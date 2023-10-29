@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dc0jmoo5wd8t2"]
+[gd_scene load_steps=4 format=3 uid="uid://dc0jmoo5wd8t2"]
+
+[ext_resource type="Script" path="res://Scripts/Buttons/PlayButton.gd" id="1_0vula"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ifb3j"]
 device = -1
@@ -17,7 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="."]
+[node name="PlayButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -30,3 +32,6 @@ offset_right = 97.0
 offset_bottom = 22.0
 shortcut = SubResource("Shortcut_aaq3q")
 text = "PLAY"
+script = ExtResource("1_0vula")
+
+[connection signal="pressed" from="PlayButton" to="PlayButton" method="_on_pressed"]

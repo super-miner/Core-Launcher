@@ -11,8 +11,12 @@ config_version=5
 [application]
 
 config/name="CoreLauncher"
-run/main_scene="res://Scenes/Menus/main_menu.tscn"
+run/main_scene="res://Scenes/Menus/MainMenu.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
+
+[autoload]
+
+SteamManager="*res://Scripts/SteamManager.gd"
 
 [rendering]
 
