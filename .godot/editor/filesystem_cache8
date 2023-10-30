@@ -1,8 +1,8 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1698627661
+::res://::1698628189
 README.md::TextFile::-1::1698558493::0::1::::<><>::
 ::res://Commands/::1698601211
-::res://Fonts/::1698627664
+::res://Fonts/::1698627667
 Roboto-Black.ttf::FontFile::1210695310110191597::1698627557::1698627666::1::::<><>::
 Roboto-BlackItalic.ttf::FontFile::4230155201933794870::1698627557::1698627666::1::::<><>::
 Roboto-Bold.ttf::FontFile::3966435255517561609::1698627557::1698627666::1::::<><>::
@@ -16,10 +16,10 @@ Roboto-Regular.ttf::FontFile::8252976073423451350::1698627557::1698627667::1::::
 Roboto-Thin.ttf::FontFile::1259809897953789144::1698627557::1698627667::1::::<><>::
 Roboto-ThinItalic.ttf::FontFile::3990723490479646301::1698627557::1698627667::1::::<><>::
 ::res://Scenes/::1698557977
-::res://Scenes/Menus/::1698627412
-MainMenu.tscn::PackedScene::7351817823015401949::1698627412::0::1::::<><>::res://Scripts/Buttons/PlayButton.cs
-::res://Scripts/::1698626367
+::res://Scenes/Menus/::1698627797
+MainMenu.tscn::PackedScene::7351817823015401949::1698627797::0::1::::<><>::uid://dpt2ksskqg0ww::::res://Fonts/Roboto-Regular.ttf<>res://Scripts/Buttons/PlayButton.cs
+::res://Scripts/::1698628157
 RegistryManager.cs::CSharpScript::-1::1698626367::0::1::::<><>::
-SteamManager.cs::CSharpScript::-1::1698626367::0::1::::<><>::
-::res://Scripts/Buttons/::1698626447
-PlayButton.cs::CSharpScript::-1::1698626447::0::1::::<><>::
+SteamManager.cs::CSharpScript::-1::1698628157::0::1::::<><>::
+::res://Scripts/Buttons/::1698628167
+PlayButton.cs::CSharpScript::-1::1698628167::0::1::::<><>::
