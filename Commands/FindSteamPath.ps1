@@ -1,1 +1,0 @@
-Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\Wow6432Node\Valve\Steam\NSIS\' -Name Path
