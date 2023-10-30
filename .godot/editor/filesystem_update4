@@ -1,4 +1,6 @@
-res://Scenes/Menus/main_menu.tscn
 res://Scenes/Menus/MainMenu.tscn
+res://Scripts/SteamManager.cs
+res://Scripts/RegistryManager.cs
+res://Scripts/Buttons/PlayButton.cs
 res://Scripts/Buttons/PlayButton.gd
 res://Scripts/SteamManager.gd

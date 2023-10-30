@@ -1,0 +1,1 @@
+powershell ./FindSteamPath.ps1

@@ -1,8 +1,11 @@
-2a60927148abd1d33b818b535e306557
-::res://::1698558532
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1698621587
 README.md::TextFile::-1::1698558493::0::1::::<><>::
-::res://Commands/::1698558211
+::res://Commands/::1698601211
 ::res://Scenes/::1698557977
-::res://Scenes/Menus/::1698558532
-MainMenu.tscn::PackedScene::7351817823015401949::1698558012::0::1::::<><>::
-::res://Scripts/::1698558526
+::res://Scenes/Menus/::1698601243
+MainMenu.tscn::PackedScene::7351817823015401949::1698601243::0::1::::<><>::res://Scripts/Buttons/PlayButton.gd
+::res://Scripts/::1698601241
+SteamManager.gd::GDScript::-1::1698601241::0::1::::<>Node<>::
+::res://Scripts/Buttons/::1698594715
+PlayButton.gd::GDScript::-1::1698594715::0::1::::<>Button<>::

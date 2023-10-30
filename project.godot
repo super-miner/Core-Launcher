@@ -12,11 +12,11 @@ config_version=5
 
 config/name="CoreLauncher"
 run/main_scene="res://Scenes/Menus/MainMenu.tscn"
-config/features=PackedStringArray("4.0", "GL Compatibility")
+config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 
-[autoload]
+[dotnet]
 
-SteamManager="*res://Scripts/SteamManager.gd"
+project/assembly_name="CoreLauncher"
 
 [rendering]
 
