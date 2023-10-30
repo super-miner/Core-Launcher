@@ -1,2 +1,3 @@
 res://Scenes/Menus/MainMenu.tscn
-res://Scripts/Buttons/PlayButton.cs
+res://Scripts/UI/Buttons/PlayButton.cs
+res://Scripts/UI/Generic/ItemList.cs
