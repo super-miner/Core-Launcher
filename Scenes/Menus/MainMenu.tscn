@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://ckbpe1f76u7jv"]
+[gd_scene load_steps=13 format=3 uid="uid://ckbpe1f76u7jv"]
 
 [ext_resource type="Texture2D" uid="uid://bdtxt5q6omnid" path="res://Images/Backgrounds/Background0.png" id="1_rkllh"]
+[ext_resource type="Texture2D" uid="uid://bwtxfmrq6g212" path="res://Images/Vignette.png" id="2_3jvfp"]
 [ext_resource type="FontFile" uid="uid://cll2pcq1g7dlm" path="res://Fonts/Roboto/Roboto-Light.ttf" id="2_3kh1n"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/PlayButton.cs" id="3_pw0hj"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/ItemList.cs" id="4_crx2s"]
@@ -66,6 +67,19 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_rkllh")
 stretch_mode = 6
+
+[node name="Vignette" type="NinePatchRect" parent="Background"]
+modulate = Color(0, 0, 0, 0.407843)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 291.0
+offset_bottom = -116.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3jvfp")
+region_rect = Rect2(0, 0, 250, 250)
 
 [node name="GameBar" type="ColorRect" parent="."]
 layout_mode = 1
