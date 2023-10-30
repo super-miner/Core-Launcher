@@ -1,41 +1,42 @@
-[gd_scene load_steps=9 format=3 uid="uid://dc0jmoo5wd8t2"]
+[gd_scene load_steps=10 format=3 uid="uid://dc0jmoo5wd8t2"]
 
+[ext_resource type="FontFile" uid="uid://dpt2ksskqg0ww" path="res://Fonts/Roboto-Regular.ttf" id="1_4t85g"]
 [ext_resource type="Script" path="res://Scripts/Buttons/PlayButton.cs" id="1_bjqxs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xicoc"]
 bg_color = Color(0, 0.533333, 1, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wiea2"]
 bg_color = Color(0, 0.647059, 1, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_louvi"]
 bg_color = Color(0, 0.803922, 1, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m26s"]
 bg_color = Color(0.564706, 0.603922, 0.639216, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6f72q"]
 bg_color = Color(0, 0.647059, 1, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [sub_resource type="InputEventKey" id="InputEventKey_ifb3j"]
 device = -1
@@ -60,9 +61,10 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -64.0
+offset_top = -116.0
 grow_horizontal = 2
 grow_vertical = 0
+color = Color(0.101961, 0.0901961, 0.0784314, 1)
 
 [node name="PlayButton" type="Button" parent="GameBar"]
 layout_mode = 1
@@ -71,10 +73,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -163.0
-offset_top = -78.0
-offset_right = 165.0
-offset_bottom = 9.0
+offset_left = -164.0
+offset_top = -87.0
+offset_right = 164.0
+offset_bottom = -11.0
+theme_override_fonts/font = ExtResource("1_4t85g")
+theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_xicoc")
 theme_override_styles/hover = SubResource("StyleBoxFlat_wiea2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_louvi")
