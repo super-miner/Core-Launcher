@@ -1,11 +1,36 @@
-[gd_scene load_steps=15 format=3 uid="uid://dc0jmoo5wd8t2"]
+[gd_scene load_steps=22 format=3 uid="uid://dc0jmoo5wd8t2"]
 
+[ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
 [ext_resource type="Texture2D" uid="uid://bdtxt5q6omnid" path="res://Images/Backgrounds/Background0.png" id="1_rkllh"]
 [ext_resource type="Texture2D" uid="uid://bwtxfmrq6g212" path="res://Images/Vignette.png" id="2_3jvfp"]
 [ext_resource type="FontFile" uid="uid://cll2pcq1g7dlm" path="res://Fonts/Roboto/Roboto-Light.ttf" id="2_3kh1n"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/PlayButton.cs" id="3_pw0hj"]
+[ext_resource type="Texture2D" uid="uid://veuu33emiei4" path="res://Images/Icons/Settings.png" id="4_06wlh"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/ItemList.cs" id="4_crx2s"]
+[ext_resource type="FontFile" uid="uid://dcmqu350lwf4x" path="res://Fonts/OpenSans/OpenSans-Medium.ttf" id="4_g8fvf"]
+[ext_resource type="FontFile" uid="uid://djl7vuk8w8far" path="res://Fonts/OpenSans/OpenSans-Bold.ttf" id="4_m8q5e"]
 [ext_resource type="PackedScene" uid="uid://bxalj6ldyic63" path="res://Scenes/DropShadow.tscn" id="5_fmcn0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bh2fx"]
+bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puni6"]
+bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wwurv"]
+bg_color = Color(0.0313726, 0.027451, 0.0235294, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arvy2"]
 
@@ -82,38 +107,109 @@ layout_mode = 2
 mouse_filter = 2
 color = Color(0.03, 0.027, 0.024, 1)
 
-[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.993
-anchor_bottom = 1.0
-offset_right = 0.0999756
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/ProfilesBar"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-theme_override_constants/margin_left = 10
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 15
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin"]
+[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin"]
 layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Options" type="HBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_fonts/font = ExtResource("4_m8q5e")
+theme_override_font_sizes/font_size = 20
+text = "Profiles"
+
+[node name="AddButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options"]
+custom_minimum_size = Vector2(30, 25)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_hover_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_constants/icon_max_width = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_bh2fx")
+icon = ExtResource("1_hfmwg")
+icon_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="Profiles" type="VBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/ScrollContainer"]
+[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 0
+
+[node name="Profiles" type="VBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("4_crx2s")
+
+[node name="ProfileEntry" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles"]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_puni6")
+
+[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileEntry"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileEntry/Margin"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileEntry/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_fonts/font = ExtResource("4_g8fvf")
+theme_override_font_sizes/font_size = 20
+text = "Mod Testing"
+
+[node name="SettingsButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileEntry/Margin/HBox"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_hover_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_constants/icon_max_width = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_wwurv")
+icon = ExtResource("4_06wlh")
+icon_alignment = 1
 
 [node name="DropShadow" parent="MainConatiner/CentralMenu/ProfilesBar" instance=ExtResource("5_fmcn0")]
 layout_mode = 1
