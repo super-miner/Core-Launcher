@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://ckbpe1f76u7jv"]
+[gd_scene load_steps=14 format=3 uid="uid://dc0jmoo5wd8t2"]
 
 [ext_resource type="Texture2D" uid="uid://bdtxt5q6omnid" path="res://Images/Backgrounds/Background0.png" id="1_rkllh"]
 [ext_resource type="Texture2D" uid="uid://bwtxfmrq6g212" path="res://Images/Vignette.png" id="2_3jvfp"]
 [ext_resource type="FontFile" uid="uid://cll2pcq1g7dlm" path="res://Fonts/Roboto/Roboto-Light.ttf" id="2_3kh1n"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/PlayButton.cs" id="3_pw0hj"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/ItemList.cs" id="4_crx2s"]
+[ext_resource type="PackedScene" uid="uid://bxalj6ldyic63" path="res://Scenes/DropShadow.tscn" id="5_fmcn0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xicoc"]
 bg_color = Color(0, 0.533333, 1, 1)
@@ -57,19 +58,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Background" type="TextureRect" parent="."]
-z_index = -1
+z_index = -1000
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("1_rkllh")
 stretch_mode = 6
 
 [node name="Vignette" type="NinePatchRect" parent="Background"]
-modulate = Color(0, 0, 0, 0.407843)
+modulate = Color(0, 0, 0, 0.235294)
+z_index = 10
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,6 +86,7 @@ texture = ExtResource("2_3jvfp")
 region_rect = Rect2(0, 0, 250, 250)
 
 [node name="GameBar" type="ColorRect" parent="."]
+z_index = 100
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -90,9 +95,11 @@ anchor_bottom = 1.0
 offset_top = -116.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 color = Color(0.101961, 0.0901961, 0.0784314, 1)
 
 [node name="PlayButton" type="Button" parent="GameBar"]
+z_index = 100
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -115,12 +122,24 @@ shortcut = SubResource("Shortcut_aaq3q")
 text = "PLAY"
 script = ExtResource("3_pw0hj")
 
+[node name="DropShadow" parent="GameBar/PlayButton" instance=ExtResource("5_fmcn0")]
+modulate = Color(0, 0, 0, 0.635294)
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DropShadow" parent="GameBar" instance=ExtResource("5_fmcn0")]
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="ProfilesBar" type="ColorRect" parent="."]
 layout_mode = 2
 anchor_bottom = 1.0
 offset_right = 291.0
 offset_bottom = -116.0
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.03, 0.027, 0.024, 1)
 
 [node name="Margin" type="MarginContainer" parent="ProfilesBar"]
@@ -128,13 +147,15 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_constants/margin_left = 20
+mouse_filter = 2
+theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 15
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ProfilesBar/Margin"]
 layout_mode = 2
+mouse_filter = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
@@ -142,6 +163,12 @@ vertical_scroll_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 script = ExtResource("4_crx2s")
+
+[node name="DropShadow" parent="ProfilesBar" instance=ExtResource("5_fmcn0")]
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="GameBar/PlayButton" to="GameBar/PlayButton" method="OnPressed"]

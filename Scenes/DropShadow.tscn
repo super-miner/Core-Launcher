@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxalj6ldyic63"]
+
+[ext_resource type="Texture2D" uid="uid://cn4mv2yxupbda" path="res://Images/InvertedVignette.png" id="1_ah14s"]
+
+[node name="DropShadow" type="MarginContainer"]
+modulate = Color(0, 0, 0, 1)
+z_index = -10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = -75
+theme_override_constants/margin_top = -75
+theme_override_constants/margin_right = -75
+theme_override_constants/margin_bottom = -75
+
+[node name="Image" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_ah14s")
+region_rect = Rect2(0, 0, 200, 200)
+patch_margin_left = 99
+patch_margin_top = 99
+patch_margin_right = 99
+patch_margin_bottom = 99
