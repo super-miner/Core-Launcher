@@ -1,15 +1,15 @@
-[gd_scene load_steps=22 format=3 uid="uid://dc0jmoo5wd8t2"]
+[gd_scene load_steps=29 format=3 uid="uid://ckbpe1f76u7jv"]
 
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
 [ext_resource type="Texture2D" uid="uid://bdtxt5q6omnid" path="res://Images/Backgrounds/Background0.png" id="1_rkllh"]
 [ext_resource type="Texture2D" uid="uid://bwtxfmrq6g212" path="res://Images/Vignette.png" id="2_3jvfp"]
 [ext_resource type="FontFile" uid="uid://cll2pcq1g7dlm" path="res://Fonts/Roboto/Roboto-Light.ttf" id="2_3kh1n"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/PlayButton.cs" id="3_pw0hj"]
-[ext_resource type="Texture2D" uid="uid://veuu33emiei4" path="res://Images/Icons/Settings.png" id="4_06wlh"]
+[ext_resource type="Texture2D" path="res://Images/Icons/Settings.png" id="4_06wlh"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/ItemList.cs" id="4_crx2s"]
 [ext_resource type="FontFile" uid="uid://dcmqu350lwf4x" path="res://Fonts/OpenSans/OpenSans-Medium.ttf" id="4_g8fvf"]
 [ext_resource type="FontFile" uid="uid://djl7vuk8w8far" path="res://Fonts/OpenSans/OpenSans-Bold.ttf" id="4_m8q5e"]
-[ext_resource type="PackedScene" uid="uid://bxalj6ldyic63" path="res://Scenes/DropShadow.tscn" id="5_fmcn0"]
+[ext_resource type="PackedScene" path="res://Scenes/DropShadow.tscn" id="5_fmcn0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bh2fx"]
 bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
@@ -17,6 +17,90 @@ corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
+
+[sub_resource type="ImageTexture" id="ImageTexture_ncce8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4aoo8"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.270588, 0.25098, 0.231373, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhc67"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.35, 0.3255, 0.301, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g6obi"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.43, 0.395887, 0.3698, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfd6x"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_che7k"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="Theme" id="Theme_khvh8"]
+VScrollBar/icons/decrement = SubResource("ImageTexture_ncce8")
+VScrollBar/icons/decrement_highlight = SubResource("ImageTexture_ncce8")
+VScrollBar/icons/decrement_pressed = SubResource("ImageTexture_ncce8")
+VScrollBar/icons/increment = SubResource("ImageTexture_ncce8")
+VScrollBar/icons/increment_highlight = SubResource("ImageTexture_ncce8")
+VScrollBar/icons/increment_pressed = SubResource("ImageTexture_ncce8")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_4aoo8")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_bhc67")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_g6obi")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_nfd6x")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_che7k")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puni6"]
 bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
@@ -151,6 +235,7 @@ icon_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+theme = SubResource("Theme_khvh8")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 

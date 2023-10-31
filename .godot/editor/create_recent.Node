@@ -1,5 +1,6 @@
-MarginContainer
 HBoxContainer
+VScrollBar
+MarginContainer
 Label
 Button
 Panel
