@@ -1,6 +1,11 @@
+MarginContainer
+Control
+TabContainer
+PopupPanel
+Popup
+MenuBar
 HBoxContainer
 VScrollBar
-MarginContainer
 Label
 Button
 Panel

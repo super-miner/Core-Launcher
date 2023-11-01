@@ -8,3 +8,4 @@ res://Scripts/UI/Generic/SerializableItemList.cs
 res://Scripts/UI/ProfileList.cs
 res://Scripts/UI/Generic/ItemListEntry.cs
 res://Scripts/UI/ProfileListEntry.cs
+res://Themes/DefaultTheme.tres
