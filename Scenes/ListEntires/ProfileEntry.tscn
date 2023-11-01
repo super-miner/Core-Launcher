@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cudquwdejnlbt"]
+[gd_scene load_steps=10 format=3 uid="uid://cudquwdejnlbt"]
 
 [ext_resource type="FontFile" uid="uid://dcmqu350lwf4x" path="res://Fonts/OpenSans/OpenSans-Medium.ttf" id="1_h6qob"]
+[ext_resource type="Script" path="res://Scripts/UI/ProfileListEntry.cs" id="1_ysmbn"]
 [ext_resource type="Texture2D" uid="uid://veuu33emiei4" path="res://Images/Icons/Settings.png" id="2_owh2i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puni6"]
@@ -45,12 +46,14 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[node name="ProfileEntry" type="Button"]
+[node name="ProfileEntry" type="Button" node_paths=PackedStringArray("_nameText")]
 custom_minimum_size = Vector2(0, 65)
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_puni6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ulnbm")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_0ji7g")
+script = ExtResource("1_ysmbn")
+_nameText = NodePath("Margin/HBox/Name")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1

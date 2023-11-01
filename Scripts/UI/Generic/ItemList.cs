@@ -8,9 +8,19 @@ public partial class ItemList : VBoxContainer {
 	
 	public List<ItemListEntry> entries = new List<ItemListEntry>();
 	
-	public virtual void AddEntry() {
-		ItemListEntry entry = new ItemListEntry(entryScene, this);
-			
-		entries.Add(entry);
+	public virtual ItemListEntry AddEntry() {
+		Node entryNode = entryScene.Instantiate();
+        
+		if (entryNode is ItemListEntry entry) {
+			AddChild(entry);
+			entries.Add(entry);
+			return entry;
+		}
+		else {
+			GD.PrintErr("ItemList entry node did not derive from ItemListEntry.");
+            
+			entryNode.QueueFree();
+			return null;
+		}
 	}
 }

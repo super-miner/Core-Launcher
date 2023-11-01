@@ -1,9 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace CoreLauncher.Scripts.StoredData; 
 
 public class StoredProfile {
-    public string name = "";
+    public string Name { get; set; } = "";
 
     public StoredProfile(string name) {
-        this.name = name;
+        this.Name = name;
     }
 }

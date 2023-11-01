@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text.Json;
 using Godot;
@@ -15,9 +16,7 @@ public static class FileManager {
     public static string GetPath(PathType pathType) {
         switch (pathType) {
             case PathType.AppData:
-                return ProjectSettings.GlobalizePath("user://") + "/CoreLauncher";
-            case PathType.StoredData:
-                return GetPath(PathType.AppData) + "/Data";
+                return ProjectSettings.GlobalizePath("user://");
             case PathType.Project:
                 return ProjectSettings.GlobalizePath("res://");
             case PathType.Steam:
@@ -29,7 +28,7 @@ public static class FileManager {
                 GD.PrintErr("Could not find steam path in the registry.");
                 return "";
             default:
-                GD.PrintErr($"The case for GetPath({pathType.ToString()} has not been implemented.");
+                GD.PrintErr($"The case for GetPath({pathType.ToString()}) has not been implemented.");
                 return "";
         }
     }
@@ -39,8 +38,21 @@ public static class FileManager {
     }
     
     public static void WriteJSONFile(string path, object data) {
-        string jsonString = JsonSerializer.Serialize(data);
+        JsonSerializerOptions options = new JsonSerializerOptions {
+            WriteIndented = true
+        };
+        string jsonString = JsonSerializer.Serialize(data, options);
         
         FileManager.WriteTextFile(path, jsonString);
+    }
+
+    public static string ReadTextFile(string path) {
+        return File.ReadAllText(path);
+    }
+
+    public static T ReadJsonFile<T>(string path) {
+        string jsonString = ReadTextFile(path);
+
+        return JsonSerializer.Deserialize<T>(jsonString);
     }
 }

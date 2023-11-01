@@ -12,6 +12,10 @@ public partial class App : Node {
         }
     }
 
+    public override void _Ready() {
+        StoredDataManager.Deserialize();
+    }
+
     private void OnQuit() {
         StoredDataManager.Serialize();
     }

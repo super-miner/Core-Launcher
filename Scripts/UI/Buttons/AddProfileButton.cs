@@ -4,7 +4,7 @@ using CoreLauncher.Scripts.UI.Generic;
 namespace CoreLauncher.Scripts.UI.Buttons;
 
 public partial class AddProfileButton : Button {
-	[Export] private CoreLauncher.Scripts.UI.Generic.ItemList itemList = null;
+	[Export] private ProfileList itemList = null;
 	
 	public void OnPressed() {
 		if (itemList != null) {
