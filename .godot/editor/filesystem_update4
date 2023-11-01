@@ -1,3 +1,5 @@
 res://Scenes/Menus/MainMenu.tscn
 res://Scripts/UI/Buttons/PlayButton.cs
 res://Scripts/UI/Generic/ItemList.cs
+res://Scenes/ListEntires/ProfileEntry.tscn
+res://Scripts/UI/Buttons/AddProfileButton.cs

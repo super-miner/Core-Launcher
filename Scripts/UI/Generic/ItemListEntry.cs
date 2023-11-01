@@ -13,7 +13,7 @@ public class ItemListEntry {
         if (nodeNode is Control) {
             node = nodeNode as Control;
             
-            node.Reparent(parent);
+            parent.AddChild(node);
         }
         else {
             GD.PrintErr("ItemList node did not derive from Control.");
