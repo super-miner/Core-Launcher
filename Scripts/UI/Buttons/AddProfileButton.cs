@@ -1,7 +1,10 @@
 using Godot;
+using CoreLauncher.Scripts.UI.Generic;
+
+namespace CoreLauncher.Scripts.UI.Buttons;
 
 public partial class AddProfileButton : Button {
-	[Export] private ItemList itemList = null;
+	[Export] private CoreLauncher.Scripts.UI.Generic.ItemList itemList = null;
 	
 	public void OnPressed() {
 		if (itemList != null) {

@@ -1,5 +1,7 @@
 using Godot;
 
+namespace CoreLauncher.Scripts.UI.Generic;
+
 public class ItemListEntry {
     public Control node = null;
 
