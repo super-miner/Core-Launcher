@@ -4,16 +4,25 @@ using System.Collections.Generic;
 namespace CoreLauncher.Scripts.UI.Generic;
 
 public partial class ItemList : VBoxContainer {
-	[Export] public PackedScene entryScene;
+	[Export] public PackedScene EntryScene;
 	
-	public List<ItemListEntry> entries = new List<ItemListEntry>();
+	public List<ItemListEntry> Entries = new List<ItemListEntry>();
+	public int SelectedEntry = -1;
 	
 	public virtual ItemListEntry AddEntry() {
-		Node entryNode = entryScene.Instantiate();
+		Node entryNode = EntryScene.Instantiate();
         
 		if (entryNode is ItemListEntry entry) {
 			AddChild(entry);
-			entries.Add(entry);
+			Entries.Add(entry);
+
+			entry.ItemList = this;
+			entry.Id = Entries.Count - 1;
+
+			if (SelectedEntry < 0) {
+				entry.Select();
+			}
+			
 			return entry;
 		}
 		else {
@@ -22,5 +31,9 @@ public partial class ItemList : VBoxContainer {
 			entryNode.QueueFree();
 			return null;
 		}
+	}
+
+	public ItemListEntry GetSelectedEntry() {
+		return SelectedEntry >= 0 ? Entries[SelectedEntry] : null;
 	}
 }

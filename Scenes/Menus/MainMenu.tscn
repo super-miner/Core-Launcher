@@ -154,7 +154,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/separation = 10
 script = ExtResource("5_ax6fr")
-entryScene = ExtResource("4_8m6cu")
+EntryScene = ExtResource("4_8m6cu")
 
 [node name="DropShadow" parent="MainConatiner/CentralMenu/ProfilesBar" instance=ExtResource("5_fmcn0")]
 layout_mode = 1
