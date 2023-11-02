@@ -185,8 +185,36 @@ theme_override_constants/margin_top = 10
 layout_mode = 2
 theme = ExtResource("9_rjd3p")
 
-[node name="Options" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
+[node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
 layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 7
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Name" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name"]
+layout_mode = 2
+theme = ExtResource("9_rjd3p")
+text = "Name: "
+
+[node name="Input" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 1
+theme = ExtResource("9_rjd3p")
+placeholder_text = "Name..."
 
 [node name="GameBar" type="ColorRect" parent="MainConatiner"]
 z_index = 100

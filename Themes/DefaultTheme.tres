@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://cp0vpg6x6licf"]
+[gd_resource type="Theme" load_steps=18 format=3 uid="uid://cp0vpg6x6licf"]
 
 [ext_resource type="FontFile" uid="uid://dcmqu350lwf4x" path="res://Fonts/OpenSans/OpenSans-Medium.ttf" id="1_piwkj"]
 
@@ -18,6 +18,22 @@ corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5e6p"]
 bg_color = Color(0.431373, 0.396078, 0.368627, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_co3p2"]
+content_margin_left = 7.0
+bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1no4y"]
+content_margin_left = 7.0
+bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
@@ -50,6 +66,22 @@ corner_radius_top_right = 7
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wycyh"]
 bg_color = Color(0.0313726, 0.027451, 0.0235294, 1)
 expand_margin_top = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_35r0k"]
+content_margin_left = 7.0
+bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wftf1"]
+content_margin_left = 7.0
+bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4aoo8"]
 content_margin_left = 4.0
@@ -108,10 +140,16 @@ Button/styles/pressed = SubResource("StyleBoxFlat_v5e6p")
 Label/colors/font_color = Color(1, 0.964706, 0.929412, 1)
 Label/font_sizes/font_size = 20
 Label/fonts/font = ExtResource("1_piwkj")
+LineEdit/colors/caret_color = Color(0.996078, 0.960784, 0.92549, 1)
+LineEdit/colors/font_color = Color(0.996078, 0.960784, 0.92549, 1)
+LineEdit/colors/font_placeholder_color = Color(0.270588, 0.25098, 0.231373, 1)
+LineEdit/font_sizes/font_size = 20
+LineEdit/styles/focus = SubResource("StyleBoxFlat_co3p2")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_1no4y")
 TabContainer/colors/font_hovered_color = Color(0.996078, 0.960784, 0.92549, 1)
 TabContainer/colors/font_selected_color = Color(0.996078, 0.960784, 0.92549, 1)
 TabContainer/colors/font_unselected_color = Color(0.490196, 0.458824, 0.431373, 1)
-TabContainer/constants/side_margin = 0
+TabContainer/constants/side_margin = 7
 TabContainer/font_sizes/font_size = 20
 TabContainer/fonts/font = ExtResource("1_piwkj")
 TabContainer/styles/panel = SubResource("StyleBoxFlat_41bmg")
@@ -119,6 +157,14 @@ TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_ghh02")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_ahu5m")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_3yblw")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_wycyh")
+TextEdit/colors/font_color = Color(1, 0.964706, 0.929412, 1)
+TextEdit/colors/font_placeholder_color = Color(0.270588, 0.25098, 0.231373, 1)
+TextEdit/constants/line_spacing = 0
+TextEdit/font_sizes/font_size = 20
+TextEdit/fonts/font = ExtResource("1_piwkj")
+TextEdit/icons/space = null
+TextEdit/styles/focus = SubResource("StyleBoxFlat_35r0k")
+TextEdit/styles/normal = SubResource("StyleBoxFlat_wftf1")
 VScrollBar/styles/grabber = SubResource("StyleBoxFlat_4aoo8")
 VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_bhc67")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_g6obi")
