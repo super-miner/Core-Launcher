@@ -7,9 +7,11 @@ public partial class ItemListEntry : Button {
     public int Id = -1;
     
     public void Select() {
+        GD.Print("Selected entry");
+        
         ItemList.GetSelectedEntry()?.Deselect();
         
-        ItemList.SelectedEntry = Id;
+        ItemList.SetSelectedEntry(Id);
 
         Disabled = true;
     }

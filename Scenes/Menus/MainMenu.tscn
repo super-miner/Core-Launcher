@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ckbpe1f76u7jv"]
+[gd_scene load_steps=24 format=3 uid="uid://ckbpe1f76u7jv"]
 
 [ext_resource type="Script" path="res://Scripts/App.cs" id="1_33a67"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -10,8 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://cudquwdejnlbt" path="res://Scenes/ListEntires/ProfileEntry.tscn" id="4_8m6cu"]
 [ext_resource type="FontFile" uid="uid://djl7vuk8w8far" path="res://Fonts/OpenSans/OpenSans-Bold.ttf" id="4_m8q5e"]
 [ext_resource type="Script" path="res://Scripts/UI/ProfileList.cs" id="5_ax6fr"]
-[ext_resource type="PackedScene" uid="uid://bxalj6ldyic63" path="res://Scenes/DropShadow.tscn" id="5_fmcn0"]
+[ext_resource type="PackedScene" path="res://Scenes/DropShadow.tscn" id="5_fmcn0"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefaultTheme.tres" id="9_rjd3p"]
+[ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs" id="10_mm626"]
+[ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsOption.cs" id="11_bg25y"]
+[ext_resource type="Script" path="res://Scripts/UIManager.cs" id="14_4xx0t"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arvy2"]
 
@@ -209,12 +212,18 @@ layout_mode = 2
 theme = ExtResource("9_rjd3p")
 text = "Name: "
 
-[node name="Input" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name"]
+[node name="Input" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name" node_paths=PackedStringArray("_settingsOption")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 1
 theme = ExtResource("9_rjd3p")
 placeholder_text = "Name..."
+script = ExtResource("10_mm626")
+_settingsOption = NodePath("ProfileSettingsOption")
+
+[node name="ProfileSettingsOption" type="Node" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input"]
+script = ExtResource("11_bg25y")
+SettingName = "Name"
 
 [node name="GameBar" type="ColorRect" parent="MainConatiner"]
 z_index = 100
@@ -269,5 +278,10 @@ mouse_filter = 2
 texture = ExtResource("1_rkllh")
 stretch_mode = 6
 
+[node name="UIManager" type="Node" parent="." node_paths=PackedStringArray("ProfileList")]
+script = ExtResource("14_4xx0t")
+ProfileList = NodePath("../MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles")
+
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
+[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]

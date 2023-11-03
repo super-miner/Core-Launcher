@@ -23,6 +23,10 @@ public partial class ProfileListEntry : ItemListEntry {
         StoredDataManager.Data.Profiles.Add(_profile);
     }
 
+    public string GetName() {
+        return Name;
+    }
+
     public void SetName(string name, bool updateProfile = true) {
         Name = name;
 
