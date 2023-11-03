@@ -7,7 +7,7 @@ namespace CoreLauncher.Scripts;
 
 public static class SteamManager {
 	public static void RunGame() {
-		OS.Execute(FileManager.GetPath(PathType.Project) + "/Commands/RunGame.bat", new string[0], new Godot.Collections.Array());
+		OS.Execute(FileManager.GetPath(PathType.Project) + "/Commands/RunGame.bat", new [] {GetPath()}, new Godot.Collections.Array());
 	}
 
 	public static string GetPath() {

@@ -1,1 +1,1 @@
-steam steam://rungameid/1621690
+%1\steam steam://rungameid/1621690
