@@ -9,6 +9,5 @@ res://Scripts/UI/Generic/ItemList.cs
 res://Scripts/UI/Generic/ItemListEntry.cs
 res://Scripts/UI/ProfileList.cs
 res://Scripts/UI/ProfileListEntry.cs
-res://Scripts/UI/Settings/ProfileSettingsOption.cs
-res://Scripts/UI/Settings/ProfileSettingsTextInput.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
+res://Scripts/UI/Settings/ProfileSettingsOption.cs

@@ -19,8 +19,6 @@ public partial class ProfileSettingsLineEdit : LineEdit {
         string textTemp = Text;
         bool success = _settingsOption.GetSetting(ref textTemp);
         Text = textTemp;
-        
-        GD.Print("Profile selected " + ((ProfileListEntry) UIManager.Instance.ProfileList.GetSelectedEntry()).GetName());
 
         if (!success) {
             GD.PrintErr($"Could not set option text input {_settingsOption.SettingName}.");
