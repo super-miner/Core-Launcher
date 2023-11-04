@@ -13,4 +13,8 @@ public static class SteamManager {
 	public static string GetPath() {
 		return FileManager.GetPath(PathType.Steam);
 	}
+
+	public static bool ValidatePath(string path) {
+		return FileManager.PathContains(path, "steam.exe");
+	}
 }

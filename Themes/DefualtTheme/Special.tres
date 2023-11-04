@@ -1,0 +1,47 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://chrjy83gamx77"]
+
+[ext_resource type="FontFile" uid="uid://cll2pcq1g7dlm" path="res://Fonts/Roboto/Roboto-Light.ttf" id="1_arbqx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m26s"]
+bg_color = Color(0.564706, 0.603922, 0.639216, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6f72q"]
+bg_color = Color(0, 0.647059, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wiea2"]
+bg_color = Color(0, 0.647059, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xicoc"]
+bg_color = Color(0, 0.533333, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_louvi"]
+bg_color = Color(0, 0.772549, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[resource]
+Button/font_sizes/font_size = 45
+Button/fonts/font = ExtResource("1_arbqx")
+Button/styles/disabled = SubResource("StyleBoxFlat_7m26s")
+Button/styles/focus = SubResource("StyleBoxFlat_6f72q")
+Button/styles/hover = SubResource("StyleBoxFlat_wiea2")
+Button/styles/normal = SubResource("StyleBoxFlat_xicoc")
+Button/styles/pressed = SubResource("StyleBoxFlat_louvi")

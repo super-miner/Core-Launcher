@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CoreLauncher"
-run/main_scene="res://Scenes/Menus/MainMenu.tscn"
+run/main_scene="res://Scenes/Menus/UI.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 
 [display]

@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://f7toood1dfne"]
+
+[ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_7esm2"]
+[ext_resource type="Texture2D" uid="uid://udrjjhyr7euf" path="res://Images/Icons/File.png" id="2_rg4a4"]
+[ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="3_io1n2"]
+
+[node name="OnboardingMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_7esm2")
+
+[node name="FindSteamPath" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBox" type="VBoxContainer" parent="FindSteamPath"]
+layout_mode = 2
+anchor_left = 0.312
+anchor_right = 0.687
+anchor_bottom = 1.0
+offset_left = 0.799988
+offset_right = 0.799927
+alignment = 1
+
+[node name="Label" type="Label" parent="FindSteamPath/VBox"]
+layout_mode = 2
+theme = ExtResource("1_7esm2")
+text = "Select your steam path:"
+
+[node name="FilePicker" type="HBoxContainer" parent="FindSteamPath/VBox"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="FindSteamPath/VBox/FilePicker"]
+z_index = 10
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_7esm2")
+
+[node name="Button" type="Button" parent="FindSteamPath/VBox/FilePicker"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_7esm2")
+theme_override_constants/icon_max_width = 40
+icon = ExtResource("2_rg4a4")
+icon_alignment = 1
+
+[node name="ErrorLabel" type="Label" parent="FindSteamPath/VBox"]
+layout_mode = 2
+theme = ExtResource("1_7esm2")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="Margin" type="MarginContainer" parent="FindSteamPath/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 80
+
+[node name="Button" type="Button" parent="FindSteamPath/VBox/Margin"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("3_io1n2")
+theme_override_font_sizes/font_size = 30
+text = "CONTINUE"

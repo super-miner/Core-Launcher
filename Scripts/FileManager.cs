@@ -55,4 +55,8 @@ public static class FileManager {
 
         return JsonSerializer.Deserialize<T>(jsonString);
     }
+
+    public static bool PathContains(string path, string file) {
+        return File.Exists(path + "/" + file);
+    }
 }
