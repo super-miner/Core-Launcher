@@ -20,8 +20,9 @@ public partial class FileLineEdit : LineEdit {
     }
 
     public void SetText(string text) {
-        Text = text;
+        ReleaseFocus();
         
+        Text = text;
         UpdateFeedback();
     }
 

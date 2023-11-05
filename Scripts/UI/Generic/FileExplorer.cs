@@ -7,6 +7,6 @@ public partial class FileExplorer : FileDialog {
     [Export] public string StartingDirectory = "";
 
     public override void _Ready() {
-        CurrentDir = "/";
+        CurrentDir = StartingDirectory;
     }
 }

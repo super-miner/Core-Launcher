@@ -17,6 +17,8 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wiea2"]
+content_margin_left = 5.0
+content_margin_right = 5.0
 bg_color = Color(0, 0.647059, 1, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
@@ -24,6 +26,8 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xicoc"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
 bg_color = Color(0, 0.533333, 1, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
@@ -31,7 +35,9 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_louvi"]
-bg_color = Color(0, 0.772549, 1, 1)
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0, 0.717647, 1, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
