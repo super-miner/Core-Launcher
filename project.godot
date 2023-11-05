@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 
 window/size/viewport_width=1600
 window/size/viewport_height=900
+window/subwindows/embed_subwindows=false
 
 [dotnet]
 

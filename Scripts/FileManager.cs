@@ -59,4 +59,8 @@ public static class FileManager {
     public static bool PathContains(string path, string file) {
         return File.Exists(path + "/" + file);
     }
+    
+    public static bool PathExists(string path) {
+        return Directory.Exists(path);
+    }
 }
