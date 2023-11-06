@@ -18,3 +18,10 @@ res://Scripts/UI/Settings/ProfileSettingsOption.cs
 res://Scenes/Menus/OnboardingMenu.tscn
 res://Themes/DefualtTheme/NormalFileExplorer.tres
 res://Scenes/Menus/MainMenu.tscn
+res://Scripts/UI/Generic/LoadingBar.cs
+res://Scripts/UI/Onboarding/OnboardingManager.cs
+res://Scenes/Menus/Onboarding/OnboardingMenu.tscn
+res://Scenes/Menus/Onboarding/LoginToSteam.tscn
+res://Scenes/Menus/Onboarding/FindSteamPath.tscn
+res://Scripts/UI/Onboarding/OnboardingPage.cs
+res://Scripts/UI/Onboarding/FindSteamPath/LoginToSteam.cs

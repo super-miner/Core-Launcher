@@ -1,0 +1,1 @@
+"%~1\steamcmd" +login %~2 +app_run 1621690 +quit

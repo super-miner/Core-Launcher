@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckbpe1f76u7jv"]
 
 [ext_resource type="Script" path="res://Scripts/App.cs" id="1_bgb4b"]
-[ext_resource type="PackedScene" uid="uid://f7toood1dfne" path="res://Scenes/Menus/OnboardingMenu.tscn" id="2_4qvvs"]
+[ext_resource type="PackedScene" uid="uid://f7toood1dfne" path="res://Scenes/Menus/Onboarding/OnboardingMenu.tscn" id="2_4qvvs"]
 
 [node name="UI" type="Control"]
 layout_mode = 3

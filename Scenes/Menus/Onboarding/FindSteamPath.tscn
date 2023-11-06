@@ -1,0 +1,133 @@
+[gd_scene load_steps=10 format=3 uid="uid://bv75ghh0fu0dp"]
+
+[ext_resource type="Script" path="res://Scripts/UI/Onboarding/FindSteamPath/FindSteamPath.cs" id="1_hesbn"]
+[ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_jcuxh"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/FileLineEdit.cs" id="3_g12u8"]
+[ext_resource type="Texture2D" uid="uid://udrjjhyr7euf" path="res://Images/Icons/File.png" id="4_ye4vh"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/FileExplorerButton.cs" id="5_i3rpn"]
+[ext_resource type="Theme" uid="uid://ca310l130svfn" path="res://Themes/DefualtTheme/NormalFileExplorer.tres" id="6_0qrp3"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/FileExplorer.cs" id="7_smgd4"]
+[ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="8_qlrd4"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="9_5bf30"]
+
+[node name="FindSteamPath" type="Control" node_paths=PackedStringArray("_steamPathLineEdit", "_progressBar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+script = ExtResource("1_hesbn")
+_steamPathLineEdit = NodePath("VBox/FilePicker/LineEdit")
+_progressBar = NodePath("ProgressBar")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+anchor_left = 0.312
+anchor_right = 0.687
+anchor_bottom = 1.0
+offset_left = 0.799988
+offset_right = 0.799927
+alignment = 1
+
+[node name="Label" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("2_jcuxh")
+text = "Select your steam path:"
+
+[node name="FilePicker" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="VBox/FilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+z_index = 10
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_jcuxh")
+placeholder_text = "Path: eg. C:\\Program Files (x86)\\Steam"
+script = ExtResource("3_g12u8")
+FolderMustContain = "steam.exe"
+_errorLabel = NodePath("../../ErrorLabel")
+_successLabel = NodePath("../../SuccessLabel")
+
+[node name="Button" type="Button" parent="VBox/FilePicker"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_jcuxh")
+theme_override_constants/icon_max_width = 40
+icon = ExtResource("4_ye4vh")
+icon_alignment = 1
+script = ExtResource("5_i3rpn")
+
+[node name="FileExplorer" type="FileDialog" parent="VBox/FilePicker/Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+theme = ExtResource("6_0qrp3")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("7_smgd4")
+StartingDirectory = "/"
+
+[node name="ErrorLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("2_jcuxh")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="SuccessLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("2_jcuxh")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Found path."
+
+[node name="Margin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 80
+
+[node name="ContinueButton" type="Button" parent="VBox/Margin"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("8_qlrd4")
+theme_override_font_sizes/font_size = 30
+text = "CONTINUE"
+
+[node name="ProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("_label")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_qlrd4")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+script = ExtResource("9_5bf30")
+SmoothingCoefficient = 0.065
+_label = NodePath("ProgressLabel")
+
+[node name="ProgressLabel" type="Label" parent="ProgressBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 780.0
+offset_top = -43.0
+offset_right = -780.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_jcuxh")
+
+[connection signal="text_changed" from="VBox/FilePicker/LineEdit" to="VBox/FilePicker/LineEdit" method="OnTextChanged"]
+[connection signal="pressed" from="VBox/FilePicker/Button" to="VBox/FilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="VBox/FilePicker/Button/FileExplorer" to="VBox/FilePicker/Button" method="OnDirectorySelected"]
+[connection signal="pressed" from="VBox/Margin/ContinueButton" to="." method="Continue"]

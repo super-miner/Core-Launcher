@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://f7toood1dfne"]
+
+[ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_7esm2"]
+[ext_resource type="Script" path="res://Scripts/UI/Onboarding/OnboardingManager.cs" id="1_cm7yd"]
+[ext_resource type="PackedScene" uid="uid://bv75ghh0fu0dp" path="res://Scenes/Menus/Onboarding/FindSteamPath.tscn" id="2_ori1u"]
+[ext_resource type="PackedScene" uid="uid://cyi5lvpy0khw4" path="res://Scenes/Menus/Onboarding/LoginToSteam.tscn" id="3_bxtlp"]
+
+[node name="OnboardingMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cm7yd")
+_pages = [ExtResource("2_ori1u"), ExtResource("3_bxtlp")]
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_7esm2")

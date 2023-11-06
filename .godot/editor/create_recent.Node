@@ -1,3 +1,8 @@
+LineEdit
+Container
+Label
+LoadingBar
+ProgressBar
 FileExplorer
 FileDialog
 Control
@@ -5,11 +10,8 @@ MarginContainer
 Button
 VBoxContainer
 CenterContainer
-Label
 HBoxContainer
-LineEdit
 Panel
-Container
 ProfileSettingsOption
 Node
 CheckButton

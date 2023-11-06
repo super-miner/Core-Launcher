@@ -1,0 +1,14 @@
+
+
+[2023-11-04 20:24:05] Client version: 1698778122
+[2023-11-04 20:24:05] Load failed: C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\SteamCMD\steamapps\libraryfolders.vdf.
+[2023-11-04 20:24:05] Load failed: C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\SteamCMD\config\libraryfolders.vdf.
+[2023-11-04 20:24:05] Steam library folders configuration will be reset.
+[2023-11-04 20:24:05] No install folder configuration files found.
+
+
+[2023-11-04 20:24:31] Client version: 1698778122
+[2023-11-04 20:24:31] Load failed: C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\SteamCMD\steamapps\libraryfolders.vdf.
+[2023-11-04 20:24:31] Load failed: C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\SteamCMD\config\libraryfolders.vdf.
+[2023-11-04 20:24:31] Steam library folders configuration will be reset.
+[2023-11-04 20:24:31] No install folder configuration files found.

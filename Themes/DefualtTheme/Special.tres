@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://chrjy83gamx77"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://chrjy83gamx77"]
 
 [ext_resource type="FontFile" uid="uid://cll2pcq1g7dlm" path="res://Fonts/Roboto/Roboto-Light.ttf" id="1_arbqx"]
 
@@ -43,6 +43,13 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yb13v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hl2q"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0.533333, 1, 1)
+
 [resource]
 Button/font_sizes/font_size = 45
 Button/fonts/font = ExtResource("1_arbqx")
@@ -51,3 +58,5 @@ Button/styles/focus = SubResource("StyleBoxFlat_6f72q")
 Button/styles/hover = SubResource("StyleBoxFlat_wiea2")
 Button/styles/normal = SubResource("StyleBoxFlat_xicoc")
 Button/styles/pressed = SubResource("StyleBoxFlat_louvi")
+ProgressBar/styles/background = SubResource("StyleBoxEmpty_yb13v")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_8hl2q")
