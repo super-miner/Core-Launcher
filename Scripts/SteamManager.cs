@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CMDSearch;
 using CoreLauncher.Scripts;
+using CoreLauncher.Scripts.UI.Generic;
 using Godot.Collections;
 
 namespace CoreLauncher.Scripts;
@@ -16,12 +18,18 @@ public enum CredentialsState {
 	Invalid
 }
 
+public delegate void OnInvalidPassword();
+public delegate void OnNeedSteamCode();
+public delegate void OnLogin();
+
 public static class SteamManager {
+	public static event OnInvalidPassword InvalidPasswordEvent;
+	public static event OnNeedSteamCode NeedSteamCodeEvent;
+	public static event OnLogin LoginEvent;
+	
 	public static string SteamPath = "";
 
-	private static Process _loginProcess = null;
-	private static StreamWriter _loginProcessWriter = null;
-	private static StreamReader _loginProcessReader = null;
+	private static CMDObject _loginProcess;
 	private static double _loginProgress = 0.0;
 	private static string _loginState = "";
 	
@@ -29,27 +37,64 @@ public static class SteamManager {
 		OS.Execute($"{FileManager.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetPath()}, new Godot.Collections.Array());
 	}
 
-	public static void Login(string username, string password) {
-		string command = $"/c \"{FileManager.GetPath(PathType.Project)}Commands/SteamCMD/Login.bat {GetPath().Replace(" ", "__")}\" {username} {password}";
-		ProcessStartInfo processInfo = new ProcessStartInfo("cmd.exe", /*$"/c \"{FileManager.GetPath(PathType.Project)}Commands/SteamCMDTest.bat\""*/command);
-		GD.Print(command);
-		processInfo.CreateNoWindow = false;
-		processInfo.UseShellExecute = false;
-		processInfo.RedirectStandardInput = true;
-		processInfo.RedirectStandardOutput = true;
+	public static void Login(string username, string password, LoadingBar loadingBar = null) {
+		_loginProcess = new CMDObject($"{FileManager.GetPath(PathType.Project)}Commands/SteamCMD/Login.bat", new string[] {
+			GetPath().Replace(" ", "__"), 
+			username, 
+			password
+		}, true);
+		
+		_loginProcess.AddCallback(@"Checking for available update\.\.\.", (Match match) => {
+			if (loadingBar != null) {
+				loadingBar.SetValue(0.1, "Checking for SteamCMD updates...");
+			}
+		});
+		
+		_loginProcess.AddCallback(@"\[ (.+)%\] Downloading update", (Match match) => {
+			if (loadingBar != null) {
+				string installPercentText = match.Captures.FirstOrDefault()?.Value;
 
-		_loginProcess = Process.Start(processInfo);
-
-		if (_loginProcess != null) {
-			_loginProcessWriter = _loginProcess.StandardInput;
-			_loginProcessReader = _loginProcess.StandardOutput;
-		}
-		else {
-			GD.PrintErr("Error starting login process (null).");
-		}
+				if (int.TryParse(installPercentText, out int installPercent)) {
+					loadingBar.SetValue(0.1 + (installPercent / 100.0) * 0.6, "Installing SteamCMD update...");
+				}
+				else {
+					loadingBar.SetValue(0.1, "Installing SteamCMD update...");
+				}
+			}
+		});
+		
+		_loginProcess.AddCallback(@"Extracting package\.\.\.", (Match match) => {
+			if (loadingBar != null) {
+				loadingBar.SetValue(0.8, "Checking for SteamCMD updates...");
+			}
+		});
+		
+		_loginProcess.AddCallback(@"Logging in user", (Match match) => {
+			if (loadingBar != null) {
+				loadingBar.SetValue(0.9, "Checking for SteamCMD updates...");
+			}
+		});
+		
+		_loginProcess.AddCallback(@"password: FAILED", (Match match) => {
+			_loginProcess.Destroy();
+			
+			InvalidPasswordEvent?.Invoke();
+		});
+		
+		_loginProcess.AddCallback(@"This computer has not been authenticated for your account using Steam Guard.", (Match match) => {
+			NeedSteamCodeEvent?.Invoke();
+		});
+		
+		_loginProcess.AddCallback(@"Waiting for user info...OK", (Match match) => {
+			if (loadingBar != null) {
+				loadingBar.SetValue(1.0, "Checking for SteamCMD updates...");
+			}
+			
+			LoginEvent?.Invoke();
+		});
 	}
 	
-	public static Task<CredentialsState> ValidateCredentials(string username, string password) {
+	/*public static Task<CredentialsState> ValidateCredentials(string username, string password) {
 		Login(username, password);
 		GD.Print("Debug");
 
@@ -85,9 +130,9 @@ public static class SteamManager {
 				}
 			}
 		});
-	}
+	}*/
 
-	public static void EnterSteamGuardCode(string steamGuardCode) {
+	/*public static void EnterSteamGuardCode(string steamGuardCode) {
 		if (_loginProcess == null || _loginProcessWriter == null || _loginProcessReader == null) {
 			GD.PrintErr("Can't enter steam guard code when no login process is running.");
 			return;
@@ -105,9 +150,9 @@ public static class SteamManager {
 		_loginProcess = null;
 		_loginProcessWriter = null;
 		_loginProcessReader = null;
-	}
+	}*/
 
-	public static double GetLoginProgress(out string loginState) {
+	/*public static double GetLoginProgress(out string loginState) {
 		if (_loginProcess == null || _loginProcessWriter == null || _loginProcessReader == null) {
 			GD.PrintErr("Can't get login progress when no login process is running.");
 			
@@ -132,7 +177,7 @@ public static class SteamManager {
 				continue;
 			}
 			
-			pattern = @"\[ (16)%\] Downloading update";
+			pattern = @"\[ (.+)%\] Downloading update";
 			match = Regex.Match(line, pattern);
 			if (match.Success) {
 				_loginState = "Installing SteamCMD update...";
@@ -174,7 +219,7 @@ public static class SteamManager {
 
 		loginState = _loginState;
 		return _loginProgress;
-	}
+	}*/
 
 	public static string GetPath() {
 		return SteamPath != "" ? SteamPath : FileManager.GetPath(PathType.Steam);

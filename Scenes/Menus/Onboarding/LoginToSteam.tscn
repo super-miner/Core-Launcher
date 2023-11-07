@@ -1,16 +1,19 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyi5lvpy0khw4"]
 
-[ext_resource type="Script" path="res://Scripts/UI/Onboarding/FindSteamPath/LoginToSteam.cs" id="1_u2bsr"]
+[ext_resource type="Script" path="res://Scripts/UI/Onboarding/LoginToSteam/LoginToSteam.cs" id="1_d7oio"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_xrnaw"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="8_qum3u"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="9_ga6bs"]
 
-[node name="LoginToSteam" type="Control" node_paths=PackedStringArray("_usernameLineEdit", "_passwordLineEdit")]
+[node name="LoginToSteam" type="Control" node_paths=PackedStringArray("_progressBar", "_usernameLineEdit", "_passwordLineEdit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1_u2bsr")
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d7oio")
+_progressBar = NodePath("ProgressBar")
 _usernameLineEdit = NodePath("VBox/UsernameInput")
 _passwordLineEdit = NodePath("VBox/PasswordInput")
 

@@ -10,7 +10,8 @@
         "dependencies": {
           "Godot.SourceGenerators": "4.1.2",
           "GodotSharp": "4.1.2",
-          "GodotSharpEditor": "4.1.2"
+          "GodotSharpEditor": "4.1.2",
+          "CMDSearch": "1.0.0.0"
         },
         "runtime": {
           "CoreLauncher.dll": {}
@@ -33,6 +34,14 @@
           "lib/net6.0/GodotSharpEditor.dll": {
             "assemblyVersion": "4.1.2.0",
             "fileVersion": "4.1.2.0"
+          }
+        }
+      },
+      "CMDSearch/1.0.0.0": {
+        "runtime": {
+          "CMDSearch.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       }
@@ -64,6 +73,11 @@
       "sha512": "sha512-L8toPAj+YzsHVtR7JEKC11//oBEVoB91kVY49kjCkVuqTLSsg8NKPaYE+54YRyI2g9lqSES9xX5bQ/6yT9rOWA==",
       "path": "godotsharpeditor/4.1.2",
       "hashPath": "godotsharpeditor.4.1.2.nupkg.sha512"
+    },
+    "CMDSearch/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

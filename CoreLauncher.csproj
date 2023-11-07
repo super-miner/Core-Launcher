@@ -3,4 +3,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CMDSearch">
+      <HintPath>..\..\..\Programs\CMDSearch\CMDSearch\bin\Debug\net6.0\CMDSearch.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
