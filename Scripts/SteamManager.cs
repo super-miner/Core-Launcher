@@ -49,16 +49,12 @@ public static class SteamManager {
 		_loginProcess = new CMDObject(batchFilePath, args, true, true);
 		
 		_loginProcess.AddCallback(@"Checking for available update\.\.\.", (Match match) => {
-			GD.Print("DEBUG 1");
-			
 			if (loadingBar != null) {
 				loadingBar.SetValue(0.1, "Checking for SteamCMD updates...");
 			}
 		});
 		
 		_loginProcess.AddCallback(@"\[ (.+)%\] Downloading update", (Match match) => {
-			GD.Print("DEBUG 1");
-			
 			if (loadingBar != null) {
 				string installPercentText = match.Captures.FirstOrDefault()?.Value;
 
@@ -72,38 +68,28 @@ public static class SteamManager {
 		});
 		
 		_loginProcess.AddCallback(@"Extracting package\.\.\.", (Match match) => {
-			GD.Print("DEBUG 1");
-			
 			if (loadingBar != null) {
-				loadingBar.SetValue(0.8, "Checking for SteamCMD updates...");
+				loadingBar.SetValue(0.8, "Extracting SteamCMD packages...");
 			}
 		});
 		
 		_loginProcess.AddCallback(@"Logging in user", (Match match) => {
-			GD.Print("DEBUG 1");
-			
 			if (loadingBar != null) {
-				loadingBar.SetValue(0.9, "Checking for SteamCMD updates...");
+				loadingBar.SetValue(0.9, "Logging in...");
 			}
 		});
 		
-		_loginProcess.AddCallback(@"password: FAILED", (Match match) => {
-			GD.Print("DEBUG 1");
-			
+		_loginProcess.AddCallback(@"Steam Public...FAILED", (Match match) => {
 			_loginProcess.Destroy();
 			
 			InvalidPasswordEvent?.Invoke();
 		});
 		
 		_loginProcess.AddCallback(@"This computer has not been authenticated for your account using Steam Guard.", (Match match) => {
-			GD.Print("DEBUG 1");
-			
 			NeedSteamCodeEvent?.Invoke();
 		});
 		
 		_loginProcess.AddCallback(@"Waiting for user info...OK", (Match match) => {
-			GD.Print("DEBUG 1");
-			
 			if (loadingBar != null) {
 				loadingBar.SetValue(1.0, "Checking for SteamCMD updates...");
 			}
