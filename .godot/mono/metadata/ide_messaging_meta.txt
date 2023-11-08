@@ -1,2 +1,0 @@
-﻿58834
-C:/Program Files/GodotSharp4.1.2/Godot_v4.1.2-stable_mono_win64.exe

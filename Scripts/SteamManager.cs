@@ -38,19 +38,27 @@ public static class SteamManager {
 	}
 
 	public static void Login(string username, string password, LoadingBar loadingBar = null) {
-		_loginProcess = new CMDObject($"{FileManager.GetPath(PathType.Project)}Commands/SteamCMD/Login.bat", new string[] {
-			GetPath().Replace(" ", "__"), 
-			username, 
+		string batchFilePath = $"{FileManager.GetPath(PathType.Project)}Commands/SteamCMD/Login.bat";
+		string[] args = new string[] {
+			GetPath().Replace(" ", "__"),
+			username,
 			password
-		}, true);
+		};
+		GD.Print($"\"{batchFilePath}\" {string.Join(' ', args)}");
+		
+		_loginProcess = new CMDObject(batchFilePath, args, true, true);
 		
 		_loginProcess.AddCallback(@"Checking for available update\.\.\.", (Match match) => {
+			GD.Print("DEBUG 1");
+			
 			if (loadingBar != null) {
 				loadingBar.SetValue(0.1, "Checking for SteamCMD updates...");
 			}
 		});
 		
 		_loginProcess.AddCallback(@"\[ (.+)%\] Downloading update", (Match match) => {
+			GD.Print("DEBUG 1");
+			
 			if (loadingBar != null) {
 				string installPercentText = match.Captures.FirstOrDefault()?.Value;
 
@@ -64,28 +72,38 @@ public static class SteamManager {
 		});
 		
 		_loginProcess.AddCallback(@"Extracting package\.\.\.", (Match match) => {
+			GD.Print("DEBUG 1");
+			
 			if (loadingBar != null) {
 				loadingBar.SetValue(0.8, "Checking for SteamCMD updates...");
 			}
 		});
 		
 		_loginProcess.AddCallback(@"Logging in user", (Match match) => {
+			GD.Print("DEBUG 1");
+			
 			if (loadingBar != null) {
 				loadingBar.SetValue(0.9, "Checking for SteamCMD updates...");
 			}
 		});
 		
 		_loginProcess.AddCallback(@"password: FAILED", (Match match) => {
+			GD.Print("DEBUG 1");
+			
 			_loginProcess.Destroy();
 			
 			InvalidPasswordEvent?.Invoke();
 		});
 		
 		_loginProcess.AddCallback(@"This computer has not been authenticated for your account using Steam Guard.", (Match match) => {
+			GD.Print("DEBUG 1");
+			
 			NeedSteamCodeEvent?.Invoke();
 		});
 		
 		_loginProcess.AddCallback(@"Waiting for user info...OK", (Match match) => {
+			GD.Print("DEBUG 1");
+			
 			if (loadingBar != null) {
 				loadingBar.SetValue(1.0, "Checking for SteamCMD updates...");
 			}

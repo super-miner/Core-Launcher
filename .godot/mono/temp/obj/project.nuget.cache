@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "n5glApwxlBuNiEtKTl5h0ZThGMUhJGjeY+cOIR9klYNdPhZnpB+sD8zLcKpZ/DSUWUixb9VuMdFlKcO1PCmpKw==",
+  "dgSpecHash": "scR1h5S4/AGsbq4T8B9GBmDL5hP6G3UequWJ6LWXP0Yr8hUht0ho7VTphw5tGVjw1uyy6XgQHtrLDUzQse7QQA==",
   "success": true,
   "projectFilePath": "C:\\Users\\marsh\\OneDrive\\Documents\\Games\\CoreLauncher\\CoreLauncher\\CoreLauncher.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\marsh\\.nuget\\packages\\godot.sourcegenerators\\4.1.2\\godot.sourcegenerators.4.1.2.nupkg.sha512",
-    "C:\\Users\\marsh\\.nuget\\packages\\godotsharp\\4.1.2\\godotsharp.4.1.2.nupkg.sha512",
-    "C:\\Users\\marsh\\.nuget\\packages\\godotsharpeditor\\4.1.2\\godotsharpeditor.4.1.2.nupkg.sha512"
+    "C:\\Users\\marsh\\.nuget\\packages\\godot.sourcegenerators\\4.1.3\\godot.sourcegenerators.4.1.3.nupkg.sha512",
+    "C:\\Users\\marsh\\.nuget\\packages\\godotsharp\\4.1.3\\godotsharp.4.1.3.nupkg.sha512",
+    "C:\\Users\\marsh\\.nuget\\packages\\godotsharpeditor\\4.1.3\\godotsharpeditor.4.1.3.nupkg.sha512"
   ],
   "logs": []
 }
