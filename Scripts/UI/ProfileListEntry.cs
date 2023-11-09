@@ -18,9 +18,12 @@ public partial class ProfileListEntry : ItemListEntry {
     }
 
     public void Serialize() {
-        GD.Print($"Serialized profile {Name}.");
+        GD.Print($"Serializing profile {Name}.");
+        
         _profile = new StoredProfile(Name);
         StoredDataManager.Data.Profiles.Add(_profile);
+        
+        GD.Print($"Serialized profile {Name}.");
     }
 
     public string GetName() {

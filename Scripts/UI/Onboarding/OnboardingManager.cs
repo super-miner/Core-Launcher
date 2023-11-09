@@ -5,6 +5,7 @@ namespace CoreLauncher.Scripts.UI.Onboarding;
 
 public partial class OnboardingManager : Node {
     [Export] private Array<PackedScene> _pages = new Array<PackedScene>();
+    [Export] private PackedScene _mainMenuScene;
 
     private Node _currentPage = null;
     private int _currentPageNum = 0;
@@ -13,7 +14,7 @@ public partial class OnboardingManager : Node {
         SetPageNum(_currentPageNum);
     }
 
-    public void MoveForward(int amount) {
+    public void MoveForward(int amount = 1) {
         int newPageNum = _currentPageNum + amount;
         if (newPageNum < _pages.Count) {
             SetPageNum(newPageNum);
@@ -21,21 +22,22 @@ public partial class OnboardingManager : Node {
     }
 
     public void SetPageNum(int pageNum) {
-        if (pageNum >= _pages.Count) {
-            GD.PrintErr("The page index was out of bounds.");
-        }
-        
         if (_currentPage != null) {
             _currentPage.QueueFree();
         }
         
-        _currentPageNum = pageNum;
+        if (pageNum >= _pages.Count) {
+            GetTree().ChangeSceneToPacked(_mainMenuScene);
+        }
+        else {
+            _currentPageNum = pageNum;
 
-        _currentPage = _pages[_currentPageNum].Instantiate();
-        AddChild(_currentPage);
+            _currentPage = _pages[_currentPageNum].Instantiate();
+            AddChild(_currentPage);
 
-        if (_currentPage is OnboardingPage currentOnboardingPage) {
-            currentOnboardingPage.OnboardingManager = this;
+            if (_currentPage is OnboardingPage currentOnboardingPage) {
+                currentOnboardingPage.OnboardingManager = this;
+            }
         }
     }
 }

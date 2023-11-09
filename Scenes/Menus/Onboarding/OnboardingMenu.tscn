@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://f7toood1dfne"]
+[gd_scene load_steps=6 format=3 uid="uid://dgwvoq2x41cym"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_7esm2"]
 [ext_resource type="Script" path="res://Scripts/UI/Onboarding/OnboardingManager.cs" id="1_cm7yd"]
 [ext_resource type="PackedScene" uid="uid://bv75ghh0fu0dp" path="res://Scenes/Menus/Onboarding/FindSteamPath.tscn" id="2_ori1u"]
-[ext_resource type="PackedScene" uid="uid://cyi5lvpy0khw4" path="res://Scenes/Menus/Onboarding/LoginToSteam.tscn" id="3_bxtlp"]
+[ext_resource type="PackedScene" uid="uid://cyi5lvpy0khw4" path="res://Scenes/Menus/Onboarding/GetModIOAPIKey.tscn" id="3_fbx1k"]
+[ext_resource type="PackedScene" uid="uid://c1n73swpkdwjh" path="res://Scenes/Menus/MainMenu.tscn" id="4_7klup"]
 
 [node name="OnboardingMenu" type="Control"]
 layout_mode = 3
@@ -13,7 +14,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cm7yd")
-_pages = [ExtResource("2_ori1u"), ExtResource("3_bxtlp")]
+_pages = [ExtResource("2_ori1u"), ExtResource("3_fbx1k")]
+_mainMenuScene = ExtResource("4_7klup")
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 2

@@ -24,3 +24,6 @@ res://Scripts/UI/ProfileList.cs
 res://Scripts/UI/ProfileListEntry.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
 res://Scripts/UI/Settings/ProfileSettingsOption.cs
+res://Scripts/UI/Onboarding/LoginToSteam/GetModIOAPIKey.cs
+res://Scripts/UI/Onboarding/GetModIOAPIKey/GetModIOAPIKey.cs
+res://Scenes/Menus/Onboarding/GetModIOAPIKey.tscn

@@ -17,24 +17,13 @@ public partial class FindSteamPath : OnboardingPage {
             return;
         }
         
+        _progressBar.SetValue(0.0, "Saving path...");
+        
         SteamManager.SetPath(_steamPathLineEdit.Text);
         
-        _progressBar.SetValue(0.0, "Looking for SteamCMD in steam directory...");
+        _progressBar.SetValue(1.0, "Saved path.");
 
-        if (FileManager.PathContains(SteamManager.GetPath(), "steamcmd.exe")) {
-            _progressBar.SetValue(1.0, "Found SteamCMD in steam directory...");
-        }
-        else {
-            _progressBar.SetValue(0.2, "Installing SteamCMD in steam directory...");
-            
-            FileManager.CopyFile(FileManager.GetPath(PathType.Project) + "/SteamCMD/steamcmd.exe", SteamManager.GetPath() + "/steamcmd.exe");
-            
-            _progressBar.SetValue(1.0, "Installed SteamCMD in the steam directory...");
-        }
-
-        await Task.Delay(500);
-        
-        GD.Print("Continued");
+        await Task.Delay(nextPageDelay);
         
         CallDeferred("Finish");
     }
