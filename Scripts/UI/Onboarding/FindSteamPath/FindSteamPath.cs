@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
@@ -19,7 +20,8 @@ public partial class FindSteamPath : OnboardingPage {
         
         _progressBar.SetValue(0.0, "Saving path...");
         
-        SteamManager.SetPath(_steamPathLineEdit.Text);
+        SteamManager.SteamPath = _steamPathLineEdit.Text;
+        StoredDataManager.Serialize();
         
         _progressBar.SetValue(1.0, "Saved path.");
 

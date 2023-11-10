@@ -1,5 +1,6 @@
-using System;
 using CoreLauncher.Scripts.StoredData;
+using CoreLauncher.Scripts.StoredData.StoredDataGroups;
+using CoreLauncher.Scripts.StoredData.StoredDataTypes;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 using ItemList = CoreLauncher.Scripts.UI.Generic.ItemList;
@@ -9,34 +10,13 @@ namespace CoreLauncher.Scripts.UI;
 public partial class ProfileList : ItemList {
     public override void _Ready() {
         StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
-    }
-
-    public void OnStoredDataDeserialized() {
-        foreach (StoredProfile profile in StoredDataManager.Data.Profiles) {
-            AddEntryFromProfile(profile);
-        }
-    }
-
-    public ProfileListEntry AddEntryFromProfile(StoredProfile profile) {
-        ProfileListEntry entry = AddEntry(false, false);
-        
-        entry.FromProfile(profile);
-        
-        if (SelectedEntry < 0) {
-            entry.Select();
-        }
-
-        return entry;
+        StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
     }
     
-    public new ProfileListEntry AddEntry(bool serialize = true, bool select = true) {
+    public new ProfileListEntry AddEntry(bool select = true) {
         ItemListEntry entry = base.AddEntry(select);
 
         if (entry is ProfileListEntry profileEntry) {
-            if (serialize) {
-                profileEntry.Serialize();
-            }
-            
             return profileEntry;
         }
         else {
@@ -45,5 +25,30 @@ public partial class ProfileList : ItemList {
             entry.QueueFree();
             return null;
         }
+    }
+    
+    private void OnStoredDataDeserialized() {
+        foreach (StoredProfileListEntry storedProfileEntry in StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles) {
+            ProfileListEntry entry = AddEntry(false);
+
+            entry.SetName(storedProfileEntry.Name);
+        }
+
+        SetSelectedEntry(StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().SelectedEntry);
+    }
+
+    private void OnSerializeStoredData() {
+        StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles.Clear();
+        foreach (ItemListEntry entry in Entries) {
+            if (entry is ProfileListEntry profileEntry) {
+                StoredProfileListEntry storedProfileEntry = new StoredProfileListEntry {
+                    Name = profileEntry.Name
+                };
+                
+                StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles.Add(storedProfileEntry);
+            }
+        }
+
+        StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().SelectedEntry = SelectedEntry;
     }
 }

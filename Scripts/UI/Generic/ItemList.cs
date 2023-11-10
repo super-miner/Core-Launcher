@@ -43,6 +43,6 @@ public partial class ItemList : VBoxContainer {
 
 	public void SetSelectedEntry(int selectedEntry) {
 		SelectedEntry = selectedEntry;
-		ItemSelectedEvent.Invoke();
+		ItemSelectedEvent?.Invoke();
 	}
 }

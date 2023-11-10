@@ -1,29 +1,31 @@
-using Godot;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using CMDSearch;
-using CoreLauncher.Scripts;
 using CoreLauncher.Scripts.StoredData;
-using CoreLauncher.Scripts.UI.Generic;
-using Godot.Collections;
+using CoreLauncher.Scripts.StoredData.StoredDataGroups;
+using Godot;
 
 namespace CoreLauncher.Scripts;
 
 public static class SteamManager {
+	public static string SteamPath;
+	
+	public static void Init() {
+		StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
+		StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
+	}
+	
 	public static void RunGame() {
 		OS.Execute($"{FileManager.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetPath()}, new Godot.Collections.Array());
 	}
 
 	public static string GetPath() {
-		return StoredDataManager.Data.SteamPath != "" ? StoredDataManager.Data.SteamPath : FileManager.GetPath(PathType.Steam);
+		string steamPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath;
+		return steamPath != "" ? steamPath : FileManager.GetPath(PathType.Steam);
+	}
+	
+	private static void OnDeserializeStoredData() {
+		SteamPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath;
 	}
 
-	public static void SetPath(string path) {
-		StoredDataManager.Data.SteamPath = path;
-		StoredDataManager.Serialize();
+	private static void OnSerializeStoredData() {
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath = SteamPath;
 	}
 }

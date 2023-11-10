@@ -7,7 +7,6 @@ namespace CoreLauncher.Scripts;
 
 public enum PathType {
     AppData,
-    StoredData,
     Project,
     Steam
 }
@@ -55,6 +54,12 @@ public static class FileManager {
 
         return JsonSerializer.Deserialize<T>(jsonString);
     }
+    
+    public static object ReadJsonFile(Type returnType, string path) {
+        string jsonString = ReadTextFile(path);
+
+        return JsonSerializer.Deserialize(jsonString, returnType);
+    }
 
     public static bool PathContains(string path, string file) {
         return File.Exists($"{path}\\{file}");
@@ -66,5 +71,9 @@ public static class FileManager {
 
     public static void CopyFile(string fromPath, string toPath) {
         File.Copy(fromPath, toPath);
+    }
+
+    public static string[] GetFiles(string path) {
+        return Directory.GetFiles(path);
     }
 }

@@ -15,6 +15,9 @@ public partial class App : Node {
 
     public override void _Ready() {
         StoredDataManager.Deserialize();
+        SteamManager.Init();
+        
+        StoredDataManager.Deserialize();
     }
 
     private void OnQuit() {
