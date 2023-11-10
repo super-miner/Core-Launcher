@@ -27,8 +27,8 @@ public static class StoredDataManager {
         foreach (Type type in _groups.Keys) {
             string path = GetPath() + _groups[type].GetPath();
 
-            if (FileManager.FileExists(path)) {
-                _groups[type] = (StoredDataGroup) FileManager.ReadJsonFile(type, path);
+            if (FileUtil.FileExists(path)) {
+                _groups[type] = (StoredDataGroup) FileUtil.ReadJsonFile(type, path);
             }
             else {
                 _groups[type] = (StoredDataGroup) Activator.CreateInstance(type);
@@ -47,7 +47,7 @@ public static class StoredDataManager {
         foreach (StoredDataGroup group in _groups.Values) {
             string path = GetPath() + group.GetPath();
             
-            FileManager.WriteJSONFile(path, group);
+            FileUtil.WriteJSONFile(path, group);
         }
     }
 
@@ -56,7 +56,7 @@ public static class StoredDataManager {
     }
     
     public static string GetPath() {
-        return FileManager.GetPath(PathType.AppData) + StoredDataFolder;
+        return FileUtil.GetPath(PathType.AppData) + StoredDataFolder;
     }
 
     private static void PopulateGroupsList() {

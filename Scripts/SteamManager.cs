@@ -13,12 +13,12 @@ public static class SteamManager {
 	}
 	
 	public static void RunGame() {
-		OS.Execute($"{FileManager.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetPath()}, new Godot.Collections.Array());
+		OS.Execute($"{FileUtil.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetPath()}, new Godot.Collections.Array());
 	}
 
 	public static string GetPath() {
 		string steamPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath;
-		return steamPath != "" ? steamPath : FileManager.GetPath(PathType.Steam);
+		return steamPath != "" ? steamPath : FileUtil.GetPath(PathType.Steam);
 	}
 	
 	private static void OnDeserializeStoredData() {

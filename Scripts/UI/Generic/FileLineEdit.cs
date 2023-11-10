@@ -42,9 +42,9 @@ public partial class FileLineEdit : LineEdit {
     }
 
     public virtual bool PathIsValid(out string outMsg) {
-        if (FileManager.DirectoryExists(Text)) {
+        if (FileUtil.DirectoryExists(Text)) {
             if (FolderMustContain != "") {
-                if (FileManager.DirectoryContains(Text, FolderMustContain)) {
+                if (FileUtil.DirectoryContains(Text, FolderMustContain)) {
                     outMsg = SuccessText;
                     return true;
                 }

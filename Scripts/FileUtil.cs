@@ -11,7 +11,7 @@ public enum PathType {
     Steam
 }
 
-public static class FileManager {
+public static class FileUtil {
     public static string GetPath(PathType pathType) {
         switch (pathType) {
             case PathType.AppData:
@@ -48,7 +48,7 @@ public static class FileManager {
         };
         string jsonString = JsonSerializer.Serialize(data, options);
         
-        FileManager.WriteTextFile(path, jsonString);
+        FileUtil.WriteTextFile(path, jsonString);
     }
 
     public static string ReadTextFile(string path) {
