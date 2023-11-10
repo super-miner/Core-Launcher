@@ -13,7 +13,6 @@ public partial class App : Node {
     }
 
     public override void _Ready() {
-        StoredDataManager.Deserialize();
         SteamManager.Init();
         ModIOManager.Init();
         

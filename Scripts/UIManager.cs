@@ -13,12 +13,11 @@ public partial class UIManager : Node {
     [Export] public ProfileList ProfileList = null;
 
     public override void _EnterTree() {
-        if (Instance == null) {
-            Instance = this;
+        if (Instance != null) {
+            Instance.QueueFree();
         }
-        else {
-            QueueFree();
-        }
+        
+        Instance = this;
     }
 
     public override void _ExitTree() {
