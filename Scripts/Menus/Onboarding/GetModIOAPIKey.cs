@@ -12,13 +12,16 @@ public partial class GetModIOAPIKey : OnboardingPage {
     [Export] private LineEdit _apiKeyLineEdit = null;
     
     public async void Continue() {
-        _progressBar.SetValue(0.0, "Saving data...");
+        _progressBar.SetValue(0.0, "Setting User ID...");
 
         ModIOManager.UserID = _userIDLineEdit.Text;
-        ModIOManager.ApiKey = _apiKeyLineEdit.Text;
-        StoredDataManager.Serialize();
         
-        _progressBar.SetValue(1.0, "Saved data.");
+        _progressBar.SetValue(0.5, "Set User ID.");
+        _progressBar.SetValue(0.5, "Setting API Key...");
+        
+        ModIOManager.ApiKey = _apiKeyLineEdit.Text;
+        
+        _progressBar.SetValue(1.0, "Set API Key.");
         
         await Task.Delay(nextPageDelay);
         

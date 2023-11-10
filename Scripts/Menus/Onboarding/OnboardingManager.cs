@@ -1,9 +1,13 @@
+using CoreLauncher.Scripts.StoredData;
+using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using Godot;
 using Godot.Collections;
 
 namespace CoreLauncher.Scripts.Menus.Onboarding; 
 
 public partial class OnboardingManager : Node {
+    public bool OnboardingComplete = false;
+    
     [Export] private Array<PackedScene> _pages = new Array<PackedScene>();
     [Export] private PackedScene _mainMenuScene;
 
@@ -12,6 +16,20 @@ public partial class OnboardingManager : Node {
 
     public override void _Ready() {
         SetPageNum(_currentPageNum);
+        
+        StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
+        StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
+        
+        if (StoredDataManager.HasDeserialized) {
+            OnDeserializeStoredData();
+        }
+    }
+
+    public override void _ExitTree() {
+        StoredDataManager.DeserializeStoredDataEvent -= OnDeserializeStoredData;
+        StoredDataManager.SerializeStoredDataEvent -= OnSerializeStoredData;
+        
+        OnSerializeStoredData();
     }
 
     public void MoveForward(int amount = 1) {
@@ -24,6 +42,9 @@ public partial class OnboardingManager : Node {
         }
         
         if (pageNum >= _pages.Count) {
+            OnboardingComplete = true;
+            StoredDataManager.Serialize();
+            
             MenuManager.instance.SetActiveMenu(2);
         }
         else {
@@ -36,5 +57,13 @@ public partial class OnboardingManager : Node {
                 currentOnboardingPage.OnboardingManager = this;
             }
         }
+    }
+    
+    private void OnDeserializeStoredData() {
+        OnboardingComplete = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().OnboardingComplete;
+    }
+
+    private void OnSerializeStoredData() {
+        StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().OnboardingComplete = OnboardingComplete;
     }
 }

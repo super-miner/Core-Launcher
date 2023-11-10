@@ -11,6 +11,8 @@ public static class StoredDataManager {
     public static event OnDeserializeStoredData DeserializeStoredDataEvent;
     public static event OnSerializeStoredData SerializeStoredDataEvent;
     public static event OnStoredDataDeserialized StoredDataDeserializedEvent;
+
+    public static bool HasDeserialized = false;
     
     private static readonly string StoredDataFolder = "Data/";
     private static Dictionary<Type, StoredDataGroup> _groups = null;
@@ -32,6 +34,8 @@ public static class StoredDataManager {
                 _groups[type] = (StoredDataGroup) Activator.CreateInstance(type);
             }
         }
+
+        HasDeserialized = true;
         
         DeserializeStoredDataEvent?.Invoke();
         StoredDataDeserializedEvent?.Invoke();

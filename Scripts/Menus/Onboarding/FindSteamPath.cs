@@ -18,12 +18,11 @@ public partial class FindSteamPath : OnboardingPage {
             return;
         }
         
-        _progressBar.SetValue(0.0, "Saving path...");
+        _progressBar.SetValue(0.0, "Setting path...");
         
         SteamManager.Path = _steamPathLineEdit.Text;
-        StoredDataManager.Serialize();
         
-        _progressBar.SetValue(1.0, "Saved path.");
+        _progressBar.SetValue(1.0, "Set path.");
 
         await Task.Delay(nextPageDelay);
         

@@ -12,7 +12,9 @@ public partial class ProfileList : ItemList {
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
         
-        OnDeserializeStoredData();
+        if (StoredDataManager.HasDeserialized) {
+            OnDeserializeStoredData();
+        }
     }
 
     public override void _ExitTree() {
