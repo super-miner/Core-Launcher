@@ -15,10 +15,7 @@ public partial class OnboardingManager : Node {
     }
 
     public void MoveForward(int amount = 1) {
-        int newPageNum = _currentPageNum + amount;
-        if (newPageNum < _pages.Count) {
-            SetPageNum(newPageNum);
-        }
+        SetPageNum(_currentPageNum + amount);
     }
 
     public void SetPageNum(int pageNum) {
