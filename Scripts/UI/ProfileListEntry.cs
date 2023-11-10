@@ -7,7 +7,7 @@ namespace CoreLauncher.Scripts.UI;
 public partial class ProfileListEntry : ItemListEntry {
     public new string Name = "";
     
-    [Export] private Label _nameText = null;
+    [Export] private Label _nameText;
 
     public string GetName() {
         return Name;
@@ -22,5 +22,9 @@ public partial class ProfileListEntry : ItemListEntry {
         else {
             _nameText.Text = "Name...";
         }
+    }
+
+    public void OnPressed() {
+        ItemList.SetSelectedEntry(Id);
     }
 }

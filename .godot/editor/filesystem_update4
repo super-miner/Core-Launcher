@@ -27,3 +27,4 @@ res://Scripts/UI/ProfileListEntry.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
 res://Scripts/UI/Settings/ProfileSettingsOption.cs
 res://Scripts/Menus/MenuManager.cs
+res://Scenes/ListEntires/ProfileEntry.tscn

@@ -24,7 +24,7 @@ public partial class ItemList : VBoxContainer {
 			entry.Id = Entries.Count - 1;
 
 			if (select && SelectedEntry < 0) {
-				entry.Select();
+				SetSelectedEntry(entry.Id);
 			}
 			
 			return entry;
@@ -41,12 +41,12 @@ public partial class ItemList : VBoxContainer {
 		return SelectedEntry >= 0 ? Entries[SelectedEntry] : null;
 	}
 
-	public void SetSelectedEntry(int selectedEntry, bool updateEntry = true) {
+	public void SetSelectedEntry(int selectedEntry) {
+		GetSelectedEntry()?.Deselect();
+		
 		SelectedEntry = selectedEntry;
-
-		if (updateEntry) {
-			GetSelectedEntry()?.Select();
-		}
+		
+		GetSelectedEntry()?.Select();
 		
 		ItemSelectedEvent?.Invoke();
 	}

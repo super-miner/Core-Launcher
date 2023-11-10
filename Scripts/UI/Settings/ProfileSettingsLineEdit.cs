@@ -1,11 +1,14 @@
+using System.Linq;
 using Godot;
 
 namespace CoreLauncher.Scripts.UI.Settings; 
 
 public partial class ProfileSettingsLineEdit : LineEdit {
-    [Export] private ProfileSettingsOption _settingsOption = null;
+    private ProfileSettingsOption _settingsOption;
     
     public override void _Ready() {
+        _settingsOption = GodotUtil.GetChildrenWithType<ProfileSettingsOption>(this).FirstOrDefault();
+        
         UIManager.UIManagerLoadedEvent += OnUIManagerLoaded;
     }
 
@@ -21,7 +24,7 @@ public partial class ProfileSettingsLineEdit : LineEdit {
         Text = textTemp;
 
         if (!success) {
-            GD.PrintErr($"Could not set option text input {_settingsOption.SettingName}.");
+            GD.PrintErr($"Could not get option text input {_settingsOption.SettingName}.");
         }
     }
     

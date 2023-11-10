@@ -78,4 +78,4 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_0sylg")
 icon = ExtResource("2_owh2i")
 icon_alignment = 1
 
-[connection signal="pressed" from="." to="." method="Select"]
+[connection signal="pressed" from="." to="." method="OnPressed"]

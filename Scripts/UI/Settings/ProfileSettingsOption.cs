@@ -46,7 +46,7 @@ public partial class ProfileSettingsOption : Node {
     public void SetSetting(object setting) {
         ItemListEntry selectedEntry = UIManager.Instance.ProfileList.GetSelectedEntry();
 
-        if (selectedEntry is ProfileListEntry selectedProfileEntry) {
+        if (selectedEntry != null && selectedEntry is ProfileListEntry selectedProfileEntry) {
             string methodName = "Set" + SettingName;
             MethodInfo method = typeof(ProfileListEntry).GetMethod(methodName);
 
@@ -64,7 +64,7 @@ public partial class ProfileSettingsOption : Node {
                         for (int i = 1; i < inputs.Length; i++) {
                             inputs[i] = Type.Missing;
                         }
-                            
+                        
                         method.Invoke(selectedProfileEntry, inputs);
                     }
                     else {

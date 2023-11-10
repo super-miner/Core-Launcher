@@ -12,14 +12,22 @@ public partial class UIManager : Node {
 
     [Export] public ProfileList ProfileList = null;
 
-    public override void _Ready() {
+    public override void _EnterTree() {
         if (Instance == null) {
             Instance = this;
         }
         else {
             QueueFree();
         }
-        
-        UIManagerLoadedEvent.Invoke();
+    }
+
+    public override void _ExitTree() {
+        if (Instance == this) {
+            Instance = null;
+        }
+    }
+
+    public override void _Ready() {
+        UIManagerLoadedEvent?.Invoke();
     }
 }
