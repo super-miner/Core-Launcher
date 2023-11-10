@@ -33,6 +33,12 @@ public static class FileManager {
     }
 
     public static void WriteTextFile(string path, string text) {
+        FileInfo fileInfo = new FileInfo(path);
+        DirectoryInfo fileDirectory = fileInfo.Directory;
+        if (fileDirectory != null && !fileDirectory.Exists) {
+            fileDirectory.Create();
+        }
+        
         File.WriteAllText(path, text);
     }
     
@@ -61,12 +67,16 @@ public static class FileManager {
         return JsonSerializer.Deserialize(jsonString, returnType);
     }
 
-    public static bool PathContains(string path, string file) {
+    public static bool DirectoryContains(string path, string file) {
         return File.Exists($"{path}\\{file}");
     }
     
-    public static bool PathExists(string path) {
+    public static bool DirectoryExists(string path) {
         return Directory.Exists(path);
+    }
+    
+    public static bool FileExists(string path) {
+        return File.Exists(path);
     }
 
     public static void CopyFile(string fromPath, string toPath) {

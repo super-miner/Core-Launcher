@@ -22,7 +22,6 @@ grow_vertical = 2
 script = ExtResource("1_hesbn")
 _steamPathLineEdit = NodePath("VBox/FilePicker/LineEdit")
 _progressBar = NodePath("ProgressBar")
-nextPageDelay = null
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2

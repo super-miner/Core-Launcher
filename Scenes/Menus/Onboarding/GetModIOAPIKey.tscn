@@ -16,7 +16,6 @@ script = ExtResource("1_28c43")
 _progressBar = NodePath("ProgressBar")
 _userIDLineEdit = NodePath("VBox/UserIDInput")
 _apiKeyLineEdit = NodePath("VBox/APIKeyInput")
-nextPageDelay = null
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2

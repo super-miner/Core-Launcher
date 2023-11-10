@@ -25,7 +25,12 @@ public static class StoredDataManager {
         foreach (Type type in _groups.Keys) {
             string path = GetPath() + _groups[type].GetPath();
 
-            _groups[type] = (StoredDataGroup) FileManager.ReadJsonFile(type, path);
+            if (FileManager.FileExists(path)) {
+                _groups[type] = (StoredDataGroup) FileManager.ReadJsonFile(type, path);
+            }
+            else {
+                _groups[type] = (StoredDataGroup) Activator.CreateInstance(type);
+            }
         }
         
         DeserializeStoredDataEvent?.Invoke();
