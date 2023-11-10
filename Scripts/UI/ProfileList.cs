@@ -9,8 +9,17 @@ namespace CoreLauncher.Scripts.UI;
 
 public partial class ProfileList : ItemList {
     public override void _Ready() {
-        StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
+        StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
+        
+        OnDeserializeStoredData();
+    }
+
+    public override void _ExitTree() {
+        StoredDataManager.DeserializeStoredDataEvent -= OnDeserializeStoredData;
+        StoredDataManager.SerializeStoredDataEvent -= OnSerializeStoredData;
+        
+        OnSerializeStoredData();
     }
     
     public new ProfileListEntry AddEntry(bool select = true) {
@@ -27,7 +36,7 @@ public partial class ProfileList : ItemList {
         }
     }
     
-    private void OnStoredDataDeserialized() {
+    private void OnDeserializeStoredData() {
         foreach (StoredProfileListEntry storedProfileEntry in StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles) {
             ProfileListEntry entry = AddEntry(false);
 

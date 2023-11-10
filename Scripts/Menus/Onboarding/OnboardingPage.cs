@@ -1,6 +1,6 @@
 using Godot;
 
-namespace CoreLauncher.Scripts.UI.Onboarding; 
+namespace CoreLauncher.Scripts.Menus.Onboarding; 
 
 public partial class OnboardingPage : Control {
     [Export] public int nextPageDelay = 500;

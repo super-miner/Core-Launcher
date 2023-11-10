@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bv75ghh0fu0dp"]
 
-[ext_resource type="Script" path="res://Scripts/UI/Onboarding/FindSteamPath/FindSteamPath.cs" id="1_hesbn"]
+[ext_resource type="Script" path="res://Scripts/Menus/Onboarding/FindSteamPath.cs" id="1_hesbn"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_jcuxh"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/FileLineEdit.cs" id="3_g12u8"]
 [ext_resource type="Texture2D" uid="uid://udrjjhyr7euf" path="res://Images/Icons/File.png" id="4_ye4vh"]
@@ -22,6 +22,7 @@ grow_vertical = 2
 script = ExtResource("1_hesbn")
 _steamPathLineEdit = NodePath("VBox/FilePicker/LineEdit")
 _progressBar = NodePath("ProgressBar")
+nextPageDelay = null
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2

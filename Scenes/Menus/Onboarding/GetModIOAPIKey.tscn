@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyi5lvpy0khw4"]
 
-[ext_resource type="Script" path="res://Scripts/UI/Onboarding/GetModIOAPIKey/GetModIOAPIKey.cs" id="1_28c43"]
+[ext_resource type="Script" path="res://Scripts/Menus/Onboarding/GetModIOAPIKey.cs" id="1_28c43"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_rr5wl"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="3_upx1r"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="4_s5j1f"]
@@ -16,6 +16,7 @@ script = ExtResource("1_28c43")
 _progressBar = NodePath("ProgressBar")
 _userIDLineEdit = NodePath("VBox/UserIDInput")
 _apiKeyLineEdit = NodePath("VBox/APIKeyInput")
+nextPageDelay = null
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2

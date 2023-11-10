@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-namespace CoreLauncher.Scripts.UI.Onboarding; 
+namespace CoreLauncher.Scripts.Menus.Onboarding; 
 
 public partial class OnboardingManager : Node {
     [Export] private Array<PackedScene> _pages = new Array<PackedScene>();

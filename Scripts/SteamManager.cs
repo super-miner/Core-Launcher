@@ -5,7 +5,7 @@ using Godot;
 namespace CoreLauncher.Scripts;
 
 public static class SteamManager {
-	public static string SteamPath;
+	public static string Path;
 	
 	public static void Init() {
 		StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
@@ -22,10 +22,10 @@ public static class SteamManager {
 	}
 	
 	private static void OnDeserializeStoredData() {
-		SteamPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath;
+		Path = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath;
 	}
 
 	private static void OnSerializeStoredData() {
-		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath = SteamPath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath = Path;
 	}
 }
