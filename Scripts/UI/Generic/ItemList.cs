@@ -41,8 +41,13 @@ public partial class ItemList : VBoxContainer {
 		return SelectedEntry >= 0 ? Entries[SelectedEntry] : null;
 	}
 
-	public void SetSelectedEntry(int selectedEntry) {
+	public void SetSelectedEntry(int selectedEntry, bool updateEntry = true) {
 		SelectedEntry = selectedEntry;
+
+		if (updateEntry) {
+			GetSelectedEntry()?.Select();
+		}
+		
 		ItemSelectedEvent?.Invoke();
 	}
 }

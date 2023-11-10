@@ -9,7 +9,7 @@ public partial class ItemListEntry : Button {
     public void Select() {
         ItemList.GetSelectedEntry()?.Deselect();
         
-        ItemList.SetSelectedEntry(Id);
+        ItemList.SetSelectedEntry(Id, false);
 
         Disabled = true;
     }
