@@ -27,7 +27,7 @@ public partial class OnboardingManager : Node {
         }
         
         if (pageNum >= _pages.Count) {
-            GetTree().ChangeSceneToPacked(_mainMenuScene);
+            MenuManager.instance.SetActiveMenu(2);
         }
         else {
             _currentPageNum = pageNum;

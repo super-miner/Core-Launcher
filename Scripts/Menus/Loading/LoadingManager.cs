@@ -11,6 +11,6 @@ public partial class LoadingManager : Control {
     }
 
     private void OnStoredDataDeserialized() {
-        GetTree().ChangeSceneToPacked(_onboardingScene);
+        MenuManager.instance.SetActiveMenu(1);
     }
 }
