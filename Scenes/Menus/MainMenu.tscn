@@ -76,7 +76,7 @@ theme = ExtResource("1_81ept")
 theme_override_fonts/font = ExtResource("4_m8q5e")
 text = "Profiles"
 
-[node name="AddButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options"]
+[node name="AddButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options" node_paths=PackedStringArray("itemList")]
 custom_minimum_size = Vector2(30, 25)
 layout_mode = 2
 focus_mode = 0
@@ -89,6 +89,7 @@ theme_override_constants/icon_max_width = 25
 icon = ExtResource("1_hfmwg")
 icon_alignment = 1
 script = ExtResource("3_hck76")
+itemList = NodePath("../../ScrollContainer/Margin/Profiles")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox"]
 layout_mode = 2
@@ -169,13 +170,14 @@ layout_mode = 2
 theme = ExtResource("1_81ept")
 text = "Name: "
 
-[node name="Input" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name"]
+[node name="Input" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name" node_paths=PackedStringArray("_settingsOption")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 1
 theme = ExtResource("1_81ept")
 placeholder_text = "Name..."
 script = ExtResource("10_mm626")
+_settingsOption = NodePath("ProfileSettingsOption")
 
 [node name="ProfileSettingsOption" type="Node" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input"]
 script = ExtResource("11_bg25y")
@@ -226,8 +228,9 @@ mouse_filter = 2
 texture = ExtResource("1_rkllh")
 stretch_mode = 6
 
-[node name="UIManager" type="Node" parent="."]
+[node name="UIManager" type="Node" parent="." node_paths=PackedStringArray("ProfileList")]
 script = ExtResource("14_4xx0t")
+ProfileList = NodePath("../MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles")
 
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
