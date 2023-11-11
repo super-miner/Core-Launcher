@@ -25,21 +25,6 @@ offset_left = 0.799988
 offset_right = 0.799927
 alignment = 1
 
-[node name="UserIDLabel" type="Label" parent="VBox"]
-layout_mode = 2
-theme = ExtResource("2_rr5wl")
-text = "Enter your User ID:"
-
-[node name="UserIDInput" type="LineEdit" parent="VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-theme = ExtResource("2_rr5wl")
-placeholder_text = "User ID"
-
-[node name="Separator" type="Container" parent="VBox"]
-custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-
 [node name="APIKeyLabel" type="Label" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("2_rr5wl")

@@ -20,8 +20,6 @@ public static class ModManager {
     public static void Init() {
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
-        
-        StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
     }
 
     public static async void FetchModsList() {
@@ -40,16 +38,20 @@ public static class ModManager {
                 return "";
         }
     }
+
+    public static void SetApiKey(string apiKey) {
+        ApiKey = apiKey;
+
+        if (!string.IsNullOrEmpty(ApiKey)) {
+            FetchModsList();
+        }
+    }
     
     private static void OnDeserializeStoredData() {
-        ApiKey = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().ModIOApiKey;
+        SetApiKey(StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().ModIOApiKey);
     }
     
     private static void OnSerializeStoredData() {
         StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().ModIOApiKey = ApiKey;
-    }
-
-    private static void OnStoredDataDeserialized() {
-        FetchModsList();
     }
 }
