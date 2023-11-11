@@ -31,3 +31,5 @@ res://Scripts/UI/Settings/ProfileSettingsOption.cs
 res://Scripts/Menus/Main/MainMenuManager.cs
 res://Scripts/UI/ModsList.cs
 res://Scripts/UI/ModsListEntry.cs
+res://Scripts/UI/AddModButton.cs
+res://Scripts/UI/Generic/StateButton.cs
