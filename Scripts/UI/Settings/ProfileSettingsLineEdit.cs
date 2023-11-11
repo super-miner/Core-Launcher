@@ -16,6 +16,8 @@ public partial class ProfileSettingsLineEdit : LineEdit {
 
     public override void _Ready() {
         _settingsOption = GodotUtil.GetChildrenWithType<ProfileSettingsOption>(this).FirstOrDefault();
+
+        UpdateSetting();
     }
 
     public void OnUIManagerLoaded() {
@@ -25,9 +27,7 @@ public partial class ProfileSettingsLineEdit : LineEdit {
     public void OnProfileSelected() {
         ReleaseFocus();
         
-        string textTemp = Text;
-        bool success = _settingsOption.GetSetting(ref textTemp);
-        Text = textTemp;
+        bool success = UpdateSetting();
 
         if (!success) {
             GD.PrintErr($"Could not get option text input {_settingsOption.SettingName}.");
@@ -36,5 +36,13 @@ public partial class ProfileSettingsLineEdit : LineEdit {
     
     public void OnInputChanged(string newText) {
         _settingsOption.SetSetting(newText);
+    }
+
+    private bool UpdateSetting() {
+        string textTemp = Text;
+        bool success = _settingsOption.GetSetting(ref textTemp);
+        Text = textTemp;
+
+        return success;
     }
 }
