@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CoreLauncher.Scripts.ModIO.JsonStructures;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.UI;
 
-namespace CoreLauncher.Scripts;
+namespace CoreLauncher.Scripts.ModIO;
 
 public enum UrlType {
     ModsList
@@ -32,6 +33,7 @@ public static class ModManager {
         string jsonString = await FetchUtil.Fetch(GetURL(UrlType.ModsList));
         
         ModsList = JsonSerializer.Deserialize<ModsListInfo>(jsonString);
+        await ModsList.Init();
         
         ModInfoLoadedEvent?.Invoke();
     }

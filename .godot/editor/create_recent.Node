@@ -1,10 +1,11 @@
+Container
+TextureRect
 Button
 Control
 MarginContainer
 HBoxContainer
 Label
 Panel
-Container
 LineEdit
 LoadingBar
 ProgressBar
@@ -27,6 +28,5 @@ ColorRect
 PanelContainer
 ReferenceRect
 NinePatchRect
-TextureRect
 ItemList
 HScrollBar

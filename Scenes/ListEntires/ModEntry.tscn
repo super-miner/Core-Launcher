@@ -74,12 +74,14 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[node name="ModEntry" type="Panel" node_paths=PackedStringArray("_nameLabel")]
+[node name="ModEntry" type="Panel" node_paths=PackedStringArray("_nameLabel", "_authorLabel", "_logoTexture")]
 custom_minimum_size = Vector2(0, 90)
 theme = ExtResource("1_vm8d1")
 theme_override_styles/panel = SubResource("StyleBoxFlat_nf05x")
 script = ExtResource("2_s3ql8")
 _nameLabel = NodePath("Margin/HBox/Name")
+_authorLabel = NodePath("Margin/HBox/Author")
+_logoTexture = NodePath("Margin/HBox/Logo")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -95,11 +97,29 @@ theme_override_constants/margin_bottom = 25
 
 [node name="HBox" type="HBoxContainer" parent="Margin"]
 layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Logo" type="TextureRect" parent="Margin/HBox"]
+custom_minimum_size = Vector2(98, 55)
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Separator" type="Container" parent="Margin/HBox"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
 
 [node name="Name" type="Label" parent="Margin/HBox"]
 layout_mode = 2
 theme = ExtResource("1_vm8d1")
 text = "Mod Name..."
+
+[node name="Author" type="Label" parent="Margin/HBox"]
+layout_mode = 2
+theme = ExtResource("1_vm8d1")
+theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
+theme_override_font_sizes/font_size = 14
+text = "By: Mod Author..."
 
 [node name="AddModButton" type="Control" parent="Margin/HBox"]
 custom_minimum_size = Vector2(220, 40)
