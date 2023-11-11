@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cudquwdejnlbt"]
+[gd_scene load_steps=9 format=3 uid="uid://cudquwdejnlbt"]
 
 [ext_resource type="FontFile" uid="uid://dcmqu350lwf4x" path="res://Fonts/OpenSans/OpenSans-Medium.ttf" id="1_h6qob"]
 [ext_resource type="Script" path="res://Scripts/UI/ProfileListEntry.cs" id="1_ysmbn"]
+[ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_0mp3c"]
 [ext_resource type="Texture2D" uid="uid://veuu33emiei4" path="res://Images/Icons/Settings.png" id="2_owh2i"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3hwm6"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17k84"]
 bg_color = Color(0.431373, 0.396078, 0.368627, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
@@ -32,18 +33,33 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[node name="ProfileEntry" type="Button" node_paths=PackedStringArray("_nameText")]
+[node name="ProfileEntry" type="Control" node_paths=PackedStringArray("_nameText", "_button")]
 custom_minimum_size = Vector2(0, 65)
-focus_mode = 0
-theme_override_styles/disabled = SubResource("StyleBoxFlat_3hwm6")
+layout_mode = 3
+anchors_preset = 0
+offset_right = 220.0
+offset_bottom = 65.0
 script = ExtResource("1_ysmbn")
-_nameText = NodePath("Margin/HBox/Name")
+_nameText = NodePath("Button/Margin/HBox/Name")
+_button = NodePath("Button")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_0mp3c")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_17k84")
+
+[node name="Margin" type="MarginContainer" parent="Button"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 10
@@ -51,10 +67,10 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBox" type="HBoxContainer" parent="Margin"]
+[node name="HBox" type="HBoxContainer" parent="Button/Margin"]
 layout_mode = 2
 
-[node name="Name" type="Label" parent="Margin/HBox"]
+[node name="Name" type="Label" parent="Button/Margin/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.964706, 0.929412, 1)
@@ -62,7 +78,7 @@ theme_override_fonts/font = ExtResource("1_h6qob")
 theme_override_font_sizes/font_size = 20
 text = "Name..."
 
-[node name="SettingsButton" type="Button" parent="Margin/HBox"]
+[node name="SettingsButton" type="Button" parent="Button/Margin/HBox"]
 visible = false
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
@@ -78,4 +94,4 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_0sylg")
 icon = ExtResource("2_owh2i")
 icon_alignment = 1
 
-[connection signal="pressed" from="." to="." method="OnPressed"]
+[connection signal="pressed" from="Button" to="." method="OnPressed"]

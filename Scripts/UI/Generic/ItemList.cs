@@ -3,15 +3,10 @@ using System.Collections.Generic;
 
 namespace CoreLauncher.Scripts.UI.Generic;
 
-public delegate void OnItemSelected();
-
 public partial class ItemList : VBoxContainer {
-	public event OnItemSelected ItemSelectedEvent;
-	
 	[Export] public PackedScene EntryScene;
 	
 	public List<ItemListEntry> Entries = new List<ItemListEntry>();
-	public int SelectedEntry = -1;
 	
 	public virtual ItemListEntry AddEntry(bool select = true) {
 		Node entryNode = EntryScene.Instantiate();
@@ -22,10 +17,8 @@ public partial class ItemList : VBoxContainer {
 
 			entry.ItemList = this;
 			entry.Id = Entries.Count - 1;
-
-			if (select && SelectedEntry < 0) {
-				SetSelectedEntry(entry.Id);
-			}
+			
+			entry.Init();
 			
 			return entry;
 		}
@@ -35,19 +28,5 @@ public partial class ItemList : VBoxContainer {
 			entryNode.QueueFree();
 			return null;
 		}
-	}
-
-	public ItemListEntry GetSelectedEntry() {
-		return SelectedEntry >= 0 ? Entries[SelectedEntry] : null;
-	}
-
-	public void SetSelectedEntry(int selectedEntry) {
-		GetSelectedEntry()?.Deselect();
-		
-		SelectedEntry = selectedEntry;
-		
-		GetSelectedEntry()?.Select();
-		
-		ItemSelectedEvent?.Invoke();
 	}
 }

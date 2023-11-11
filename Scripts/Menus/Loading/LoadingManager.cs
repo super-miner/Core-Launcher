@@ -8,10 +8,13 @@ public partial class LoadingManager : Control {
     public bool OnboardingComplete = false;
     
     [Export] private PackedScene _onboardingScene;
+    [Export] private int _totalSteps;
+    private int _stepsComplete;
     
     public override void _Ready() {
-        StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
+        ModManager.ModInfoLoadedEvent += OnModInfoLoaded;
         
+        StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
 
@@ -21,21 +24,42 @@ public partial class LoadingManager : Control {
     }
 
     public override void _ExitTree() {
-        StoredDataManager.StoredDataDeserializedEvent -= OnStoredDataDeserialized;
+        ModManager.ModInfoLoadedEvent -= OnModInfoLoaded;
         
+        StoredDataManager.StoredDataDeserializedEvent -= OnStoredDataDeserialized;
         StoredDataManager.DeserializeStoredDataEvent -= OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent -= OnSerializeStoredData;
         
         OnSerializeStoredData();
     }
 
+    public void StepComplete() {
+        SetStepsComplete(_stepsComplete + 1);
+    }
+
+    public void SetStepsComplete(int amount) {
+        _stepsComplete = amount;
+
+        if (_stepsComplete >= _totalSteps) {
+            if (OnboardingComplete) {
+                MenuManager.Instance.SetActiveMenu(2);
+            }
+            else {
+                MenuManager.Instance.SetActiveMenu(1);
+            }
+        }
+    }
+
+    private void OnModInfoLoaded() {
+        GD.Print("Loading Manager: Fetched mod data.");
+        
+        StepComplete();
+    }
+
     private void OnStoredDataDeserialized() {
-        if (OnboardingComplete) {
-            MenuManager.Instance.SetActiveMenu(2);
-        }
-        else {
-            MenuManager.Instance.SetActiveMenu(1);
-        }
+        GD.Print("Loading Manager: Deserialized app data.");
+        
+        StepComplete();
     }
     
     private void OnDeserializeStoredData() {

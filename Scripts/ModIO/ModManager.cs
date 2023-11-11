@@ -11,7 +11,11 @@ public enum UrlType {
     ModsList
 }
 
+public delegate void OnModInfoLoaded();
+
 public static class ModManager {
+    public static event OnModInfoLoaded ModInfoLoadedEvent;
+    
     private static readonly string modsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
     
     public static ModsListInfo ModsList = null;
@@ -28,6 +32,8 @@ public static class ModManager {
         string jsonString = await FetchUtil.Fetch(GetURL(UrlType.ModsList));
         
         ModsList = JsonSerializer.Deserialize<ModsListInfo>(jsonString);
+        
+        ModInfoLoadedEvent?.Invoke();
     }
     
     public static string GetURL(UrlType urlType) {

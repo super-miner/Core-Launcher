@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=20 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -14,79 +14,10 @@
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs" id="10_mm626"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsOption.cs" id="11_bg25y"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="11_tprdv"]
-[ext_resource type="Script" path="res://Scripts/UI/AddModButton.cs" id="12_q510q"]
+[ext_resource type="Script" path="res://Scripts/UI/ModList.cs" id="12_e3elj"]
+[ext_resource type="PackedScene" uid="uid://c76en0nxy0bs6" path="res://Scenes/ListEntires/ModEntry.tscn" id="13_4fbd0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arvy2"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nf05x"]
-bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1lbr"]
-bg_color = Color(0, 0.533333, 1, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqt1o"]
-bg_color = Color(0, 0.647059, 1, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pj2gr"]
-bg_color = Color(0, 0.717647, 1, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox8bb"]
-bg_color = Color(0, 0.694118, 0.203922, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7ei3"]
-bg_color = Color(0, 0.733333, 0.203922, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2k6yq"]
-bg_color = Color(0, 0.780392, 0.219608, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4bwil"]
-bg_color = Color(0.890196, 0.607843, 0.117647, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ck148"]
-bg_color = Color(0.94, 0.64014, 0.1222, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bcf7r"]
-bg_color = Color(0.99, 0.67419, 0.1287, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
 
 [sub_resource type="InputEventKey" id="InputEventKey_ifb3j"]
 device = -1
@@ -280,80 +211,9 @@ theme_override_constants/margin_right = 10
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="Mod" type="Panel" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods"]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-theme = ExtResource("1_81ept")
-theme_override_styles/panel = SubResource("StyleBoxFlat_nf05x")
-
-[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
-
-[node name="HBox" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin"]
-layout_mode = 2
-
-[node name="Name" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox"]
-layout_mode = 2
-theme = ExtResource("1_81ept")
-text = "Mod Name..."
-
-[node name="AddModButton" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox"]
-custom_minimum_size = Vector2(220, 40)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-script = ExtResource("12_q510q")
-
-[node name="NotAddedButton" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton"]
-layout_mode = 2
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 10
-size_flags_vertical = 4
-focus_mode = 0
-theme = ExtResource("1_81ept")
-theme_override_styles/normal = SubResource("StyleBoxFlat_p1lbr")
-theme_override_styles/hover = SubResource("StyleBoxFlat_bqt1o")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pj2gr")
-text = "Add"
-
-[node name="AddedButton" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton"]
-visible = false
-layout_mode = 2
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 10
-size_flags_vertical = 4
-focus_mode = 0
-theme = ExtResource("1_81ept")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ox8bb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_b7ei3")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2k6yq")
-text = "Added"
-
-[node name="AddedAsDependencyButton" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton"]
-visible = false
-layout_mode = 2
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 10
-size_flags_vertical = 4
-focus_mode = 0
-theme = ExtResource("1_81ept")
-theme_override_styles/normal = SubResource("StyleBoxFlat_4bwil")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ck148")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_bcf7r")
-text = "Added As Depenency"
+theme_override_constants/separation = 10
+script = ExtResource("12_e3elj")
+EntryScene = ExtResource("13_4fbd0")
 
 [node name="GameBar" type="ColorRect" parent="MainConatiner"]
 z_index = 100
@@ -400,7 +260,4 @@ stretch_mode = 6
 
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
-[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton/NotAddedButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton" method="OnAddPressed"]
-[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton/AddedButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton" method="OnAddedPressed"]
-[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton/AddedAsDependencyButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin/Mods/Mod/Margin/HBox/AddModButton" method="OnAddPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]

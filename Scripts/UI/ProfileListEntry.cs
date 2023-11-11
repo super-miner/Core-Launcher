@@ -4,7 +4,7 @@ using Godot;
 
 namespace CoreLauncher.Scripts.UI; 
 
-public partial class ProfileListEntry : ItemListEntry {
+public partial class ProfileListEntry : SelectableItemListEntry {
     public new string Name = "";
     
     [Export] private Label _nameText;

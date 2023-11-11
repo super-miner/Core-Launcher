@@ -7,7 +7,7 @@ using ItemList = CoreLauncher.Scripts.UI.Generic.ItemList;
 
 namespace CoreLauncher.Scripts.UI;
 
-public partial class ProfileList : ItemList {
+public partial class ProfileList : SelectableItemList {
     public override void _Ready() {
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;

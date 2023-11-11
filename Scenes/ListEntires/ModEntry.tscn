@@ -1,0 +1,154 @@
+[gd_scene load_steps=14 format=3 uid="uid://c76en0nxy0bs6"]
+
+[ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_vm8d1"]
+[ext_resource type="Script" path="res://Scripts/UI/AddModButton.cs" id="2_1iw3e"]
+[ext_resource type="Script" path="res://Scripts/UI/ModListEntry.cs" id="2_s3ql8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nf05x"]
+bg_color = Color(0.0313726, 0.027451, 0.0235294, 0.827451)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1lbr"]
+bg_color = Color(0, 0.533333, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqt1o"]
+bg_color = Color(0, 0.647059, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pj2gr"]
+bg_color = Color(0, 0.717647, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox8bb"]
+bg_color = Color(0, 0.694118, 0.203922, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7ei3"]
+bg_color = Color(0, 0.733333, 0.203922, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2k6yq"]
+bg_color = Color(0, 0.780392, 0.219608, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4bwil"]
+bg_color = Color(0.890196, 0.607843, 0.117647, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ck148"]
+bg_color = Color(0.94, 0.64014, 0.1222, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bcf7r"]
+bg_color = Color(0.99, 0.67419, 0.1287, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[node name="ModEntry" type="Panel" node_paths=PackedStringArray("_nameLabel")]
+custom_minimum_size = Vector2(0, 90)
+theme = ExtResource("1_vm8d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nf05x")
+script = ExtResource("2_s3ql8")
+_nameLabel = NodePath("Margin/HBox/Name")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="HBox" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/HBox"]
+layout_mode = 2
+theme = ExtResource("1_vm8d1")
+text = "Mod Name..."
+
+[node name="AddModButton" type="Control" parent="Margin/HBox"]
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+script = ExtResource("2_1iw3e")
+
+[node name="NotAddedButton" type="Button" parent="Margin/HBox/AddModButton"]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 10
+size_flags_vertical = 4
+focus_mode = 0
+theme = ExtResource("1_vm8d1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_p1lbr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bqt1o")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pj2gr")
+text = "Add"
+
+[node name="AddedButton" type="Button" parent="Margin/HBox/AddModButton"]
+visible = false
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 10
+size_flags_vertical = 4
+focus_mode = 0
+theme = ExtResource("1_vm8d1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ox8bb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b7ei3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2k6yq")
+text = "Added"
+
+[node name="AddedAsDependencyButton" type="Button" parent="Margin/HBox/AddModButton"]
+visible = false
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 10
+size_flags_vertical = 4
+focus_mode = 0
+theme = ExtResource("1_vm8d1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4bwil")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ck148")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_bcf7r")
+text = "Added As Depenency"
+
+[connection signal="pressed" from="Margin/HBox/AddModButton/NotAddedButton" to="Margin/HBox/AddModButton" method="OnAddPressed"]
+[connection signal="pressed" from="Margin/HBox/AddModButton/AddedButton" to="Margin/HBox/AddModButton" method="OnAddedPressed"]
+[connection signal="pressed" from="Margin/HBox/AddModButton/AddedAsDependencyButton" to="Margin/HBox/AddModButton" method="OnAddPressed"]

@@ -33,3 +33,8 @@ res://Scripts/UI/ModsList.cs
 res://Scripts/UI/ModsListEntry.cs
 res://Scripts/UI/AddModButton.cs
 res://Scripts/UI/Generic/StateButton.cs
+res://Scenes/ListEntires/ModEntry.tscn
+res://Scripts/UI/ModList.cs
+res://Scripts/UI/ModListEntry.cs
+res://Scripts/UI/Generic/SelectableItemList.cs
+res://Scripts/UI/Generic/SelectableItemListEntry.cs

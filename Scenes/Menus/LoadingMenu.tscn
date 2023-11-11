@@ -13,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8kroy")
 _onboardingScene = ExtResource("2_skt2x")
+_totalSteps = 2
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 1
