@@ -38,3 +38,4 @@ res://Scripts/UI/ModList.cs
 res://Scripts/UI/ModListEntry.cs
 res://Scripts/UI/Generic/SelectableItemList.cs
 res://Scripts/UI/Generic/SelectableItemListEntry.cs
+res://Scripts/Menus/Main/Tabs/ModsTabManager.cs

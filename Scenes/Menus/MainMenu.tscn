@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=21 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsOption.cs" id="11_bg25y"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="11_tprdv"]
 [ext_resource type="Script" path="res://Scripts/UI/ModList.cs" id="12_e3elj"]
+[ext_resource type="Script" path="res://Scripts/Menus/Main/Tabs/ModsTabManager.cs" id="12_jy5iy"]
 [ext_resource type="PackedScene" uid="uid://c76en0nxy0bs6" path="res://Scenes/ListEntires/ModEntry.tscn" id="13_4fbd0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arvy2"]
@@ -151,6 +152,7 @@ layout_mode = 2
 theme = ExtResource("1_81ept")
 
 [node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -187,28 +189,41 @@ script = ExtResource("10_mm626")
 script = ExtResource("11_bg25y")
 SettingName = "Name"
 
-[node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
-visible = false
+[node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" node_paths=PackedStringArray("_modsLoadedLabel")]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 7
+script = ExtResource("12_jy5iy")
+_modsLoadedLabel = NodePath("VBox/TabSettings/ModsShown")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods"]
+[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods"]
 layout_mode = 2
+
+[node name="TabSettings" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox"]
+layout_mode = 2
+
+[node name="ModsShown" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+text = "Showing 0 out of 0 mods."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("1_81ept")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer"]
+[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Mods" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer/Margin"]
+[node name="Mods" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/ScrollContainer/Margin"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
