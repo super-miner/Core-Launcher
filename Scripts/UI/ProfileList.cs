@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.StoredData.StoredDataTypes;
@@ -43,6 +44,7 @@ public partial class ProfileList : SelectableItemList {
             ProfileListEntry entry = AddEntry(false);
 
             entry.SetName(storedProfileEntry.Name);
+            entry.Mods = storedProfileEntry.Mods ?? new List<int>();
         }
         
         SetSelectedEntry(StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().SelectedEntry);
@@ -53,7 +55,8 @@ public partial class ProfileList : SelectableItemList {
         foreach (ItemListEntry entry in Entries) {
             if (entry is ProfileListEntry profileEntry) {
                 StoredProfileListEntry storedProfileEntry = new StoredProfileListEntry {
-                    Name = profileEntry.Name
+                    Name = profileEntry.Name,
+                    Mods = profileEntry.Mods
                 };
                 
                 StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles.Add(storedProfileEntry);

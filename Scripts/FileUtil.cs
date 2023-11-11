@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Text.Json;
 using Godot;
 
@@ -34,7 +35,7 @@ public static class FileUtil {
 
     public static void WriteTextFile(string path, string text) {
         FileInfo fileInfo = new FileInfo(path);
-        DirectoryInfo fileDirectory = fileInfo.Directory;
+        DirectoryInfo fileDirectory = fileInfo.Directory; // TODO: Make this use FileUtil functions
         if (fileDirectory != null && !fileDirectory.Exists) {
             fileDirectory.Create();
         }
@@ -74,6 +75,10 @@ public static class FileUtil {
     public static bool DirectoryExists(string path) {
         return Directory.Exists(path);
     }
+
+    public static void CreateDirectory(string path) {
+        Directory.CreateDirectory(path);
+    }
     
     public static bool FileExists(string path) {
         return File.Exists(path);
@@ -85,5 +90,13 @@ public static class FileUtil {
 
     public static string[] GetFiles(string path) {
         return Directory.GetFiles(path);
+    }
+
+    public static void UnzipToDirectory(string zipPath, string directoryPath) {
+        if (!DirectoryExists(directoryPath)) {
+            CreateDirectory(directoryPath);
+        }
+        
+        ZipFile.ExtractToDirectory(zipPath, directoryPath);
     }
 }

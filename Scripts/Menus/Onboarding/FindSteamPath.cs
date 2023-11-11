@@ -10,7 +10,7 @@ public partial class FindSteamPath : OnboardingPage {
     [Export] private LoadingBar _progressBar = null;
     
     public override void _Ready() {
-        _steamPathLineEdit.SetText(SteamManager.GetPath());
+        _steamPathLineEdit.SetText(GameManager.GetSteamPath());
     }
 
     public async void Continue() {
@@ -20,7 +20,7 @@ public partial class FindSteamPath : OnboardingPage {
         
         _progressBar.SetValue(0.0, "Setting path...");
         
-        SteamManager.Path = _steamPathLineEdit.Text;
+        GameManager.SteamPath = _steamPathLineEdit.Text;
         
         _progressBar.SetValue(1.0, "Set path.");
 

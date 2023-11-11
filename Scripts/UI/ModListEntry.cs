@@ -1,4 +1,5 @@
 using CoreLauncher.Scripts.ModIO;
+using CoreLauncher.Scripts.ModIO.JsonStructures;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
@@ -10,8 +11,14 @@ public partial class ModListEntry : ItemListEntry {
 	[Export] private TextureRect _logoTexture;
 
 	public override void Init() {
-		_nameLabel.Text = ModManager.ModsList.Mods[Id].Name;
-		_authorLabel.Text = $"By: {ModManager.ModsList.Mods[Id].Author.Username}";
-		_logoTexture.Texture = ImageTexture.CreateFromImage(ModManager.ModsList.Mods[Id].Logo.LogoImage);
+		ModInfo modInfo = GetModInfo();
+		
+		_nameLabel.Text = modInfo.Name;
+		_authorLabel.Text = $"By: {modInfo.Author.Username}";
+		_logoTexture.Texture = ImageTexture.CreateFromImage(modInfo.Logo.LogoImage);
+	}
+
+	public ModInfo GetModInfo() {
+		return ModManager.ModsList.Mods[Id];
 	}
 }

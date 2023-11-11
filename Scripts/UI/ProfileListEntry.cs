@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CoreLauncher.Scripts.StoredData.StoredDataTypes;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
@@ -6,6 +7,7 @@ namespace CoreLauncher.Scripts.UI;
 
 public partial class ProfileListEntry : SelectableItemListEntry {
     public new string Name = "";
+    public List<int> Mods;
     
     [Export] private Label _nameText;
 

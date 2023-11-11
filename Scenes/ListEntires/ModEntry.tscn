@@ -121,12 +121,13 @@ theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 theme_override_font_sizes/font_size = 14
 text = "By: Mod Author..."
 
-[node name="AddModButton" type="Control" parent="Margin/HBox"]
+[node name="AddModButton" type="Control" parent="Margin/HBox" node_paths=PackedStringArray("_modEntry")]
 custom_minimum_size = Vector2(220, 40)
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 script = ExtResource("2_1iw3e")
+_modEntry = NodePath("../../..")
 
 [node name="NotAddedButton" type="Button" parent="Margin/HBox/AddModButton"]
 layout_mode = 2
