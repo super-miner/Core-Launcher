@@ -5,15 +5,21 @@ namespace CoreLauncher.Scripts.UI.Settings;
 
 public partial class ProfileSettingsLineEdit : LineEdit {
     private ProfileSettingsOption _settingsOption;
-    
+
+    public override void _EnterTree() {
+        MainMenuManager.MainMenuManagerLoadedEvent += OnUIManagerLoaded;
+    }
+
+    public override void _ExitTree() {
+        MainMenuManager.MainMenuManagerLoadedEvent -= OnUIManagerLoaded;
+    }
+
     public override void _Ready() {
         _settingsOption = GodotUtil.GetChildrenWithType<ProfileSettingsOption>(this).FirstOrDefault();
-        
-        UIManager.UIManagerLoadedEvent += OnUIManagerLoaded;
     }
 
     public void OnUIManagerLoaded() {
-        UIManager.Instance.ProfileList.ItemSelectedEvent += OnProfileSelected;
+        MainMenuManager.Instance.ProfileList.ItemSelectedEvent += OnProfileSelected;
     }
 
     public void OnProfileSelected() {

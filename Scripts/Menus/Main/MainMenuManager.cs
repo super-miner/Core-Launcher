@@ -3,12 +3,12 @@ using Godot;
 
 namespace CoreLauncher.Scripts;
 
-public delegate void OnUIManagerLoaded();
+public delegate void OnMainMenuManagerLoaded();
 
-public partial class UIManager : Node {
-    public static UIManager Instance = null;
+public partial class MainMenuManager : Node {
+    public static MainMenuManager Instance = null;
 
-    public static event OnUIManagerLoaded UIManagerLoadedEvent;
+    public static event OnMainMenuManagerLoaded MainMenuManagerLoadedEvent;
 
     [Export] public ProfileList ProfileList = null;
 
@@ -27,6 +27,6 @@ public partial class UIManager : Node {
     }
 
     public override void _Ready() {
-        UIManagerLoadedEvent?.Invoke();
+        MainMenuManagerLoadedEvent?.Invoke();
     }
 }

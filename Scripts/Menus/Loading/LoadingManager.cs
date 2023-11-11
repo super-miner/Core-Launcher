@@ -31,10 +31,10 @@ public partial class LoadingManager : Control {
 
     private void OnStoredDataDeserialized() {
         if (OnboardingComplete) {
-            MenuManager.instance.SetActiveMenu(2);
+            MenuManager.Instance.SetActiveMenu(2);
         }
         else {
-            MenuManager.instance.SetActiveMenu(1);
+            MenuManager.Instance.SetActiveMenu(1);
         }
     }
     

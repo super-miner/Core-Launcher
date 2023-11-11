@@ -45,7 +45,7 @@ public partial class OnboardingManager : Node {
             OnboardingComplete = true;
             StoredDataManager.Serialize();
             
-            MenuManager.instance.SetActiveMenu(2);
+            MenuManager.Instance.SetActiveMenu(2);
         }
         else {
             _currentPageNum = pageNum;

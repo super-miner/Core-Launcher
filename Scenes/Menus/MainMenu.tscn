@@ -1,6 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
+[ext_resource type="Script" path="res://Scripts/Menus/Main/MainMenuManager.cs" id="1_a6n6l"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
 [ext_resource type="Texture2D" uid="uid://bdtxt5q6omnid" path="res://Images/Backgrounds/Background0.png" id="1_rkllh"]
 [ext_resource type="Texture2D" uid="uid://bwtxfmrq6g212" path="res://Images/Vignette.png" id="2_3jvfp"]
@@ -13,7 +14,6 @@
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs" id="10_mm626"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsOption.cs" id="11_bg25y"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="11_tprdv"]
-[ext_resource type="Script" path="res://Scripts/UIManager.cs" id="14_4xx0t"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arvy2"]
 
@@ -32,7 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("14_4xx0t")
+script = ExtResource("1_a6n6l")
 ProfileList = NodePath("MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles")
 
 [node name="MainConatiner" type="VBoxContainer" parent="."]

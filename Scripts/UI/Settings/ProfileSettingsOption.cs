@@ -11,7 +11,7 @@ public partial class ProfileSettingsOption : Node {
     [Export] public string SettingName = "";
     
     public bool GetSetting<T>(ref T setting) {
-        ItemListEntry selectedEntry = UIManager.Instance.ProfileList.GetSelectedEntry();
+        ItemListEntry selectedEntry = MainMenuManager.Instance.ProfileList.GetSelectedEntry();
 
         if (selectedEntry is ProfileListEntry selectedProfileEntry) {
             string methodName = "Get" + SettingName;
@@ -44,7 +44,7 @@ public partial class ProfileSettingsOption : Node {
     }
 
     public void SetSetting(object setting) {
-        ItemListEntry selectedEntry = UIManager.Instance.ProfileList.GetSelectedEntry();
+        ItemListEntry selectedEntry = MainMenuManager.Instance.ProfileList.GetSelectedEntry();
 
         if (selectedEntry != null && selectedEntry is ProfileListEntry selectedProfileEntry) {
             string methodName = "Set" + SettingName;

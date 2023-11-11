@@ -44,7 +44,7 @@ public partial class ProfileList : ItemList {
 
             entry.SetName(storedProfileEntry.Name);
         }
-
+        
         SetSelectedEntry(StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().SelectedEntry);
     }
 
