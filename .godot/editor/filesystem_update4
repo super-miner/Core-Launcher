@@ -29,3 +29,5 @@ res://Scripts/UI/ProfileListEntry.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
 res://Scripts/UI/Settings/ProfileSettingsOption.cs
 res://Scripts/Menus/Main/MainMenuManager.cs
+res://Scripts/UI/ModsList.cs
+res://Scripts/UI/ModsListEntry.cs

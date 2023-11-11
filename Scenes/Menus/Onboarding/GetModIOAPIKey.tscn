@@ -5,7 +5,7 @@
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="3_upx1r"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="4_s5j1f"]
 
-[node name="GetModIOAPIKey" type="Control" node_paths=PackedStringArray("_progressBar", "_userIDLineEdit", "_apiKeyLineEdit")]
+[node name="GetModIOAPIKey" type="Control" node_paths=PackedStringArray("_progressBar", "_apiKeyLineEdit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +14,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_28c43")
 _progressBar = NodePath("ProgressBar")
-_userIDLineEdit = NodePath("VBox/UserIDInput")
 _apiKeyLineEdit = NodePath("VBox/APIKeyInput")
 
 [node name="VBox" type="VBoxContainer" parent="."]

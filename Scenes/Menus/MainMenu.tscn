@@ -184,6 +184,23 @@ script = ExtResource("10_mm626")
 script = ExtResource("11_bg25y")
 SettingName = "Name"
 
+[node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 7
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="GameBar" type="ColorRect" parent="MainConatiner"]
 z_index = 100
 custom_minimum_size = Vector2(0, 116)
