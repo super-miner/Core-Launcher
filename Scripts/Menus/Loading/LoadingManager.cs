@@ -1,15 +1,19 @@
+using System.Threading.Tasks;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
+using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
 namespace CoreLauncher.Scripts.Menus.Loading; 
 
 public partial class LoadingManager : Control {
     public bool OnboardingComplete = false;
-    
-    [Export] private PackedScene _onboardingScene;
+
+    [Export] private LoadingBar _progressBar;
     [Export] private int _totalSteps;
+    [Export] private int _startDelay = 500;
+    [Export] private int _nextPageDelay = 500;
     private int _stepsComplete;
     
     public override void _Ready() {
@@ -18,9 +22,10 @@ public partial class LoadingManager : Control {
         StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
-
+        
         if (StoredDataManager.HasDeserialized) {
             OnDeserializeStoredData();
+            OnStoredDataDeserialized();
         }
     }
 
@@ -38,21 +43,26 @@ public partial class LoadingManager : Control {
         SetStepsComplete(_stepsComplete + 1);
     }
 
-    public void SetStepsComplete(int amount) {
+    public async void SetStepsComplete(int amount) {
+        GD.Print($"Loading Manager: Completed {amount} steps.");
+        
         _stepsComplete = amount;
 
         if (_stepsComplete >= _totalSteps) {
-            if (OnboardingComplete) {
-                MenuManager.Instance.SetActiveMenu(2);
-            }
-            else {
-                MenuManager.Instance.SetActiveMenu(1);
-            }
+            await Task.Delay(_nextPageDelay);
+            
+            CallDeferred("Finish");
         }
+    }
+
+    public void Finish() {
+        MenuManager.Instance.SetActiveMenu(2);
     }
 
     private void OnModInfoLoaded() {
         GD.Print("Loading Manager: Fetched mod data.");
+        
+        _progressBar.SetValue(_progressBar.GetValue() + 0.9, "Retrieved info from Mod.io...");
         
         StepComplete();
     }
@@ -60,7 +70,14 @@ public partial class LoadingManager : Control {
     private void OnStoredDataDeserialized() {
         GD.Print("Loading Manager: Deserialized app data.");
         
-        StepComplete();
+        _progressBar.SetValue(_progressBar.GetValue() + 0.1, "Loaded configs...");
+        
+        if (OnboardingComplete) {
+            StepComplete();
+        }
+        else {
+            MenuManager.Instance.SetActiveMenu(1);
+        }
     }
     
     private void OnDeserializeStoredData() {

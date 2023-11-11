@@ -1,11 +1,11 @@
-Label
 HBoxContainer
+MarginContainer
+TextureRect
+Label
 VBoxContainer
 Container
-TextureRect
 Button
 Control
-MarginContainer
 Panel
 LineEdit
 LoadingBar

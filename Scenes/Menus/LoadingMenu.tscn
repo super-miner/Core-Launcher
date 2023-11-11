@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdn0bnuwtnxho"]
+[gd_scene load_steps=8 format=3 uid="uid://cdn0bnuwtnxho"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_6vekl"]
 [ext_resource type="Script" path="res://Scripts/Menus/Loading/LoadingManager.cs" id="1_8kroy"]
-[ext_resource type="PackedScene" uid="uid://dgwvoq2x41cym" path="res://Scenes/Menus/Onboarding/OnboardingMenu.tscn" id="2_skt2x"]
+[ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="4_7cavb"]
+[ext_resource type="Texture2D" uid="uid://cauueesrtj374" path="res://Images/Icons/CoreLauncher.png" id="4_vs7kq"]
+[ext_resource type="FontFile" uid="uid://dpt2ksskqg0ww" path="res://Fonts/Roboto/Roboto-Regular.ttf" id="6_3slc3"]
+[ext_resource type="FontFile" uid="uid://bwrmuyghwtkw4" path="res://Fonts/Roboto/Roboto-Bold.ttf" id="7_ica8h"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="8_ep1lx"]
 
-[node name="LoadingMenu" type="Control"]
+[node name="LoadingMenu" type="Control" node_paths=PackedStringArray("_progressBar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8kroy")
-_onboardingScene = ExtResource("2_skt2x")
+_progressBar = NodePath("ProgressBar")
 _totalSteps = 2
 
 [node name="Background" type="Panel" parent="."]
@@ -22,4 +26,103 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_6vekl")
+
+[node name="Vbox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Title" type="HBoxContainer" parent="Vbox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Logo" type="MarginContainer" parent="Vbox/Title"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 22
+
+[node name="Image" type="TextureRect" parent="Vbox/Title/Logo"]
+modulate = Color(0.996078, 0.960784, 0.92549, 1)
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_vs7kq")
+expand_mode = 3
+
+[node name="Text" type="Label" parent="Vbox/Title"]
+layout_mode = 2
+theme = ExtResource("4_7cavb")
+theme_override_font_sizes/font_size = 100
+text = "Core Launcher"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="HBoxContainer" parent="Vbox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Prefix" type="Label" parent="Vbox/Subtitle"]
+layout_mode = 2
+theme = ExtResource("4_7cavb")
+theme_override_colors/font_color = Color(0, 0.717647, 1, 1)
+theme_override_fonts/font = ExtResource("6_3slc3")
+theme_override_font_sizes/font_size = 25
+text = "An "
+horizontal_alignment = 1
+
+[node name="Unofficial" type="Label" parent="Vbox/Subtitle"]
+layout_mode = 2
+theme = ExtResource("4_7cavb")
+theme_override_colors/font_color = Color(0, 0.717647, 1, 1)
+theme_override_fonts/font = ExtResource("7_ica8h")
+theme_override_font_sizes/font_size = 25
+text = "Unofficial "
+horizontal_alignment = 1
+
+[node name="Suffix" type="Label" parent="Vbox/Subtitle"]
+layout_mode = 2
+theme = ExtResource("4_7cavb")
+theme_override_colors/font_color = Color(0, 0.717647, 1, 1)
+theme_override_fonts/font = ExtResource("6_3slc3")
+theme_override_font_sizes/font_size = 25
+text = "Launcher for Core Keeper"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("_label")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_7cavb")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+script = ExtResource("8_ep1lx")
+SmoothingCoefficient = 0.065
+_label = NodePath("ProgressLabel")
+
+[node name="ProgressLabel" type="Label" parent="ProgressBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 780.0
+offset_top = -43.0
+offset_right = -780.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
 theme = ExtResource("1_6vekl")

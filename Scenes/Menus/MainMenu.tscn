@@ -152,7 +152,6 @@ layout_mode = 2
 theme = ExtResource("1_81ept")
 
 [node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -190,6 +189,7 @@ script = ExtResource("11_bg25y")
 SettingName = "Name"
 
 [node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" node_paths=PackedStringArray("_modsLoadedLabel")]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15

@@ -31,4 +31,8 @@ public partial class LoadingBar : ProgressBar {
             _oldText = text;
         }
     }
+
+    public double GetValue() {
+        return TargetValue;
+    }
 }

@@ -9,10 +9,10 @@ public class LogoInfo {
     public Image LogoImage;
 
     public async Task Init() {
-        GD.Print($"LogoInfo: Downloading mod logo from {LogoUrl}.");
+        GD.Print($"Mod Manager: Downloading mod logo from {LogoUrl}.");
         
         LogoImage = await FetchUtil.FetchImage(LogoUrl);
         
-        GD.Print($"LogoInfo: Finished downloading mod logo from {LogoUrl}.");
+        GD.Print($"Mod Manager: Finished downloading mod logo from {LogoUrl}.");
     }
 }
