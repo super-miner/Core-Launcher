@@ -9,6 +9,8 @@ using Godot;
 namespace CoreLauncher.Scripts.UI; 
 
 public partial class ModListEntry : ItemListEntry {
+	public int ModListId;
+	
 	[Export] private StateButton _addButton;
 	[Export] private Label _nameLabel;
 	[Export] private Label _authorLabel;
@@ -46,6 +48,6 @@ public partial class ModListEntry : ItemListEntry {
 	}
 
 	public ModInfo GetModInfo() {
-		return ModManager.ModsList.Mods[Id];
+		return ModManager.ModsList.Mods[ModListId];
 	}
 }

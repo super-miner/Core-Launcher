@@ -1,11 +1,14 @@
-LoadingBarSegment
-HBoxContainer
+StateButton
 MarginContainer
-TextureRect
-Label
-VBoxContainer
 Container
 Button
+Label
+CheckBox
+CheckButton
+LoadingBarSegment
+HBoxContainer
+TextureRect
+VBoxContainer
 Control
 Panel
 LineEdit
@@ -16,7 +19,6 @@ FileDialog
 CenterContainer
 ProfileSettingsOption
 Node
-CheckButton
 Tree
 ScrollContainer
 TextEdit
@@ -28,5 +30,3 @@ VScrollBar
 ColorRect
 PanelContainer
 ReferenceRect
-NinePatchRect
-ItemList

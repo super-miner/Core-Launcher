@@ -4,6 +4,7 @@ using Godot;
 
 namespace CoreLauncher.Scripts.UI.Generic; 
 
+[GlobalClass]
 public partial class StateButton : Control {
     private Control _currentStateNode;
     

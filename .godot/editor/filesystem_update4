@@ -27,6 +27,7 @@ res://Scripts/UI/Generic/FileLineEdit.cs
 res://Scripts/UI/Generic/ItemList.cs
 res://Scripts/UI/Generic/ItemListEntry.cs
 res://Scripts/UI/Generic/LoadingBar.cs
+res://Scripts/UI/Generic/LoadingBarSegment.cs
 res://Scripts/UI/Generic/SelectableItemList.cs
 res://Scripts/UI/Generic/SelectableItemListEntry.cs
 res://Scripts/UI/Generic/StateButton.cs
@@ -36,4 +37,3 @@ res://Scripts/UI/ProfileList.cs
 res://Scripts/UI/ProfileListEntry.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
 res://Scripts/UI/Settings/ProfileSettingsOption.cs
-res://Scripts/UI/Generic/LoadingBarSegment.cs

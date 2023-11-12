@@ -21,7 +21,7 @@ public static class FileUtil {
             case PathType.Project:
                 return ProjectSettings.GlobalizePath("res://");
             case PathType.Steam:
-                object pathObject = RegistryManager.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
+                object pathObject = RegistryUtil.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
 		
                 if (pathObject is string pathString) {
                     return pathString;

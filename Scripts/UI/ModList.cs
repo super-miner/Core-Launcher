@@ -1,5 +1,9 @@
 using CoreLauncher.Scripts.Menus.Main;
+using CoreLauncher.Scripts.Menus.Main.Tabs;
 using CoreLauncher.Scripts.ModIO;
+using CoreLauncher.Scripts.ModIO.JsonStructures;
+using CoreLauncher.Scripts.StoredData;
+using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
@@ -8,26 +12,60 @@ using ItemList = CoreLauncher.Scripts.UI.Generic.ItemList;
 namespace CoreLauncher.Scripts.UI;
 
 public partial class ModList : ItemList {
+    [Export] public bool ShowLibraryMods;
+    public int ModsShowing = 0;
+    
     public override void _EnterTree() {
         InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent += OnItemSelected;
-    }
-
-    public override void _Ready() {
-        CreateEntries();
-    }
-    
-    public override void _ExitTree() {
-        InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent -= OnItemSelected;
-    }
-
-    public void CreateEntries() {
-        for (int i = 0; i < ModManager.ModsList.Mods.Count; i++) {
-            AddEntry();
+        
+        StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
+        StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
+        
+        if (StoredDataManager.HasDeserialized) {
+            OnDeserializeStoredData();
         }
     }
     
-    public new ModListEntry AddEntry(bool select = true) {
-        ItemListEntry entry = base.AddEntry(select);
+    public override void _Ready() {
+        CreateEntries();
+    }
+
+    public override void _ExitTree() {
+        InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent -= OnItemSelected;
+        
+        StoredDataManager.DeserializeStoredDataEvent -= OnDeserializeStoredData;
+        StoredDataManager.SerializeStoredDataEvent -= OnSerializeStoredData;
+        
+        OnSerializeStoredData();
+    }
+
+    public void CreateEntries() {
+        ModsShowing = 0;
+        
+        for (int i = 0; i < ModManager.ModsList.Mods.Count; i++) {
+            ModInfo modInfo = ModManager.ModsList.Mods[i];
+            
+            if (!ShowLibraryMods && modInfo.Name.Contains("CoreLib")) {
+                continue;
+            }
+            
+            ModListEntry modEntry = AddEntry(true, false);
+            modEntry.ModListId = i;
+            modEntry.Init();
+
+            ModsShowing++;
+        }
+    }
+
+    public void SetShowLibraryMods(bool showLibraryMods) {
+        ShowLibraryMods = showLibraryMods;
+        
+        ClearEntries();
+        CreateEntries();
+    }
+    
+    public new ModListEntry AddEntry(bool select = true, bool init = true) {
+        ItemListEntry entry = base.AddEntry(select, init);
 
         if (entry is ModListEntry modEntry) {
             return modEntry;
@@ -50,5 +88,13 @@ public partial class ModList : ItemList {
 
     private void OnItemSelected() {
         UpdateButtonStates();
+    }
+    
+    private void OnDeserializeStoredData() {
+        ShowLibraryMods = StoredDataManager.GetStoredDataGroup<ConfigDataGroup>().ShowLibraryMods;
+    }
+
+    private void OnSerializeStoredData() {
+        StoredDataManager.GetStoredDataGroup<ConfigDataGroup>().ShowLibraryMods = ShowLibraryMods;
     }
 }

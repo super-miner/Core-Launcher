@@ -8,7 +8,7 @@ public partial class ItemList : VBoxContainer {
 	
 	public List<ItemListEntry> Entries = new List<ItemListEntry>();
 	
-	public virtual ItemListEntry AddEntry(bool select = true) {
+	public virtual ItemListEntry AddEntry(bool select = true, bool init = true) {
 		Node entryNode = EntryScene.Instantiate();
         
 		if (entryNode is ItemListEntry entry) {
@@ -17,8 +17,10 @@ public partial class ItemList : VBoxContainer {
 
 			entry.ItemList = this;
 			entry.Id = Entries.Count - 1;
-			
-			entry.Init();
+
+			if (init) {
+				entry.Init();
+			}
 			
 			return entry;
 		}
@@ -28,5 +30,13 @@ public partial class ItemList : VBoxContainer {
 			entryNode.QueueFree();
 			return null;
 		}
+	}
+
+	public virtual void ClearEntries() {
+		foreach (ItemListEntry entry in Entries) {
+			entry.QueueFree();
+		}
+
+		Entries = new List<ItemListEntry>();
 	}
 }

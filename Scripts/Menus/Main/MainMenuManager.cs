@@ -11,7 +11,6 @@ public partial class MainMenuManager : Node {
     public static event OnMainMenuManagerLoaded MainMenuManagerLoadedEvent;
     
     [Export] public ProfileList ProfileList = null;
-
     [Export] public LoadingBar PlayProgressBar;
 
     public override void _EnterTree() {
