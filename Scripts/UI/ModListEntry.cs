@@ -23,6 +23,12 @@ public partial class ModListEntry : ItemListEntry {
 			if (profileEntry.Mods.Contains(modInfo.Id)) {
 				_addButton.SetState("AddedButton");
 			}
+			else if (ModManager.GetDependencies(profileEntry.Mods).Contains(modInfo.Id)) {
+				_addButton.SetState("AddedAsDependencyButton");
+			}
+			else {
+				_addButton.SetState("NotAddedButton");
+			}
 		}
 	}
 

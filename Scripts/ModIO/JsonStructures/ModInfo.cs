@@ -1,5 +1,7 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Godot;
 
 namespace CoreLauncher.Scripts.ModIO.JsonStructures; 
 
@@ -17,7 +19,15 @@ public class ModInfo {
         await Logo.Init();
 
         if (HasDependencies) {
+            string dependencyUrl = ModManager.GetUrl(UrlType.DependenciesList, this);
             
+            GD.Print($"Mod Manager: Fetching dependencies from {dependencyUrl}.");
+            
+            string jsonString = await FetchUtil.FetchString(dependencyUrl);
+        
+            DependenciesList = JsonSerializer.Deserialize<DependencyListInfo>(jsonString);
+            
+            GD.Print($"Mod Manager: Fetched dependencies from {dependencyUrl}.");
         }
     }
 

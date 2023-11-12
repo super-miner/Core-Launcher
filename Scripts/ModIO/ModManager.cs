@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
-using CoreLauncher.Scripts.UI;
 using Godot;
 
 namespace CoreLauncher.Scripts.ModIO;
 
 public enum UrlType {
-    ModsList
+    ModsList,
+    DependenciesList
 }
 
 public delegate void OnModInfoLoaded();
@@ -20,6 +19,7 @@ public static class ModManager {
     public static event OnModInfoLoaded ModInfoLoadedEvent;
     
     private static readonly string _modsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
+    private static readonly string _dependenciesListUrl = "https://api.mod.io/v1/games/5289/mods/{mod_id}/dependencies?api_key={api_key}";
     
     public static ModsListInfo ModsList = null;
     public static string ApiKey = "";
@@ -40,10 +40,12 @@ public static class ModManager {
         ModInfoLoadedEvent?.Invoke();
     }
     
-    public static string GetUrl(UrlType urlType) {
+    public static string GetUrl(UrlType urlType, ModInfo modInfo = null) {
         switch (urlType) {
             case UrlType.ModsList:
                 return _modsListUrl.Replace("{api_key}", ApiKey);
+            case UrlType.DependenciesList:
+                return _dependenciesListUrl.Replace("{api_key}", ApiKey).Replace("{mod_id}", $"{modInfo.Id}");
             default:
                 return "";
         }
@@ -82,7 +84,7 @@ public static class ModManager {
     }
 
     public static List<int> GetDependencies(List<int> modsList) {
-        List<int> result = modsList;
+        List<int> result = new List<int>(modsList);
         
         foreach (int modId in modsList) {
             ModInfo modInfo = GetModInfo(modId);
