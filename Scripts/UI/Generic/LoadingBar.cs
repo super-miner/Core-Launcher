@@ -32,6 +32,18 @@ public partial class LoadingBar : ProgressBar {
         
         _targetValueMutex.Unlock();
     }
+    
+    public void SetValue(double value, string text) {
+        _targetValueMutex.Lock();
+        
+        foreach (LoadingBarSegment segment in GodotUtil.GetChildrenWithType<LoadingBarSegment>(this)) {
+            segment.Percent = value;
+        }
+        
+        UpdateTargetValue();
+        
+        _targetValueMutex.Unlock();
+    }
 
     public void SetValue(string segmentName, double value, string text) {
         _targetValueMutex.Lock();

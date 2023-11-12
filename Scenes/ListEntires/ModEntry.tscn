@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/ModListEntry.cs" id="2_s3ql8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nf05x"]
-bg_color = Color(0.0313726, 0.027451, 0.0235294, 0.827451)
+bg_color = Color(0.0313726, 0.027451, 0.0235294, 0.913725)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
@@ -54,21 +54,21 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4bwil"]
-bg_color = Color(0.890196, 0.607843, 0.117647, 1)
+bg_color = Color(1, 0.482353, 0.141176, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ck148"]
-bg_color = Color(0.94, 0.64014, 0.1222, 1)
+bg_color = Color(1, 0.529412, 0.141176, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bcf7r"]
-bg_color = Color(0.99, 0.67419, 0.1287, 1)
+bg_color = Color(1, 0.568627, 0.141176, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7

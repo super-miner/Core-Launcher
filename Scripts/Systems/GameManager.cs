@@ -23,9 +23,16 @@ public static class GameManager {
 	public static async void RunGame() {
 		SelectableItemListEntry selectableEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
 		if (selectableEntry is ProfileListEntry profileEntry) {
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "Finding dependencies...");
+			
 			List<int> fullModsList = await ModManager.GetDependencies(profileEntry.Mods);
 			
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 1.0, "Found dependencies...");
+			
 			ModManager.DownloadMods(fullModsList);
+			
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "");
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Mods", 0.0, "");
 		}
 		
 		OS.Execute($"{FileUtil.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetSteamPath()}, new Godot.Collections.Array());

@@ -15,6 +15,11 @@ public partial class AddModButton : StateButton {
 		}
 		
 		SetState("AddedButton");
+
+		CoreLauncher.Scripts.UI.Generic.ItemList itemList = _modEntry.ItemList;
+		if (itemList is ModList modList) {
+			modList.UpdateButtonStates();
+		}
 	}
 
 	public void OnAddedPressed() {
@@ -24,5 +29,10 @@ public partial class AddModButton : StateButton {
 		}
 		
 		SetState("NotAddedButton");
+		
+		CoreLauncher.Scripts.UI.Generic.ItemList itemList = _modEntry.ItemList;
+		if (itemList is ModList modList) {
+			modList.UpdateButtonStates();
+		}
 	}
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
@@ -71,6 +72,8 @@ public static class ModManager {
     public static async void DownloadMods(List<int> modsList) {
         foreach (int modId in modsList) {
             ModInfo modInfo = GetModInfo(modId);
+            
+            InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Mods", 1.0, $"Downloading {modInfo.Name}...");
 
             if (!FileUtil.DirectoryExists(modInfo.GetCachePath())) {
                 string tempPath = $"{FileUtil.GetPath(PathType.AppData)}/Temp/ModTemp.zip";

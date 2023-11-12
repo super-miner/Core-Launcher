@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=23 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -17,6 +17,8 @@
 [ext_resource type="Script" path="res://Scripts/UI/ModList.cs" id="12_e3elj"]
 [ext_resource type="Script" path="res://Scripts/Menus/Main/Tabs/ModsTabManager.cs" id="12_jy5iy"]
 [ext_resource type="PackedScene" uid="uid://c76en0nxy0bs6" path="res://Scenes/ListEntires/ModEntry.tscn" id="13_4fbd0"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="17_chpd6"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="18_ooe8h"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arvy2"]
 
@@ -29,7 +31,7 @@ unicode = 112
 [sub_resource type="Shortcut" id="Shortcut_aaq3q"]
 events = [SubResource("InputEventKey_ifb3j")]
 
-[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList")]
+[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "PlayProgressBar")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -37,6 +39,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qb7sc")
 ProfileList = NodePath("MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles")
+PlayProgressBar = NodePath("MainConatiner/GameBar/ProgressBar")
 
 [node name="MainConatiner" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -264,6 +267,45 @@ grow_vertical = 2
 layout_mode = 1
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="MainConatiner/GameBar" node_paths=PackedStringArray("_label")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("11_tprdv")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+script = ExtResource("17_chpd6")
+SmoothingCoefficient = 0.065
+_label = NodePath("ProgressLabel")
+
+[node name="ProgressLabel" type="Label" parent="MainConatiner/GameBar/ProgressBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 780.0
+offset_top = -43.0
+offset_right = -780.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_81ept")
+
+[node name="Dependencies" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
+script = ExtResource("18_ooe8h")
+TotalPercent = 0.2
+
+[node name="Mods" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
+script = ExtResource("18_ooe8h")
+TotalPercent = 0.8
 
 [node name="Background" type="TextureRect" parent="."]
 z_index = -1000

@@ -29,4 +29,12 @@ public partial class ModList : ItemList {
             return null;
         }
     }
+
+    public void UpdateButtonStates() {
+        foreach (ItemListEntry entry in Entries) {
+            if (entry is ModListEntry modEntry) {
+                modEntry.UpdateButtonState();
+            }
+        }
+    }
 }
