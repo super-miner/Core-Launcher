@@ -90,7 +90,25 @@ public static class FileUtil {
     }
 
     public static void CopyFile(string fromPath, string toPath) {
-        File.Copy(fromPath, toPath);
+        File.Copy(fromPath, toPath, true);
+    }
+    
+    public static void CopyDirectory(string fromPath, string toPath) {
+        string parentPath = UpOneLevel(fromPath);
+        
+        foreach (string directoryPath in Directory.GetDirectories(parentPath, "*", SearchOption.AllDirectories)) {
+            Directory.CreateDirectory(directoryPath.Replace(parentPath, toPath));
+        }
+        
+        foreach (string filePath in Directory.GetFiles(parentPath, "*.*",SearchOption.AllDirectories)) {
+            CopyFile(filePath, filePath.Replace(parentPath, toPath));
+        }
+    }
+
+    public static string UpOneLevel(string path) {
+        DirectoryInfo directory = new DirectoryInfo(path);
+        DirectoryInfo parentDirectory = directory.Parent;
+        return parentDirectory != null ? parentDirectory.ToString() : null;
     }
 
     public static string[] GetFiles(string path) {

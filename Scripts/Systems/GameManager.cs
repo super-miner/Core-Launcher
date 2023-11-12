@@ -30,10 +30,16 @@ public static class GameManager {
 			List<int> fullModsList = await ModManager.GetDependencies(profileEntry.Mods);
 			
 			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 1.0, "Found dependencies...");
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 0.0, "Downloading mods...");
 			
 			await ModManager.DownloadMods(fullModsList);
 			
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Mods", 1.0, "Downloaded mods...");
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 1.0, "Downloaded mods...");
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 0.0, "Installing mods...");
+
+			await ModManager.InstallMods(fullModsList);
+			
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 0.0, "Installed mods...");
 		}
 		
 		OS.Execute($"{FileUtil.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetSteamPath()}, new Godot.Collections.Array());

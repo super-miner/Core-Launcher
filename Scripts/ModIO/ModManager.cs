@@ -74,28 +74,47 @@ public static class ModManager {
             int modId = modsList[i];
             ModInfo modInfo = GetModInfo(modId);
             
-            InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Mods", (double)i / modsList.Count, $"Downloading {modInfo.Name}...");
+            InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", (double)i / modsList.Count, $"Downloading {modInfo.Name}...");
 
-            if (!FileUtil.DirectoryExists(modInfo.GetCachePath())) {
-                string localPath = modInfo.GetCachePath();
-
-                if (FileUtil.FileExists(localPath)) {
-                    continue;
-                }
-                
-                string tempPath = $"{FileUtil.GetPath(PathType.AppData)}/Temp/ModTemp.zip";
-                
-                GD.Print($"Mod Manager: Downloading files for {modInfo.Name} ({modInfo.Id})...");
-                
-                await FetchManager.DownloadFile(modInfo.ModFile.Download.Url, tempPath);
-                
-                GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} ({modInfo.Id}), unzipping...");
-                
-                FileUtil.UnzipToDirectory(tempPath, localPath);
-                FileUtil.DeleteFile(tempPath);
-                
-                GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} ({modInfo.Id}).");
+            string localPath = modInfo.GetCachePath();
+            if (FileUtil.DirectoryExists(localPath)) {
+                continue;
             }
+            
+            string tempPath = $"{FileUtil.GetPath(PathType.AppData)}/Temp/ModTemp.zip";
+            
+            GD.Print($"Mod Manager: Downloading files for {modInfo.Name} ({modInfo.Id})...");
+            
+            await FetchManager.DownloadFile(modInfo.ModFile.Download.Url, tempPath);
+            
+            GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} ({modInfo.Id}), unzipping...");
+            
+            FileUtil.UnzipToDirectory(tempPath, localPath);
+            FileUtil.DeleteFile(tempPath);
+            
+            GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} ({modInfo.Id}).");
+        }
+    }
+
+    public static async Task InstallMods(List<int> modsList) {
+        for (int i = 0; i < modsList.Count; i++) {
+            int modId = modsList[i];
+            ModInfo modInfo = GetModInfo(modId);
+            
+            InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", (double)i / modsList.Count, $"Installing {modInfo.Name}...");
+
+            string localPath = modInfo.GetCachePath();
+            if (!FileUtil.DirectoryExists(localPath)) {
+                continue;
+            }
+            
+            string installPath = GameManager.GetModsPath();
+            
+            GD.Print($"Mod Manager: Installing mod to {installPath}.");
+            
+            FileUtil.CopyDirectory(localPath, installPath);
+
+            GD.Print($"Mod Manager: Finished installing mod to {installPath}.");
         }
     }
 
