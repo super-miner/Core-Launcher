@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace CoreLauncher.Scripts; 
+namespace CoreLauncher.Scripts.Systems; 
 
 public static class ReflectionUtil {
     public static IEnumerable<(Type, T)> GetTypesWithAttribute<T>(Assembly assembly = null) {

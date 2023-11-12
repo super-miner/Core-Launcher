@@ -1,3 +1,4 @@
+using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 

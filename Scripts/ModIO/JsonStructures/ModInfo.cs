@@ -1,6 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using CoreLauncher.Scripts.Systems;
+using CoreLauncher.Scripts.Systems.Fetch;
 using Godot;
 
 namespace CoreLauncher.Scripts.ModIO.JsonStructures; 

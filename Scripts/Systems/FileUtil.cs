@@ -4,7 +4,7 @@ using System.IO.Compression;
 using System.Text.Json;
 using Godot;
 
-namespace CoreLauncher.Scripts;
+namespace CoreLauncher.Scripts.Systems;
 
 public enum PathType {
     AppData,

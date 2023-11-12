@@ -1,7 +1,7 @@
 using CoreLauncher.Scripts.UI;
 using Godot;
 
-namespace CoreLauncher.Scripts;
+namespace CoreLauncher.Scripts.Menus.Main;
 
 public delegate void OnMainMenuManagerLoaded();
 

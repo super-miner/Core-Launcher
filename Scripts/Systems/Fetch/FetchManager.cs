@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using CoreLauncher.Scripts.Systems.Fetch;
 using Godot;
 
-namespace CoreLauncher.Scripts;
+namespace CoreLauncher.Scripts.Systems.Fetch;
 
 public enum ImageFormat {
     Png,

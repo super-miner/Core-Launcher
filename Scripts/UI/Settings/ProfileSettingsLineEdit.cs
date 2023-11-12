@@ -1,4 +1,6 @@
 using System.Linq;
+using CoreLauncher.Scripts.Menus.Main;
+using CoreLauncher.Scripts.Systems;
 using Godot;
 
 namespace CoreLauncher.Scripts.UI.Settings; 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
@@ -6,7 +7,7 @@ using CoreLauncher.Scripts.UI;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
-namespace CoreLauncher.Scripts;
+namespace CoreLauncher.Scripts.Systems;
 
 public static class GameManager {
 	public static readonly string CoreKeeperRelativePath = "/steamapps/common/Core Keeper";
