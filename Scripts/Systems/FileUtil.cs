@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
 using System.Text.Json;
 using Godot;
 
@@ -68,6 +69,10 @@ public static class FileUtil {
         return JsonSerializer.Deserialize(jsonString, returnType);
     }
 
+    public static void DeleteFile(string path) {
+        File.Delete(path);
+    }
+
     public static bool DirectoryContains(string path, string file) {
         return File.Exists($"{path}\\{file}");
     }
@@ -97,6 +102,6 @@ public static class FileUtil {
             CreateDirectory(directoryPath);
         }
         
-        ZipFile.ExtractToDirectory(zipPath, directoryPath);
+        ZipFile.ExtractToDirectory(zipPath, directoryPath, Encoding.Default, true);
     }
 }

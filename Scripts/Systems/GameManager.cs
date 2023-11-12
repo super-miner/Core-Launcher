@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO.Compression;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.StoredData;
@@ -29,10 +30,9 @@ public static class GameManager {
 			
 			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 1.0, "Found dependencies...");
 			
-			ModManager.DownloadMods(fullModsList);
+			await ModManager.DownloadMods(fullModsList);
 			
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "");
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Mods", 0.0, "");
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue(0.0, "");
 		}
 		
 		OS.Execute($"{FileUtil.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetSteamPath()}, new Godot.Collections.Array());

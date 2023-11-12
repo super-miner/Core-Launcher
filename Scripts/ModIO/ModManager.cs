@@ -69,7 +69,7 @@ public static class ModManager {
         return ModsList.Mods.FirstOrDefault(modInfo => modInfo.Id == modId);
     }
     
-    public static async void DownloadMods(List<int> modsList) {
+    public static async Task DownloadMods(List<int> modsList) {
         foreach (int modId in modsList) {
             ModInfo modInfo = GetModInfo(modId);
             
@@ -85,6 +85,7 @@ public static class ModManager {
                 GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} ({modInfo.Id}), unzipping...");
                 
                 FileUtil.UnzipToDirectory(tempPath, modInfo.GetCachePath());
+                FileUtil.DeleteFile(tempPath);
                 
                 GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} ({modInfo.Id}).");
             }
