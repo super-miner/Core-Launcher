@@ -14,4 +14,8 @@ public partial class SelectableItemListEntry : ItemListEntry {
     public void Deselect() {
         _button.Disabled = false;
     }
+    
+    public void OnPressed() {
+        ItemList.SetSelectedEntry(Id);
+    }
 }

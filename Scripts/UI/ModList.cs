@@ -1,4 +1,6 @@
+using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
+using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 using ItemList = CoreLauncher.Scripts.UI.Generic.ItemList;
@@ -6,8 +8,16 @@ using ItemList = CoreLauncher.Scripts.UI.Generic.ItemList;
 namespace CoreLauncher.Scripts.UI;
 
 public partial class ModList : ItemList {
+    public override void _EnterTree() {
+        InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent += OnItemSelected;
+    }
+
     public override void _Ready() {
         CreateEntries();
+    }
+    
+    public override void _ExitTree() {
+        InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent -= OnItemSelected;
     }
 
     public void CreateEntries() {
@@ -36,5 +46,9 @@ public partial class ModList : ItemList {
                 modEntry.UpdateButtonState();
             }
         }
+    }
+
+    private void OnItemSelected() {
+        UpdateButtonStates();
     }
 }
