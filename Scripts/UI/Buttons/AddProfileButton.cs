@@ -1,17 +1,17 @@
+using CoreLauncher.Scripts.Menus.Main;
+using CoreLauncher.Scripts.Systems;
 using Godot;
 using CoreLauncher.Scripts.UI.Generic;
 
 namespace CoreLauncher.Scripts.UI.Buttons;
 
 public partial class AddProfileButton : Button {
-	[Export] private ProfileList itemList;
-	
 	public void OnPressed() {
-		if (itemList != null) {
-			itemList.AddEntry();
+		if (InstanceManager.GetInstance<MainMenuManager>().ProfileList != null) {
+			InstanceManager.GetInstance<MainMenuManager>().ProfileList.AddEntry();
 		}
 		else {
-			GD.PrintErr("Add Profile Button: Could not add profile because the itemList was not found.");
+			GD.PrintErr("Add Profile Button: Could not add profile because the item list was not found.");
 		}
 	}
 }

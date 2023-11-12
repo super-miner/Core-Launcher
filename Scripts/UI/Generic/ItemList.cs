@@ -32,6 +32,11 @@ public partial class ItemList : VBoxContainer {
 		}
 	}
 
+	public virtual void RemoveEntry(ItemListEntry entry) {
+		entry.QueueFree();
+		Entries.Remove(entry);
+	}
+
 	public virtual void ClearEntries() {
 		foreach (ItemListEntry entry in Entries) {
 			entry.QueueFree();

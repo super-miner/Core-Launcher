@@ -13,7 +13,7 @@ public partial class SelectableItemList : ItemList {
         ItemListEntry entry = base.AddEntry(select);
 
         if (entry is SelectableItemListEntry selectableEntry) {
-            if (select && SelectedEntry < 0) {
+            if (select) {
                 SetSelectedEntry(entry.Id);
             }
 
@@ -28,10 +28,18 @@ public partial class SelectableItemList : ItemList {
             return null;
         }
     }
+
+    public override void RemoveEntry(ItemListEntry entry) {
+        base.RemoveEntry(entry);
+
+        if (SelectedEntry >= Entries.Count) {
+            SetSelectedEntry(Entries.Count - 1);
+        }
+    }
     
     public SelectableItemListEntry GetSelectedEntry() {
         if (SelectedEntry >= 0) {
-            ItemListEntry entry = Entries[SelectedEntry];
+            ItemListEntry entry = SelectedEntry < Entries.Count ? Entries[SelectedEntry] : null;
 
             if (entry is SelectableItemListEntry selectableEntry) {
                 return selectableEntry;
@@ -43,7 +51,7 @@ public partial class SelectableItemList : ItemList {
     public void SetSelectedEntry(int selectedEntry) {
         GetSelectedEntry()?.Deselect();
 		
-        SelectedEntry = selectedEntry;
+        SelectedEntry = SelectedEntry >= Entries.Count ? Entries.Count - 1 : selectedEntry;
 		
         GetSelectedEntry()?.Select();
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=25 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -11,6 +11,8 @@
 [ext_resource type="FontFile" uid="uid://djl7vuk8w8far" path="res://Fonts/OpenSans/OpenSans-Bold.ttf" id="4_m8q5e"]
 [ext_resource type="Script" path="res://Scripts/UI/ProfileList.cs" id="5_ax6fr"]
 [ext_resource type="PackedScene" uid="uid://bxalj6ldyic63" path="res://Scenes/DropShadow.tscn" id="5_fmcn0"]
+[ext_resource type="Texture2D" uid="uid://b5kyrqwybx057" path="res://Images/Icons/Minus.png" id="6_6n51t"]
+[ext_resource type="Script" path="res://Scripts/UI/Buttons/RemoveProfileButton.cs" id="7_onhks"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs" id="10_mm626"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsOption.cs" id="11_bg25y"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="11_tprdv"]
@@ -84,7 +86,7 @@ theme = ExtResource("1_81ept")
 theme_override_fonts/font = ExtResource("4_m8q5e")
 text = "Profiles"
 
-[node name="AddButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options" node_paths=PackedStringArray("itemList")]
+[node name="AddButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options"]
 custom_minimum_size = Vector2(30, 25)
 layout_mode = 2
 focus_mode = 0
@@ -97,7 +99,20 @@ theme_override_constants/icon_max_width = 25
 icon = ExtResource("1_hfmwg")
 icon_alignment = 1
 script = ExtResource("3_hck76")
-itemList = NodePath("../../ScrollContainer/Margin/Profiles")
+
+[node name="RemoveButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options"]
+custom_minimum_size = Vector2(30, 25)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_81ept")
+theme_override_colors/icon_normal_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_hover_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 0.964706, 0.929412, 1)
+theme_override_constants/icon_max_width = 25
+icon = ExtResource("6_6n51t")
+icon_alignment = 1
+script = ExtResource("7_onhks")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox"]
 layout_mode = 2
@@ -155,7 +170,6 @@ layout_mode = 2
 theme = ExtResource("1_81ept")
 
 [node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -193,6 +207,7 @@ script = ExtResource("11_bg25y")
 SettingName = "Name"
 
 [node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" node_paths=PackedStringArray("ModList", "_modsLoadedLabel", "_showLibraryModsCheckBox")]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -337,6 +352,7 @@ texture = ExtResource("1_rkllh")
 stretch_mode = 6
 
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
+[connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]
