@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdn0bnuwtnxho"]
+[gd_scene load_steps=9 format=3 uid="uid://cdn0bnuwtnxho"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_6vekl"]
 [ext_resource type="Script" path="res://Scripts/Menus/Loading/LoadingManager.cs" id="1_8kroy"]
@@ -7,8 +7,9 @@
 [ext_resource type="FontFile" uid="uid://dpt2ksskqg0ww" path="res://Fonts/Roboto/Roboto-Regular.ttf" id="6_3slc3"]
 [ext_resource type="FontFile" uid="uid://bwrmuyghwtkw4" path="res://Fonts/Roboto/Roboto-Bold.ttf" id="7_ica8h"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="8_ep1lx"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="8_v7ofs"]
 
-[node name="LoadingMenu" type="Control" node_paths=PackedStringArray("_progressBar")]
+[node name="LoadingMenu" type="Control" node_paths=PackedStringArray("ProgressBar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +17,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8kroy")
-_progressBar = NodePath("ProgressBar")
+ProgressBar = NodePath("ProgressBar")
 _totalSteps = 2
 
 [node name="Background" type="Panel" parent="."]
@@ -126,3 +127,11 @@ offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_6vekl")
+
+[node name="AppData" type="Node" parent="ProgressBar"]
+script = ExtResource("8_v7ofs")
+TotalPercent = 0.2
+
+[node name="Mods" type="Node" parent="ProgressBar"]
+script = ExtResource("8_v7ofs")
+TotalPercent = 0.8

@@ -1,3 +1,4 @@
+LoadingBarSegment
 HBoxContainer
 MarginContainer
 TextureRect
@@ -29,4 +30,3 @@ PanelContainer
 ReferenceRect
 NinePatchRect
 ItemList
-HScrollBar

@@ -12,11 +12,11 @@ public partial class GetModIOAPIKey : OnboardingPage {
     [Export] private LineEdit _apiKeyLineEdit = null;
     
     public async void Continue() {
-        _progressBar.SetValue(0.5, "Setting API Key...");
+        _progressBar.SetValue("ApiKey", 0.0, "Setting API Key...");
         
         ModManager.SetApiKey(_apiKeyLineEdit.Text);
         
-        _progressBar.SetValue(1.0, "Set API Key.");
+        _progressBar.SetValue("ApiKey", 1.0, "Set API Key.");
         
         await Task.Delay(NextPageDelay);
         

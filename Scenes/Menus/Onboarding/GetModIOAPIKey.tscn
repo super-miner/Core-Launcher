@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyi5lvpy0khw4"]
+[gd_scene load_steps=6 format=3 uid="uid://cyi5lvpy0khw4"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/Onboarding/GetModIOAPIKey.cs" id="1_28c43"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_rr5wl"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="3_upx1r"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="4_s5j1f"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="5_wsiam"]
 
 [node name="GetModIOAPIKey" type="Control" node_paths=PackedStringArray("_progressBar", "_apiKeyLineEdit")]
 layout_mode = 3
@@ -80,5 +81,8 @@ offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_rr5wl")
+
+[node name="ApiKey" type="Node" parent="ProgressBar"]
+script = ExtResource("5_wsiam")
 
 [connection signal="pressed" from="VBox/Margin/ContinueButton" to="." method="Continue"]

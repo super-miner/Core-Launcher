@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bv75ghh0fu0dp"]
+[gd_scene load_steps=11 format=3 uid="uid://bv75ghh0fu0dp"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/Onboarding/FindSteamPath.cs" id="1_hesbn"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_jcuxh"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Generic/FileExplorer.cs" id="7_smgd4"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="8_qlrd4"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="9_5bf30"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="10_plhh4"]
 
 [node name="FindSteamPath" type="Control" node_paths=PackedStringArray("_steamPathLineEdit", "_progressBar")]
 layout_mode = 3
@@ -128,6 +129,10 @@ offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_jcuxh")
+
+[node name="SteamPath" type="Node" parent="ProgressBar"]
+script = ExtResource("10_plhh4")
+TotalPercent = 1.0
 
 [connection signal="text_changed" from="VBox/FilePicker/LineEdit" to="VBox/FilePicker/LineEdit" method="OnTextChanged"]
 [connection signal="pressed" from="VBox/FilePicker/Button" to="VBox/FilePicker/Button" method="OnPressed"]
