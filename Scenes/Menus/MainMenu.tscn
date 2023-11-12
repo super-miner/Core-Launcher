@@ -170,6 +170,7 @@ layout_mode = 2
 theme = ExtResource("1_81ept")
 
 [node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -207,7 +208,6 @@ script = ExtResource("11_bg25y")
 SettingName = "Name"
 
 [node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" node_paths=PackedStringArray("ModList", "_modsLoadedLabel", "_showLibraryModsCheckBox")]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -215,25 +215,31 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 7
 script = ExtResource("12_jy5iy")
 ModList = NodePath("VBox/ScrollContainer/Margin/Mods")
-_modsLoadedLabel = NodePath("VBox/TabSettings/ModsShown")
-_showLibraryModsCheckBox = NodePath("VBox/TabSettings/CheckButton")
+_modsLoadedLabel = NodePath("VBox/TabSettings/HBox/ModsShown")
+_showLibraryModsCheckBox = NodePath("VBox/TabSettings/HBox/CheckButton")
 
 [node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods"]
 layout_mode = 2
 
-[node name="TabSettings" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox"]
+[node name="TabSettings" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
+
+[node name="HBox" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings"]
 layout_mode = 2
 
-[node name="ModsShown" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings"]
+[node name="ModsShown" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox"]
 layout_mode = 2
 theme = ExtResource("1_81ept")
 text = "Showing 0 out of 0 mods."
 
-[node name="Separator" type="Container" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings"]
+[node name="Separator" type="Container" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CheckButton" type="CheckBox" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings"]
+[node name="CheckButton" type="CheckBox" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox"]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_81ept")
@@ -354,5 +360,5 @@ stretch_mode = 6
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
-[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
+[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]
