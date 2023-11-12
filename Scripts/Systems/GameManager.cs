@@ -35,9 +35,14 @@ public static class GameManager {
 			await ModManager.DownloadMods(fullModsList);
 			
 			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 1.0, "Downloaded mods...");
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModRemoval", 0.0, "Removing mods...");
+
+			ModManager.UninstallMods(fullModsList);
+			
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModRemoval", 1.0, "Removed mods...");
 			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 0.0, "Installing mods...");
 
-			await ModManager.InstallMods(fullModsList);
+			ModManager.InstallMods(fullModsList);
 			
 			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 1.0, "Installed mods...");
 		}

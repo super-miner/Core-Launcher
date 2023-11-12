@@ -72,6 +72,10 @@ public static class FileUtil {
     public static void DeleteFile(string path) {
         File.Delete(path);
     }
+    
+    public static void DeleteDirectory(string path) {
+        Directory.Delete(path, true);
+    }
 
     public static bool DirectoryContains(string path, string file) {
         return File.Exists($"{path}\\{file}");
@@ -94,14 +98,16 @@ public static class FileUtil {
     }
     
     public static void CopyDirectory(string fromPath, string toPath) {
-        string parentPath = UpOneLevel(fromPath);
-        
-        foreach (string directoryPath in Directory.GetDirectories(parentPath, "*", SearchOption.AllDirectories)) {
-            Directory.CreateDirectory(directoryPath.Replace(parentPath, toPath));
+        if (!DirectoryExists(toPath)) {
+            CreateDirectory(toPath);
         }
         
-        foreach (string filePath in Directory.GetFiles(parentPath, "*.*",SearchOption.AllDirectories)) {
-            CopyFile(filePath, filePath.Replace(parentPath, toPath));
+        foreach (string directoryPath in Directory.GetDirectories(fromPath, "*", SearchOption.AllDirectories)) {
+            Directory.CreateDirectory(directoryPath.Replace(fromPath, toPath));
+        }
+        
+        foreach (string filePath in Directory.GetFiles(fromPath, "*.*",SearchOption.AllDirectories)) {
+            CopyFile(filePath, filePath.Replace(fromPath, toPath));
         }
     }
 
@@ -113,6 +119,10 @@ public static class FileUtil {
 
     public static string[] GetFiles(string path) {
         return Directory.GetFiles(path);
+    }
+
+    public static string[] GetDirectories(string path) {
+        return Directory.GetDirectories(path);
     }
 
     public static void UnzipToDirectory(string zipPath, string directoryPath) {

@@ -307,6 +307,10 @@ TotalPercent = 0.2
 script = ExtResource("18_ooe8h")
 TotalPercent = 0.4
 
+[node name="ModRemoval" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
+script = ExtResource("18_ooe8h")
+TotalPercent = 0.4
+
 [node name="ModInstalls" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
 script = ExtResource("18_ooe8h")
 TotalPercent = 0.4

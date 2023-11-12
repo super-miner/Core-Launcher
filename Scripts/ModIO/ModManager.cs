@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
@@ -25,6 +26,7 @@ public static class ModManager {
     
     private static readonly string _modsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
     private static readonly string _dependenciesListUrl = "https://api.mod.io/v1/games/5289/mods/{mod_id}/dependencies?api_key={api_key}";
+    private static readonly Regex _localModsRegex = new Regex(@"CL_Mod_(\d+)_(.+)");
     
     public static ModsListInfo ModsList = null;
     public static string ApiKey = "";
@@ -96,7 +98,7 @@ public static class ModManager {
         }
     }
 
-    public static async Task InstallMods(List<int> modsList) {
+    public static void InstallMods(List<int> modsList) {
         for (int i = 0; i < modsList.Count; i++) {
             int modId = modsList[i];
             ModInfo modInfo = GetModInfo(modId);
@@ -108,13 +110,38 @@ public static class ModManager {
                 continue;
             }
             
-            string installPath = GameManager.GetModsPath();
+            string installPath = $"{GameManager.GetModsPath()}/CL_Mod_{modInfo.Id}_{modInfo.Name}";
             
-            GD.Print($"Mod Manager: Installing mod to {installPath}.");
+            GD.Print($"Mod Manager: Installing {modInfo.Name} from {localPath} to {installPath}.");
             
             FileUtil.CopyDirectory(localPath, installPath);
 
-            GD.Print($"Mod Manager: Finished installing mod to {installPath}.");
+            GD.Print($"Mod Manager: Finished installing {modInfo.Name} from {localPath} to {installPath}.");
+        }
+    }
+    
+    public static void UninstallMods(List<int> modsList) {
+        string modsPath = GameManager.GetModsPath();
+        
+        foreach (string filePath in FileUtil.GetDirectories(modsPath)) {
+            Match match = _localModsRegex.Match(filePath);
+
+            if (!match.Success) {
+                continue;
+            }
+            
+            string modNumberString = match.Groups[1].ToString();
+            int.TryParse(modNumberString, out int modNumber);
+
+            if (modsList.Contains(modNumber)) {
+                continue;
+            }
+            
+            string modName = match.Groups[2].ToString();
+                    
+            FileUtil.DeleteDirectory(filePath);
+                    
+            GD.Print($"Mod Manager: Deleted mod {modName} from {filePath}.");
         }
     }
 
