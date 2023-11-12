@@ -70,12 +70,19 @@ public static class ModManager {
     }
     
     public static async Task DownloadMods(List<int> modsList) {
-        foreach (int modId in modsList) {
+        for (int i = 0; i < modsList.Count; i++) {
+            int modId = modsList[i];
             ModInfo modInfo = GetModInfo(modId);
             
-            InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Mods", 1.0, $"Downloading {modInfo.Name}...");
+            InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Mods", (double)i / modsList.Count, $"Downloading {modInfo.Name}...");
 
             if (!FileUtil.DirectoryExists(modInfo.GetCachePath())) {
+                string localPath = modInfo.GetCachePath();
+
+                if (FileUtil.FileExists(localPath)) {
+                    continue;
+                }
+                
                 string tempPath = $"{FileUtil.GetPath(PathType.AppData)}/Temp/ModTemp.zip";
                 
                 GD.Print($"Mod Manager: Downloading files for {modInfo.Name} ({modInfo.Id})...");
@@ -84,7 +91,7 @@ public static class ModManager {
                 
                 GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} ({modInfo.Id}), unzipping...");
                 
-                FileUtil.UnzipToDirectory(tempPath, modInfo.GetCachePath());
+                FileUtil.UnzipToDirectory(tempPath, localPath);
                 FileUtil.DeleteFile(tempPath);
                 
                 GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} ({modInfo.Id}).");

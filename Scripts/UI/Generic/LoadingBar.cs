@@ -33,14 +33,17 @@ public partial class LoadingBar : ProgressBar {
         _targetValueMutex.Unlock();
     }
     
-    public void SetValue(double value, string text) {
+    public void Reset() {
         _targetValueMutex.Lock();
         
         foreach (LoadingBarSegment segment in GodotUtil.GetChildrenWithType<LoadingBarSegment>(this)) {
-            segment.Percent = value;
+            _targetValueMutex.Unlock();
+            
+            SetValue(segment, 0.0, "");
+            Value = TargetValue;
+            
+            _targetValueMutex.Lock();
         }
-        
-        UpdateTargetValue();
         
         _targetValueMutex.Unlock();
     }
@@ -49,11 +52,19 @@ public partial class LoadingBar : ProgressBar {
         _targetValueMutex.Lock();
         
         LoadingBarSegment segment = GetSegment(segmentName);
-
+        
         if (segment == null) {
             GD.PrintErr($"Loading Bar: Could not find segment {segmentName}.");
             return;
         }
+        
+        _targetValueMutex.Unlock();
+        
+        SetValue(segment, value, text);
+    }
+    
+    public void SetValue(LoadingBarSegment segment, double value, string text) {
+        _targetValueMutex.Lock();
         
         segment.Percent = value;
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO.Compression;
+using System.Threading.Tasks;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.StoredData;
@@ -32,10 +33,14 @@ public static class GameManager {
 			
 			await ModManager.DownloadMods(fullModsList);
 			
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue(0.0, "");
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Mods", 1.0, "Downloaded mods...");
 		}
 		
 		OS.Execute($"{FileUtil.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetSteamPath()}, new Godot.Collections.Array());
+		
+		await Task.Delay(2000);
+			
+		InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.Reset();
 	}
 
 	public static string GetSteamPath() {
