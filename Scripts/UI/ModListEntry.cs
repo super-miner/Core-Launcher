@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
 using CoreLauncher.Scripts.UI.Generic;
@@ -18,16 +19,26 @@ public partial class ModListEntry : ItemListEntry {
 		_authorLabel.Text = $"By: {modInfo.Author.Username}";
 		_logoTexture.Texture = ImageTexture.CreateFromImage(modInfo.Logo.LogoImage);
 		
+		UpdateButtonState();
+	}
+
+	public async void UpdateButtonState() {
+		ModInfo modInfo = GetModInfo();
+		
 		SelectableItemListEntry selectableEntry = MainMenuManager.Instance.ProfileList.GetSelectedEntry();
 		if (selectableEntry is ProfileListEntry profileEntry) {
 			if (profileEntry.Mods.Contains(modInfo.Id)) {
 				_addButton.SetState("AddedButton");
 			}
-			else if (ModManager.GetDependencies(profileEntry.Mods).Contains(modInfo.Id)) {
-				_addButton.SetState("AddedAsDependencyButton");
-			}
 			else {
-				_addButton.SetState("NotAddedButton");
+				List<int> dependencies = await ModManager.GetDependencies(profileEntry.Mods);
+				
+				if (dependencies.Contains(modInfo.Id)) {
+					_addButton.SetState("AddedAsDependencyButton");
+				}
+				else {
+					_addButton.SetState("NotAddedButton");
+				}
 			}
 		}
 	}

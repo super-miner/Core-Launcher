@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
@@ -32,7 +33,7 @@ public static class ModManager {
     public static async void FetchModsList() {
         ModsList = null;
         
-        string jsonString = await FetchUtil.FetchString(GetUrl(UrlType.ModsList));
+        string jsonString = await FetchManager.FetchString(GetUrl(UrlType.ModsList));
         
         ModsList = JsonSerializer.Deserialize<ModsListInfo>(jsonString);
         await ModsList.Init();
@@ -72,7 +73,7 @@ public static class ModManager {
                 
                 GD.Print($"Mod Manager: Downloading files for {modInfo.Name} ({modInfo.Id})...");
                 
-                await FetchUtil.DownloadFile(modInfo.ModFile.Download.Url, tempPath);
+                await FetchManager.DownloadFile(modInfo.ModFile.Download.Url, tempPath);
                 
                 GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} ({modInfo.Id}), unzipping...");
                 
@@ -83,14 +84,16 @@ public static class ModManager {
         }
     }
 
-    public static List<int> GetDependencies(List<int> modsList) {
+    public static async Task<List<int>> GetDependencies(List<int> modsList) {
         List<int> result = new List<int>(modsList);
         
         foreach (int modId in modsList) {
             ModInfo modInfo = GetModInfo(modId);
 
             if (modInfo.HasDependencies) {
-                foreach (DependencyInfo dependency in modInfo.DependenciesList.Dependencies) {
+                DependencyListInfo dependenciesList = await modInfo.GetDependencies();
+                
+                foreach (DependencyInfo dependency in dependenciesList.Dependencies) {
                     if (!result.Contains(dependency.Id)) {
                         result.Add(dependency.Id);
                     }
@@ -99,7 +102,7 @@ public static class ModManager {
         }
 
         if (result.Count > modsList.Count) {
-            result = GetDependencies(result);
+            result = await GetDependencies(result);
         }
         
         return result;

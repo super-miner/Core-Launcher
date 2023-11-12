@@ -1,8 +1,11 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using CoreLauncher.Scripts.Systems.Fetch;
 using Godot;
 
 namespace CoreLauncher.Scripts;
@@ -14,19 +17,64 @@ public enum ImageFormat {
     Webp
 }
 
-public static class FetchUtil {
-    public static async Task<HttpResponseMessage> Fetch(string url) {
-        try {
-            using (System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient()) {
-                return await httpClient.GetAsync(url);
-            }
+public static class FetchManager {
+    public static long GlobalCooldownEndTime {
+        get {
+            _globalCooldownMutex.Lock();
+            long globalCooldownEndTime = _globalCooldownEndTime;
+            _globalCooldownMutex.Unlock();
+            return globalCooldownEndTime;
         }
-        catch(WebException exception) {
-            GD.PrintErr($"Error fetching url {url}.");
-            GD.PrintErr(exception.Message);
+        set {
+            _globalCooldownMutex.Lock();
+            _globalCooldownEndTime = value;
+            _globalCooldownMutex.Unlock();
         }
+    }
+    
+    private static Mutex _ongoingFetchesMutex = new Mutex();
+    private static List<FetchInfo> _ongoingFetches = new List<FetchInfo>();
 
-        return null;
+    private static Mutex _globalCooldownMutex = new Mutex();
+    private static long _globalCooldownEndTime = -1;
+
+    public static FetchInfo GetOngoingFetch(string url) {
+        _ongoingFetchesMutex.Lock();
+
+        FetchInfo output = _ongoingFetches.FirstOrDefault(fetch => fetch.Url == url);
+
+        _ongoingFetchesMutex.Unlock();
+
+        return output;
+    }
+    
+    public static FetchInfo CreateOutgoingFetch(string url) {
+        FetchInfo fetch = new FetchInfo(url);
+        return AddOutgoingFetch(fetch);
+    }
+
+    public static FetchInfo AddOutgoingFetch(FetchInfo fetch) {
+        _ongoingFetches.Add(fetch);
+        return fetch;
+    }
+
+    public static void RemoveOutgoingFetch(FetchInfo fetch) {
+        _ongoingFetches.Remove(fetch);
+    }
+
+    public static long GetGlobalCooldownTimeLeft() {
+        return GlobalCooldownEndTime - (long)Time.GetTicksMsec();
+    }
+    
+    public static async Task<HttpResponseMessage> Fetch(string url) {
+        FetchInfo fetch = GetOngoingFetch(url);
+
+        if (fetch != null) {
+            return await fetch.Fetch();
+        }
+        else {
+            return await CreateOutgoingFetch(url).Fetch();
+        }
     }
     
     public static async Task<string> FetchString(string url) {

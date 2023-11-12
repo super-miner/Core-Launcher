@@ -13,22 +13,26 @@ public class ModInfo {
     [JsonInclude] [JsonPropertyName("modfile")] public ModFileInfo ModFile;
     [JsonInclude] [JsonPropertyName("logo")] public LogoInfo Logo;
     [JsonInclude] [JsonPropertyName("dependencies")] public bool HasDependencies;
-    public DependencyListInfo DependenciesList;
+    
+    private DependencyListInfo _dependenciesList;
 
     public async Task Init() {
         await Logo.Init();
+    }
 
+    public async Task<DependencyListInfo> GetDependencies() {
         if (HasDependencies) {
-            string dependencyUrl = ModManager.GetUrl(UrlType.DependenciesList, this);
+            if (_dependenciesList == null) {
+                string dependencyUrl = ModManager.GetUrl(UrlType.DependenciesList, this);
             
-            GD.Print($"Mod Manager: Fetching dependencies from {dependencyUrl}.");
+                string jsonString = await FetchManager.FetchString(dependencyUrl);
+                _dependenciesList = JsonSerializer.Deserialize<DependencyListInfo>(jsonString);
+            }
             
-            string jsonString = await FetchUtil.FetchString(dependencyUrl);
-        
-            DependenciesList = JsonSerializer.Deserialize<DependencyListInfo>(jsonString);
-            
-            GD.Print($"Mod Manager: Fetched dependencies from {dependencyUrl}.");
+            return _dependenciesList;
         }
+
+        return null;
     }
 
     public string GetCachePath() {

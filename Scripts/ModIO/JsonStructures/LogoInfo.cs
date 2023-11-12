@@ -11,7 +11,7 @@ public class LogoInfo {
     public async Task Init() {
         GD.Print($"Mod Manager: Downloading mod logo from {LogoUrl}.");
         
-        LogoImage = await FetchUtil.FetchImage(LogoUrl);
+        LogoImage = await FetchManager.FetchImage(LogoUrl);
         
         GD.Print($"Mod Manager: Finished downloading mod logo from {LogoUrl}.");
     }

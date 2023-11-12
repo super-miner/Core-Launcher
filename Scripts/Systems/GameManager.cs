@@ -19,10 +19,10 @@ public static class GameManager {
 		StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
 	}
 	
-	public static void RunGame() {
+	public static async void RunGame() {
 		SelectableItemListEntry selectableEntry = MainMenuManager.Instance.ProfileList.GetSelectedEntry();
 		if (selectableEntry is ProfileListEntry profileEntry) {
-			List<int> fullModsList = ModManager.GetDependencies(profileEntry.Mods);
+			List<int> fullModsList = await ModManager.GetDependencies(profileEntry.Mods);
 			
 			ModManager.DownloadMods(fullModsList);
 		}
