@@ -10,18 +10,27 @@ public delegate void OnMainMenuManagerLoaded();
 public partial class MainMenuManager : Node {
     public static event OnMainMenuManagerLoaded MainMenuManagerLoadedEvent;
     
-    [Export] public ProfileList ProfileList = null;
+    [Export] public ProfileList ProfileList;
     [Export] public LoadingBar PlayProgressBar;
+    [Export] public TabContainer OptionsTabs;
 
     public override void _EnterTree() {
         InstanceManager.AddInstance(this);
+        
+        ProfileList.ItemSelectedEvent += OnItemSelected;
+    }
+    
+    public override void _Ready() {
+        MainMenuManagerLoadedEvent?.Invoke();
     }
 
     public override void _ExitTree() {
+        ProfileList.ItemSelectedEvent -= OnItemSelected;
+        
         InstanceManager.RemoveInstance(this);
     }
 
-    public override void _Ready() {
-        MainMenuManagerLoadedEvent?.Invoke();
+    private void OnItemSelected() {
+        OptionsTabs.CurrentTab = 0;
     }
 }

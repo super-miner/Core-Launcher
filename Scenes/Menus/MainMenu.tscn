@@ -33,7 +33,7 @@ unicode = 112
 [sub_resource type="Shortcut" id="Shortcut_aaq3q"]
 events = [SubResource("InputEventKey_ifb3j")]
 
-[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "PlayProgressBar")]
+[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "PlayProgressBar", "OptionsTabs")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -42,6 +42,7 @@ grow_vertical = 2
 script = ExtResource("1_qb7sc")
 ProfileList = NodePath("MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles")
 PlayProgressBar = NodePath("MainConatiner/GameBar/ProgressBar")
+OptionsTabs = NodePath("MainConatiner/CentralMenu/MainScreen/Margin/Tabs")
 
 [node name="MainConatiner" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -170,7 +171,6 @@ layout_mode = 2
 theme = ExtResource("1_81ept")
 
 [node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -208,6 +208,7 @@ script = ExtResource("11_bg25y")
 SettingName = "Name"
 
 [node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" node_paths=PackedStringArray("ModList", "_modsLoadedLabel", "_showLibraryModsCheckBox")]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
