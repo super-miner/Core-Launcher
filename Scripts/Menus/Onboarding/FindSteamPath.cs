@@ -25,7 +25,7 @@ public partial class FindSteamPath : OnboardingPage {
         
         _progressBar.SetValue(1.0, "Set path.");
 
-        await Task.Delay(nextPageDelay);
+        await Task.Delay(NextPageDelay);
         
         CallDeferred("Finish");
     }

@@ -20,6 +20,7 @@ public delegate void OnModInfoLoaded();
 
 public static class ModManager {
     public static event OnModInfoLoaded ModInfoLoadedEvent;
+    public static bool HasLoaded = false;
     
     private static readonly string _modsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
     private static readonly string _dependenciesListUrl = "https://api.mod.io/v1/games/5289/mods/{mod_id}/dependencies?api_key={api_key}";
@@ -39,7 +40,8 @@ public static class ModManager {
         
         ModsList = JsonSerializer.Deserialize<ModsListInfo>(jsonString);
         await ModsList.Init();
-        
+
+        HasLoaded = true;
         ModInfoLoadedEvent?.Invoke();
     }
     

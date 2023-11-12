@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using CoreLauncher.Scripts.Menus.Main;
+using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
@@ -12,7 +13,7 @@ public partial class ProfileSettingsOption : Node {
     [Export] public string SettingName = "";
     
     public bool GetSetting<T>(ref T setting) {
-        ItemListEntry selectedEntry = MainMenuManager.Instance.ProfileList.GetSelectedEntry();
+        ItemListEntry selectedEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
 
         if (selectedEntry is ProfileListEntry selectedProfileEntry) {
             string methodName = "Get" + SettingName;
@@ -45,7 +46,7 @@ public partial class ProfileSettingsOption : Node {
     }
 
     public void SetSetting(object setting) {
-        ItemListEntry selectedEntry = MainMenuManager.Instance.ProfileList.GetSelectedEntry();
+        ItemListEntry selectedEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
 
         if (selectedEntry != null && selectedEntry is ProfileListEntry selectedProfileEntry) {
             string methodName = "Set" + SettingName;

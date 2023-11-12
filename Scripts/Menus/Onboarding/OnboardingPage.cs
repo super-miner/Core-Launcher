@@ -3,7 +3,7 @@ using Godot;
 namespace CoreLauncher.Scripts.Menus.Onboarding; 
 
 public partial class OnboardingPage : Control {
-    [Export] public int nextPageDelay = 500;
+    [Export] public int NextPageDelay = 500;
     
     public OnboardingManager OnboardingManager = null;
     

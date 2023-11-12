@@ -1,5 +1,6 @@
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
+using CoreLauncher.Scripts.Systems;
 using Godot;
 using Godot.Collections;
 
@@ -14,8 +15,8 @@ public partial class OnboardingManager : Node {
     private Node _currentPage = null;
     private int _currentPageNum = 0;
 
-    public override void _Ready() {
-        SetPageNum(_currentPageNum);
+    public override void _EnterTree() {
+        InstanceManager.AddInstance(this);
         
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
@@ -25,11 +26,17 @@ public partial class OnboardingManager : Node {
         }
     }
 
+    public override void _Ready() {
+        SetPageNum(_currentPageNum);
+    }
+
     public override void _ExitTree() {
         StoredDataManager.DeserializeStoredDataEvent -= OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent -= OnSerializeStoredData;
         
         OnSerializeStoredData();
+        
+        InstanceManager.RemoveInstance(this);
     }
 
     public void MoveForward(int amount = 1) {
@@ -45,7 +52,7 @@ public partial class OnboardingManager : Node {
             OnboardingComplete = true;
             StoredDataManager.Serialize();
             
-            MenuManager.Instance.SetActiveMenu(0);
+            InstanceManager.GetInstance<MenuManager>().SetActiveMenu(0);
         }
         else {
             _currentPageNum = pageNum;

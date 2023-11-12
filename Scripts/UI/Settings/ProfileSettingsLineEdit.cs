@@ -23,7 +23,7 @@ public partial class ProfileSettingsLineEdit : LineEdit {
     }
 
     public void OnUIManagerLoaded() {
-        MainMenuManager.Instance.ProfileList.ItemSelectedEvent += OnProfileSelected;
+        InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent += OnProfileSelected;
     }
 
     public void OnProfileSelected() {

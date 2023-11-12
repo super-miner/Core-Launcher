@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
+using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
+using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
@@ -16,8 +18,14 @@ public partial class LoadingManager : Control {
     [Export] private int _nextPageDelay = 500;
     private int _stepsComplete;
     
-    public override void _Ready() {
+    public override void _EnterTree() {
+        InstanceManager.AddInstance(this);
+        
         ModManager.ModInfoLoadedEvent += OnModInfoLoaded;
+        
+        if (ModManager.HasLoaded) {
+            OnModInfoLoaded();
+        }
         
         StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
@@ -37,6 +45,8 @@ public partial class LoadingManager : Control {
         StoredDataManager.SerializeStoredDataEvent -= OnSerializeStoredData;
         
         OnSerializeStoredData();
+        
+        InstanceManager.RemoveInstance(this);
     }
 
     public void StepComplete() {
@@ -56,7 +66,7 @@ public partial class LoadingManager : Control {
     }
 
     public void Finish() {
-        MenuManager.Instance.SetActiveMenu(2);
+        InstanceManager.GetInstance<MenuManager>().SetActiveMenu(2);
     }
 
     private void OnModInfoLoaded() {
@@ -76,7 +86,7 @@ public partial class LoadingManager : Control {
             StepComplete();
         }
         else {
-            MenuManager.Instance.SetActiveMenu(1);
+            InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
         }
     }
     

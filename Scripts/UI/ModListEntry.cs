@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
+using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
@@ -26,7 +27,7 @@ public partial class ModListEntry : ItemListEntry {
 	public async void UpdateButtonState() {
 		ModInfo modInfo = GetModInfo();
 		
-		SelectableItemListEntry selectableEntry = MainMenuManager.Instance.ProfileList.GetSelectedEntry();
+		SelectableItemListEntry selectableEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
 		if (selectableEntry is ProfileListEntry profileEntry) {
 			if (profileEntry.Mods.Contains(modInfo.Id)) {
 				_addButton.SetState("AddedButton");

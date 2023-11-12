@@ -18,7 +18,7 @@ public partial class GetModIOAPIKey : OnboardingPage {
         
         _progressBar.SetValue(1.0, "Set API Key.");
         
-        await Task.Delay(nextPageDelay);
+        await Task.Delay(NextPageDelay);
         
         CallDeferred("Finish");
     }

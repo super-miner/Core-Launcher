@@ -21,7 +21,7 @@ public static class GameManager {
 	}
 	
 	public static async void RunGame() {
-		SelectableItemListEntry selectableEntry = MainMenuManager.Instance.ProfileList.GetSelectedEntry();
+		SelectableItemListEntry selectableEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
 		if (selectableEntry is ProfileListEntry profileEntry) {
 			List<int> fullModsList = await ModManager.GetDependencies(profileEntry.Mods);
 			

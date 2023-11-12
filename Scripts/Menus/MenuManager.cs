@@ -1,29 +1,23 @@
-using System.Diagnostics;
+using CoreLauncher.Scripts.Systems;
 using Godot;
 using Godot.Collections;
 
 namespace CoreLauncher.Scripts.Menus; 
 
 public partial class MenuManager : Control {
-    public static MenuManager Instance = null;
-    
     [Export] private int _activeMenuIndex = 0;
     [Export] private Array<PackedScene> _menuScenes = new Array<PackedScene>();
     private Node _activeMenu = null;
 
     public override void _EnterTree() {
-        
+        InstanceManager.AddInstance(this);
     }
-    
+
+    public override void _ExitTree() {
+        InstanceManager.RemoveInstance(this);
+    }
+
     public override void _Ready() {
-        if (Instance == null) {
-            Instance = this;
-        }
-        else {
-            QueueFree();
-            return;
-        }
-        
         SetActiveMenu(_activeMenuIndex);
     }
 
