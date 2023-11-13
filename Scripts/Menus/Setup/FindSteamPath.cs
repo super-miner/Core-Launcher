@@ -11,7 +11,7 @@ public partial class FindSteamPath : SetupPage {
     [Export] private LoadingBar _progressBar = null;
     
     public override void _Ready() {
-        _steamPathLineEdit.SetText(GameManager.GetSteamPath());
+        _steamPathLineEdit.SetText(FileUtil.GetPath(PathType.Steam));
     }
 
     public async void Continue() {

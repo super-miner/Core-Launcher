@@ -53,20 +53,15 @@ public static class GameManager {
 			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 1.0, "Installed mods...");
 		}
 		
-		OS.Execute($"{FileUtil.GetPath(PathType.Project)}/Commands/RunGame.bat", new [] {GetSteamPath()}, new Godot.Collections.Array());
+		OS.Execute($"{FileUtil.GetPath(PathType.Steam)}/steam.exe", new [] {"-applaunch", "1621690"}, new Godot.Collections.Array());
 		
 		await Task.Delay(2000);
 			
 		InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.Reset();
 	}
 
-	public static string GetSteamPath() {
-		string steamPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath;
-		return steamPath != "" ? steamPath : FileUtil.GetPath(PathType.Steam);
-	}
-
 	public static string GetCoreKeeperPath() {
-		return GetSteamPath() + CoreKeeperRelativePath;
+		return FileUtil.GetPath(PathType.Steam) + CoreKeeperRelativePath;
 	}
 	
 	public static string GetModsPath() {

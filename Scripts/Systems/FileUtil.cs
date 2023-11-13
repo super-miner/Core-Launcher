@@ -21,13 +21,18 @@ public static class FileUtil {
             case PathType.Project:
                 return ProjectSettings.GlobalizePath("res://");
             case PathType.Steam:
-                object pathObject = RegistryUtil.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
-		
-                if (pathObject is string pathString) {
-                    return pathString;
+                if (!string.IsNullOrEmpty(GameManager.SteamPath)) {
+                    return GameManager.SteamPath;
                 }
-                GD.PrintErr("Could not find steam path in the registry.");
-                return "";
+                else {
+                    object pathObject = RegistryUtil.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
+		
+                    if (pathObject is string pathString) {
+                        return pathString;
+                    }
+                    GD.PrintErr("Could not find steam path in the registry.");
+                    return "";
+                }
             default:
                 GD.PrintErr($"The case for GetPath({pathType.ToString()}) has not been implemented.");
                 return "";
