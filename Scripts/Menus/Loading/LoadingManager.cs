@@ -32,6 +32,12 @@ public partial class LoadingManager : Control {
 		}
 	}
 
+	public override void _Ready() {
+		if (SetupManager.SetupComplete) {
+			ModManager.FetchModsList();
+		}
+	}
+
 	public override void _ExitTree() {
 		ModManager.ModInfoLoadedEvent -= OnModInfoLoaded;
 		

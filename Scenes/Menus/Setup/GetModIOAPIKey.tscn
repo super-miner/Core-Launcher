@@ -117,8 +117,13 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_rr5wl")
 
+[node name="Validation" type="Node" parent="ProgressBar"]
+script = ExtResource("5_wsiam")
+TotalPercent = 0.3
+
 [node name="ApiKey" type="Node" parent="ProgressBar"]
 script = ExtResource("5_wsiam")
+TotalPercent = 0.7
 
 [connection signal="meta_clicked" from="VBox/Desc" to="VBox/Desc" method="OnMetaPressed"]
 [connection signal="pressed" from="VBox/Margin/ContinueButton" to="." method="Continue"]

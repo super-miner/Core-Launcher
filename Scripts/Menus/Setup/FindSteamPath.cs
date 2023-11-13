@@ -16,6 +16,7 @@ public partial class FindSteamPath : SetupPage {
 
     public async void Continue() {
         if (!_steamPathLineEdit.PathIsValid(out string outMsg)) {
+            _progressBar.SetValue("SteamPath", 0.0, "Invalid Steam path...");
             return;
         }
         

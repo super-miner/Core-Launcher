@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -31,7 +33,6 @@ public static class ModManager {
     
     public static ModsListInfo ModsList = null;
     public static string ApiKey = "";
-    public static bool SetupComplete = false;
 
     public static void Init() {
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
@@ -67,6 +68,21 @@ public static class ModManager {
         if (!string.IsNullOrEmpty(ApiKey) && SetupManager.SetupComplete) {
             FetchModsList();
         }
+    }
+
+    public static async Task<bool> ValidateApiKey(string apiKey) {
+        string tempApiKey = ApiKey;
+        ApiKey = apiKey;
+        
+        HttpResponseMessage testMessageResponse = await FetchManager.Fetch(GetUrl(UrlType.ModsList));
+        
+        ApiKey = tempApiKey;
+        
+        if (testMessageResponse.StatusCode == HttpStatusCode.Unauthorized) {
+            return false;
+        }
+
+        return true;
     }
 
     public static ModInfo GetModInfo(int modId) {
