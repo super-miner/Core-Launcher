@@ -1,9 +1,10 @@
+LinkText
+VBoxContainer
+MarginContainer
 RichTextLabel
 HBoxContainer
-VBoxContainer
 Container
 Label
-MarginContainer
 StateButton
 Button
 CheckBox
@@ -30,4 +31,3 @@ MenuBar
 VScrollBar
 ColorRect
 PanelContainer
-ReferenceRect

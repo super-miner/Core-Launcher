@@ -10,7 +10,6 @@ namespace CoreLauncher.Scripts.Menus.Loading;
 
 public partial class LoadingManager : Control {
 	[Export] public LoadingBar ProgressBar;
-	public bool OnboardingComplete = false;
 	
 	[Export] private int _totalSteps;
 	[Export] private int _startDelay = 500;
@@ -27,11 +26,8 @@ public partial class LoadingManager : Control {
 		}
 		
 		StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
-		StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
-		StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
 		
 		if (StoredDataManager.HasDeserialized) {
-			OnDeserializeStoredData();
 			OnStoredDataDeserialized();
 		}
 	}
@@ -40,10 +36,6 @@ public partial class LoadingManager : Control {
 		ModManager.ModInfoLoadedEvent -= OnModInfoLoaded;
 		
 		StoredDataManager.StoredDataDeserializedEvent -= OnStoredDataDeserialized;
-		StoredDataManager.DeserializeStoredDataEvent -= OnDeserializeStoredData;
-		StoredDataManager.SerializeStoredDataEvent -= OnSerializeStoredData;
-		
-		OnSerializeStoredData();
 		
 		InstanceManager.RemoveInstance(this);
 	}
@@ -81,19 +73,11 @@ public partial class LoadingManager : Control {
 		
 		ProgressBar.SetValue("AppData", 1.0, "Loaded configs...");
 		
-		if (OnboardingComplete) {
+		if (SetupManager.SetupComplete) {
 			StepComplete();
 		}
 		else {
 			InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
 		}
-	}
-	
-	private void OnDeserializeStoredData() {
-		OnboardingComplete = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().OnboardingComplete;
-	}
-
-	private void OnSerializeStoredData() {
-		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().OnboardingComplete = OnboardingComplete;
 	}
 }

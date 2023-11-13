@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/App.cs" id="1_bgb4b"]
 [ext_resource type="PackedScene" uid="uid://cdn0bnuwtnxho" path="res://Scenes/Menus/LoadingMenu.tscn" id="2_lkv5j"]
 [ext_resource type="Script" path="res://Scripts/Menus/MenuManager.cs" id="3_qdslm"]
-[ext_resource type="PackedScene" uid="uid://dgwvoq2x41cym" path="res://Scenes/Menus/Onboarding/OnboardingMenu.tscn" id="4_ofekc"]
+[ext_resource type="PackedScene" uid="uid://dgwvoq2x41cym" path="res://Scenes/Menus/Setup/SetupMenu.tscn" id="4_ofekc"]
 [ext_resource type="PackedScene" uid="uid://c1n73swpkdwjh" path="res://Scenes/Menus/MainMenu.tscn" id="5_wwahe"]
 
 [node name="UI" type="Control"]

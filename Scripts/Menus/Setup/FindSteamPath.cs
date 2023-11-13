@@ -4,9 +4,9 @@ using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
-namespace CoreLauncher.Scripts.Menus.Onboarding; 
+namespace CoreLauncher.Scripts.Menus.Setup; 
 
-public partial class FindSteamPath : OnboardingPage {
+public partial class FindSteamPath : SetupPage {
     [Export] private FileLineEdit _steamPathLineEdit = null;
     [Export] private LoadingBar _progressBar = null;
     

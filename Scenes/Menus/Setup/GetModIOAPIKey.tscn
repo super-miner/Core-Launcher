@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyi5lvpy0khw4"]
+[gd_scene load_steps=7 format=3 uid="uid://cyi5lvpy0khw4"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/Onboarding/GetModIOAPIKey.cs" id="1_28c43"]
+[ext_resource type="Script" path="res://Scripts/Menus/Setup/GetModIOAPIKey.cs" id="1_28c43"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_rr5wl"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="3_upx1r"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LinkText.cs" id="4_obl7s"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="4_s5j1f"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="5_wsiam"]
 
@@ -29,15 +30,18 @@ alignment = 1
 [node name="Title" type="Label" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("3_upx1r")
+theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 theme_override_font_sizes/font_size = 80
 text = "API Key"
 
 [node name="Desc" type="RichTextLabel" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("2_rr5wl")
+theme_override_colors/default_color = Color(0.270588, 0.25098, 0.231373, 1)
 bbcode_enabled = true
-text = "Input your Mod IO api key. This can be found [color=#0088ff][url=\"https://mod.io/apikey]here[/url][/color]."
+text = "Input your Mod IO api key. This can be found [color=#0088ff][url=https://mod.io/apikey]here[/url][/color]."
 fit_content = true
+script = ExtResource("4_obl7s")
 
 [node name="Description" type="VBoxContainer" parent="VBox"]
 visible = false
@@ -54,7 +58,7 @@ theme = ExtResource("2_rr5wl")
 text = "Input your Mod IO api key. This can be found "
 
 [node name="Separator" type="Container" parent="VBox"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="APIKeyLabel" type="Label" parent="VBox"]
@@ -116,4 +120,5 @@ theme = ExtResource("2_rr5wl")
 [node name="ApiKey" type="Node" parent="ProgressBar"]
 script = ExtResource("5_wsiam")
 
+[connection signal="meta_clicked" from="VBox/Desc" to="VBox/Desc" method="OnMetaPressed"]
 [connection signal="pressed" from="VBox/Margin/ContinueButton" to="." method="Continue"]

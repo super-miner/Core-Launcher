@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bv75ghh0fu0dp"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/Onboarding/FindSteamPath.cs" id="1_hesbn"]
+[ext_resource type="Script" path="res://Scripts/Menus/Setup/FindSteamPath.cs" id="1_hesbn"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_jcuxh"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/FileLineEdit.cs" id="3_g12u8"]
 [ext_resource type="Texture2D" uid="uid://udrjjhyr7euf" path="res://Images/Icons/File.png" id="4_ye4vh"]
@@ -29,23 +29,25 @@ layout_mode = 2
 anchor_left = 0.312
 anchor_right = 0.687
 anchor_bottom = 1.0
-offset_left = 0.799988
-offset_right = 0.799927
+offset_left = -0.200012
+offset_right = 5.80005
 alignment = 1
 
 [node name="Title" type="Label" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("8_qlrd4")
-theme_override_font_sizes/font_size = 80
+theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
+theme_override_font_sizes/font_size = 70
 text = "Steam Path"
 
 [node name="Description" type="Label" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("2_jcuxh")
+theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 text = "Let Core Launcher know where Steam is located on your device."
 
 [node name="Separator" type="Container" parent="VBox"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBox"]

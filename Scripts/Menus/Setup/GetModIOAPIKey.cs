@@ -5,9 +5,9 @@ using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
-namespace CoreLauncher.Scripts.Menus.Onboarding; 
+namespace CoreLauncher.Scripts.Menus.Setup; 
 
-public partial class GetModIOAPIKey : OnboardingPage {
+public partial class GetModIOAPIKey : SetupPage {
     [Export] private LoadingBar _progressBar = null;
     [Export] private LineEdit _apiKeyLineEdit = null;
     

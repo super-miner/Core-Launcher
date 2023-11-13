@@ -22,6 +22,7 @@ public delegate void OnModInfoLoaded();
 
 public static class ModManager {
     public static event OnModInfoLoaded ModInfoLoadedEvent;
+    
     public static bool HasLoaded = false;
     
     private static readonly string _modsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
@@ -30,6 +31,7 @@ public static class ModManager {
     
     public static ModsListInfo ModsList = null;
     public static string ApiKey = "";
+    public static bool SetupComplete = false;
 
     public static void Init() {
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
@@ -62,7 +64,7 @@ public static class ModManager {
     public static void SetApiKey(string apiKey) {
         ApiKey = apiKey;
 
-        if (!string.IsNullOrEmpty(ApiKey)) {
+        if (!string.IsNullOrEmpty(ApiKey) && SetupManager.SetupComplete) {
             FetchModsList();
         }
     }

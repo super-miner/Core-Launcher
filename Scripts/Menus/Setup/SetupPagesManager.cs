@@ -4,11 +4,9 @@ using CoreLauncher.Scripts.Systems;
 using Godot;
 using Godot.Collections;
 
-namespace CoreLauncher.Scripts.Menus.Onboarding; 
+namespace CoreLauncher.Scripts.Menus.Setup; 
 
-public partial class OnboardingManager : Node {
-    public bool OnboardingComplete = false;
-    
+public partial class SetupPagesManager : Node {
     [Export] private Array<PackedScene> _pages = new Array<PackedScene>();
     [Export] private PackedScene _mainMenuScene;
 
@@ -17,13 +15,6 @@ public partial class OnboardingManager : Node {
 
     public override void _EnterTree() {
         InstanceManager.AddInstance(this);
-        
-        StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
-        StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
-        
-        if (StoredDataManager.HasDeserialized) {
-            OnDeserializeStoredData();
-        }
     }
 
     public override void _Ready() {
@@ -31,11 +22,6 @@ public partial class OnboardingManager : Node {
     }
 
     public override void _ExitTree() {
-        StoredDataManager.DeserializeStoredDataEvent -= OnDeserializeStoredData;
-        StoredDataManager.SerializeStoredDataEvent -= OnSerializeStoredData;
-        
-        OnSerializeStoredData();
-        
         InstanceManager.RemoveInstance(this);
     }
 
@@ -49,7 +35,7 @@ public partial class OnboardingManager : Node {
         }
         
         if (pageNum >= _pages.Count) {
-            OnboardingComplete = true;
+            SetupManager.SetupComplete = true;
             StoredDataManager.Serialize();
             
             InstanceManager.GetInstance<MenuManager>().SetActiveMenu(0);
@@ -60,17 +46,9 @@ public partial class OnboardingManager : Node {
             _currentPage = _pages[_currentPageNum].Instantiate();
             AddChild(_currentPage);
 
-            if (_currentPage is OnboardingPage currentOnboardingPage) {
-                currentOnboardingPage.OnboardingManager = this;
+            if (_currentPage is SetupPage currentSetupPage) {
+                currentSetupPage.SetupPagesManager = this;
             }
         }
-    }
-    
-    private void OnDeserializeStoredData() {
-        OnboardingComplete = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().OnboardingComplete;
-    }
-
-    private void OnSerializeStoredData() {
-        StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().OnboardingComplete = OnboardingComplete;
     }
 }
