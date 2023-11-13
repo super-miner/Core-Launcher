@@ -40,7 +40,13 @@ public partial class ProfileList : SelectableItemList {
     }
     
     private void OnDeserializeStoredData() {
-        foreach (StoredProfileListEntry storedProfileEntry in StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles) {
+        List<StoredProfileListEntry> storedProfiles = StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles;
+
+        if (storedProfiles.Count == 0) {
+            storedProfiles.Add(new StoredProfileListEntry());
+        }
+        
+        foreach (StoredProfileListEntry storedProfileEntry in storedProfiles) {
             ProfileListEntry entry = AddEntry(false);
 
             entry.SetName(storedProfileEntry.Name);

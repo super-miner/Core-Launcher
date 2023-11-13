@@ -18,7 +18,7 @@ public partial class ProfileListEntry : SelectableItemListEntry {
     public void SetName(string name) {
         Name = name;
 
-        if (Name != "") {
+        if (!string.IsNullOrEmpty(Name)) {
             _nameText.Text = Name;
         }
         else {
