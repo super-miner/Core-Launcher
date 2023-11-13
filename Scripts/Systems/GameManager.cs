@@ -24,6 +24,12 @@ public static class GameManager {
 	
 	public static async void RunGame() {
 		SelectableItemListEntry selectableEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
+
+		if (selectableEntry == null) {
+			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "No profile was selected...");
+			return;
+		}
+		
 		if (selectableEntry is ProfileListEntry profileEntry) {
 			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "Finding dependencies...");
 			

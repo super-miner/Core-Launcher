@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.StoredData.StoredDataTypes;
+using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 using ItemList = CoreLauncher.Scripts.UI.Generic.ItemList;
@@ -28,6 +30,10 @@ public partial class ProfileList : SelectableItemList {
     public new ProfileListEntry AddEntry(bool select = true) {
         ItemListEntry entry = base.AddEntry(select);
 
+        if (Entries.Count == 1) {
+            InstanceManager.GetInstance<MainMenuManager>().OptionsTabs.Visible = true;
+        }
+
         if (entry is ProfileListEntry profileEntry) {
             return profileEntry;
         }
@@ -36,6 +42,14 @@ public partial class ProfileList : SelectableItemList {
             
             entry.QueueFree();
             return null;
+        }
+    }
+
+    public override void RemoveEntry(ItemListEntry entry) {
+        base.RemoveEntry(entry);
+        
+        if (Entries.Count == 0) {
+            InstanceManager.GetInstance<MainMenuManager>().OptionsTabs.Visible = false;
         }
     }
     

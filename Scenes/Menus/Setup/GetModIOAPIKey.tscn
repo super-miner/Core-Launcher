@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cyi5lvpy0khw4"]
+[gd_scene load_steps=8 format=3 uid="uid://cyi5lvpy0khw4"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/Setup/GetModIOAPIKey.cs" id="1_28c43"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="2_rr5wl"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="3_upx1r"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LinkText.cs" id="4_obl7s"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="4_s5j1f"]
+[ext_resource type="Texture2D" uid="uid://db6qafesh0kp2" path="res://Images/ApiKeyInfo.png" id="5_2wxbc"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="5_wsiam"]
 
 [node name="GetModIOAPIKey" type="Control" node_paths=PackedStringArray("_progressBar", "_apiKeyLineEdit")]
@@ -24,7 +25,8 @@ anchor_left = 0.312
 anchor_right = 0.687
 anchor_bottom = 1.0
 offset_left = 0.799988
-offset_right = 0.799927
+offset_right = -0.200073
+offset_bottom = -1.0
 alignment = 1
 
 [node name="Title" type="Label" parent="VBox"]
@@ -34,31 +36,32 @@ theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 theme_override_font_sizes/font_size = 80
 text = "API Key"
 
-[node name="Desc" type="RichTextLabel" parent="VBox"]
+[node name="Description" type="RichTextLabel" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("2_rr5wl")
 theme_override_colors/default_color = Color(0.270588, 0.25098, 0.231373, 1)
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "Input your Mod IO api key. This can be found [color=#0088ff][url=https://mod.io/apikey]here[/url][/color]."
 fit_content = true
 script = ExtResource("4_obl7s")
 
-[node name="Description" type="VBoxContainer" parent="VBox"]
-visible = false
+[node name="Separator1" type="Container" parent="VBox"]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
-theme_override_constants/separation = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBox/Description"]
+[node name="ApiKeyVisual" type="MarginContainer" parent="VBox"]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/margin_left = -50
+theme_override_constants/margin_right = -50
 
-[node name="Text" type="Label" parent="VBox/Description/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBox/ApiKeyVisual"]
 layout_mode = 2
-theme = ExtResource("2_rr5wl")
-text = "Input your Mod IO api key. This can be found "
+texture = ExtResource("5_2wxbc")
+expand_mode = 5
 
-[node name="Separator" type="Container" parent="VBox"]
-custom_minimum_size = Vector2(0, 30)
+[node name="Separator2" type="Container" parent="VBox"]
+custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 
 [node name="APIKeyLabel" type="Label" parent="VBox"]
@@ -125,5 +128,5 @@ TotalPercent = 0.3
 script = ExtResource("5_wsiam")
 TotalPercent = 0.7
 
-[connection signal="meta_clicked" from="VBox/Desc" to="VBox/Desc" method="OnMetaPressed"]
+[connection signal="meta_clicked" from="VBox/Description" to="VBox/Description" method="OnMetaPressed"]
 [connection signal="pressed" from="VBox/Margin/ContinueButton" to="." method="Continue"]
