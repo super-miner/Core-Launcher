@@ -26,6 +26,37 @@ offset_left = 0.799988
 offset_right = 0.799927
 alignment = 1
 
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_upx1r")
+theme_override_font_sizes/font_size = 80
+text = "API Key"
+
+[node name="Desc" type="RichTextLabel" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("2_rr5wl")
+bbcode_enabled = true
+text = "Input your Mod IO api key. This can be found [color=#0088ff][url=\"https://mod.io/apikey]here[/url][/color]."
+fit_content = true
+
+[node name="Description" type="VBoxContainer" parent="VBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox/Description"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Text" type="Label" parent="VBox/Description/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_rr5wl")
+text = "Input your Mod IO api key. This can be found "
+
+[node name="Separator" type="Container" parent="VBox"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
 [node name="APIKeyLabel" type="Label" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("2_rr5wl")
