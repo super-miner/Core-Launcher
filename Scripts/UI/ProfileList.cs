@@ -6,7 +6,6 @@ using CoreLauncher.Scripts.StoredData.StoredDataTypes;
 using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
-using ItemList = CoreLauncher.Scripts.UI.Generic.ItemList;
 
 namespace CoreLauncher.Scripts.UI;
 
@@ -66,8 +65,9 @@ public partial class ProfileList : SelectableItemList {
             entry.SetName(storedProfileEntry.Name);
             entry.Mods = storedProfileEntry.Mods ?? new List<int>();
         }
-        
-        SetSelectedEntry(StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().SelectedEntry);
+
+        int selectedEntry = StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().SelectedEntry;
+        SetSelectedEntry(selectedEntry >= 0 ? selectedEntry : 0);
     }
 
     private void OnSerializeStoredData() {

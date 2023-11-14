@@ -1,3 +1,5 @@
+Control
+Button
 MarginContainer
 VBoxContainer
 TextureRect
@@ -7,11 +9,9 @@ HBoxContainer
 Container
 Label
 StateButton
-Button
 CheckBox
 CheckButton
 LoadingBarSegment
-Control
 Panel
 LineEdit
 LoadingBar

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=26 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -16,13 +16,13 @@
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs" id="10_mm626"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsOption.cs" id="11_bg25y"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="11_tprdv"]
+[ext_resource type="Script" path="res://Scripts/Menus/Main/Tabs/TabsManager.cs" id="12_4bc7j"]
 [ext_resource type="Script" path="res://Scripts/UI/ModList.cs" id="12_e3elj"]
 [ext_resource type="Script" path="res://Scripts/Menus/Main/Tabs/ModsTabManager.cs" id="12_jy5iy"]
 [ext_resource type="PackedScene" uid="uid://c76en0nxy0bs6" path="res://Scenes/ListEntires/ModEntry.tscn" id="13_4fbd0"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="17_chpd6"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="18_ooe8h"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arvy2"]
+[ext_resource type="Texture2D" uid="uid://veuu33emiei4" path="res://Images/Icons/Settings.png" id="18_qlm2n"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ifb3j"]
 device = -1
@@ -146,15 +146,16 @@ layout_mode = 1
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MainScreen" type="PanelContainer" parent="MainConatiner/CentralMenu"]
+[node name="MainScreen" type="Control" parent="MainConatiner/CentralMenu"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_arvy2")
 
 [node name="BackgroundVignette" type="NinePatchRect" parent="MainConatiner/CentralMenu/MainScreen"]
 modulate = Color(0, 0, 0, 0.235294)
 z_index = -99
 layout_mode = 2
+offset_right = 1300.0
+offset_bottom = 784.0
 texture = ExtResource("2_3jvfp")
 region_rect = Rect2(0, 0, 250, 250)
 patch_margin_left = 124
@@ -164,11 +165,14 @@ patch_margin_bottom = 124
 
 [node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen"]
 layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
 theme_override_constants/margin_top = 10
 
 [node name="Tabs" type="TabContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin"]
 layout_mode = 2
 theme = ExtResource("1_81ept")
+script = ExtResource("12_4bc7j")
 
 [node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
 layout_mode = 2
@@ -268,6 +272,19 @@ theme_override_constants/separation = 10
 script = ExtResource("12_e3elj")
 EntryScene = ExtResource("13_4fbd0")
 
+[node name="OptionsButton" type="Button" parent="MainConatiner/CentralMenu/MainScreen"]
+z_index = 100
+layout_mode = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -47.0
+offset_right = 47.0
+offset_bottom = -12.0
+focus_mode = 0
+theme = ExtResource("1_81ept")
+icon = ExtResource("18_qlm2n")
+
 [node name="GameBar" type="ColorRect" parent="MainConatiner"]
 z_index = 100
 custom_minimum_size = Vector2(0, 116)
@@ -362,4 +379,5 @@ stretch_mode = 6
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
+[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" method="OnTogglePressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]

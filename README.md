@@ -12,7 +12,7 @@ Godot provides lots of useful features -- especially for ui. Godot is also very 
 - Create system for mods to provide extra data in their descriptions
 - Allow use with the Core Keeper Dedicated Server
 - Add option to view mods in a grid instead of a list
-- Add a button to toggle the options screen
+- ~~Add a button to toggle the options screen~~
 ## Beyond
 - Automatic updates (to the launcher)
 - Menu for creating backups of the game / your world, character, etc. files

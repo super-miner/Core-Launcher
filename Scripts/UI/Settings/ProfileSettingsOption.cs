@@ -15,6 +15,11 @@ public partial class ProfileSettingsOption : Node {
     public bool GetSetting<T>(ref T setting) {
         ItemListEntry selectedEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
 
+        if (selectedEntry == null) {
+            GD.PrintErr("The selected profile was null.");
+            return false;
+        }
+        
         if (selectedEntry is ProfileListEntry selectedProfileEntry) {
             string methodName = "Get" + SettingName;
             MethodInfo method = typeof(ProfileListEntry).GetMethod(methodName);
@@ -47,6 +52,11 @@ public partial class ProfileSettingsOption : Node {
 
     public void SetSetting(object setting) {
         ItemListEntry selectedEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
+        
+        if (selectedEntry == null) {
+            GD.PrintErr("The selected profile was null.");
+            return;
+        }
 
         if (selectedEntry != null && selectedEntry is ProfileListEntry selectedProfileEntry) {
             string methodName = "Set" + SettingName;
