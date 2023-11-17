@@ -12,7 +12,7 @@ public partial class GetModIOAPIKey : SetupPage {
     [Export] private LineEdit _apiKeyLineEdit = null;
     
     public async void Continue() {
-        _progressBar.SetValue("Validation", 0.0, "Validating API key...");
+        _progressBar.SetValue("Validation", 0.5, "Validating API key...");
 
         bool apiKeyValid = await ModManager.ValidateApiKey(_apiKeyLineEdit.Text);
         if (!apiKeyValid) {
