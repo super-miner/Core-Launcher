@@ -1,10 +1,11 @@
 using CoreLauncher.Scripts.Systems;
 using Godot;
+using Godot.Collections;
 
 namespace CoreLauncher.Scripts.UI.Generic; 
 
 public partial class FileLineEdit : LineEdit {
-    [Export] public string FolderMustContain = "";
+    [Export] public Array<string> FolderMustContain = new Array<string>();
     [Export] public string FileErrorText = "The selected folder must contain {folderMustContain}.";
     [Export] public string FolderErrorText = "The path specified does not exist.";
     [Export] public string SuccessText = "Found path.";
@@ -43,25 +44,19 @@ public partial class FileLineEdit : LineEdit {
     }
 
     public virtual bool PathIsValid(out string outMsg) {
-        if (FileUtil.DirectoryExists(Text)) {
-            if (FolderMustContain != "") {
-                if (FileUtil.DirectoryContains(Text, FolderMustContain)) {
-                    outMsg = SuccessText;
-                    return true;
-                }
-                else {
-                    outMsg = FileErrorText.Replace("{folderMustContain}", FolderMustContain);
-                    return false;
-                }
-            }
-            else {
-                outMsg = SuccessText;
-                return true;
-            }
-        }
-        else {
+        if (!FileUtil.DirectoryExists(Text)) {
             outMsg = FolderErrorText;
             return false;
         }
+        
+        foreach (string contains in FolderMustContain) {
+            if (!FileUtil.DirectoryContains(Text, contains)) {
+                outMsg = FileErrorText.Replace("{folderMustContain}", contains);
+                return false;
+            }
+        }
+        
+        outMsg = SuccessText;
+        return true;
     }
 }
