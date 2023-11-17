@@ -31,31 +31,7 @@ public static class GameManager {
 		}
 		
 		if (selectableEntry is ProfileListEntry profileEntry) {
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "Finding dependencies...");
-			
-			List<int> fullModsList = await ModManager.GetDependencies(profileEntry.Mods);
-			
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 1.0, "Found dependencies.");
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("OldVersions", 0.0, "Removing outdated mods from the cache...");
-
-			ModManager.RemoveOldModVersions();
-			
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("OldVersions", 1.0, "Removed outdated mods from the cache.");
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 0.0, "Downloading mods...");
-			
-			await ModManager.DownloadMods(fullModsList);
-			
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 1.0, "Downloaded mods.");
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModRemoval", 0.0, "Removing mods...");
-
-			ModManager.UninstallMods(fullModsList);
-			
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModRemoval", 1.0, "Removed mods.");
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 0.0, "Installing mods...");
-
-			ModManager.InstallMods(fullModsList);
-			
-			InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 1.0, "Installed mods.");
+			await ModManager.ManageMods(profileEntry.Mods);
 		}
 		
 		OS.Execute($"{FileUtil.GetPath(PathType.Steam)}/steam.exe", new [] {"-applaunch", "1621690"}, new Godot.Collections.Array());

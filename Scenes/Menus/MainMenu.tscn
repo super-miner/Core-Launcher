@@ -354,15 +354,11 @@ theme = ExtResource("1_81ept")
 script = ExtResource("18_ooe8h")
 TotalPercent = 0.2
 
-[node name="OldVersions" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
-script = ExtResource("18_ooe8h")
-TotalPercent = 0.2
-
-[node name="ModDownloads" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
+[node name="ModRemoval" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
 script = ExtResource("18_ooe8h")
 TotalPercent = 0.4
 
-[node name="ModRemoval" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
+[node name="ModDownloads" type="Node" parent="MainConatiner/GameBar/ProgressBar"]
 script = ExtResource("18_ooe8h")
 TotalPercent = 0.4
 

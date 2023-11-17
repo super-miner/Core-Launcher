@@ -37,7 +37,11 @@ public class ModInfo {
         return null;
     }
 
-    public string GetCachePath() {
-        return $"{FileUtil.GetPath(PathType.AppData)}ModCache/CL_Mod_{Id}_{Name.Replace(" ", "_")}_{ModFile.Version}";
+    public override string ToString() {
+        return ModManager.GetModLocalDirectoryName(Id, Name, ModFile.Version);
+    }
+    
+    public string GetLocalDirectoryPath() {
+        return ModManager.GetModLocalDirectoryPath(Id, Name, ModFile.Version);
     }
 }
