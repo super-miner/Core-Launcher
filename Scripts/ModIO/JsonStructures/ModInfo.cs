@@ -38,6 +38,6 @@ public class ModInfo {
     }
 
     public string GetCachePath() {
-        return $"{FileUtil.GetPath(PathType.AppData)}ModCache/CL_Mod_{Id}_{Name.Replace(" ", "_")}";
+        return $"{FileUtil.GetPath(PathType.AppData)}ModCache/CL_Mod_{Id}_{Name.Replace(" ", "_")}_{ModFile.Version}";
     }
 }

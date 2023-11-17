@@ -29,7 +29,7 @@ public static class ModManager {
     
     private static readonly string _modsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
     private static readonly string _dependenciesListUrl = "https://api.mod.io/v1/games/5289/mods/{mod_id}/dependencies?api_key={api_key}";
-    private static readonly Regex _localModsRegex = new Regex(@"CL_Mod_(\d+)_(.+)");
+    private static readonly Regex _localModsRegex = new Regex(@"CL_Mod_(\d+)_(.+)_(.*)");
     
     public static ModsListInfo ModsList = null;
     public static string ApiKey = "";
@@ -88,6 +88,31 @@ public static class ModManager {
     public static ModInfo GetModInfo(int modId) {
         return ModsList.Mods.FirstOrDefault(modInfo => modInfo.Id == modId);
     }
+
+    public static void RemoveOldModVersions() {
+        string modCacheDirectory = $"{FileUtil.GetPath(PathType.AppData)}ModCache";
+        
+        foreach (string directory in FileUtil.GetDirectories(modCacheDirectory)) {
+            Match match = _localModsRegex.Match(directory);
+
+            if (!match.Success) {
+                GD.Print($"Mod Manager: Found an outdated mod in the cache ({directory}), removing it");
+                
+                FileUtil.DeleteDirectory(directory);
+                continue;
+            }
+
+            string modNumberString = match.Groups[1].ToString();
+            if (int.TryParse(modNumberString, out int modNumber)) {
+                string cachedModVersion = match.Groups[3].ToString();
+                ModInfo modInfo = GetModInfo(modNumber);
+
+                if (cachedModVersion != modInfo.ModFile.Version) {
+                    FileUtil.DeleteDirectory(directory);
+                }
+            }
+        }
+    }
     
     public static async Task DownloadMods(List<int> modsList) {
         for (int i = 0; i < modsList.Count; i++) {
@@ -103,16 +128,16 @@ public static class ModManager {
             
             string tempPath = $"{FileUtil.GetPath(PathType.AppData)}/Temp/ModTemp.zip";
             
-            GD.Print($"Mod Manager: Downloading files for {modInfo.Name} ({modInfo.Id})...");
+            GD.Print($"Mod Manager: Downloading files for {modInfo.Name} version {modInfo.ModFile.Version} ({modInfo.Id})...");
             
             await FetchManager.DownloadFile(modInfo.ModFile.Download.Url, tempPath);
             
-            GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} ({modInfo.Id}), unzipping...");
+            GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} version {modInfo.ModFile.Version} ({modInfo.Id}), unzipping...");
             
             FileUtil.UnzipToDirectory(tempPath, localPath);
             FileUtil.DeleteFile(tempPath);
             
-            GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} ({modInfo.Id}).");
+            GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} version {modInfo.ModFile.Version} ({modInfo.Id}).");
         }
     }
 
