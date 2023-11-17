@@ -4,7 +4,7 @@
 This is a custom game launcher made for the game Core Keeper. It uses the Mod IO API so you will need a Mod IO account. If you have any questions please contact me at `Core Keeper Discord Server > Modding > Available Mods > Core Launcher` or dm me at `super_miner_1`.
 
 # Info for Mod Developers
-From v1.1.0 onwards there will be the option to link things like donation links so that they show up in the launcher. Please read [this]() for more info.
+From v1.1.0 onwards there will be the option to link things like donation links so that they show up in the launcher. Please read [this](Info/UsingExtraData.md) for more info.
 
 # Why Godot?
 ### Godot is a game engine, so why am I using it for this project?
