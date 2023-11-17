@@ -1,12 +1,10 @@
 # Using Extra Data
 
-## What is Extra Data?
-
 Extra Data is the name for a system that allows you to attach extra information to your mod using the mod description. This includes:
 - Donation Links (which will be displayed beside your mod)
 - Dependency info (this saves one API key use per mod so please implement this)
 
-This can be set up by putting certain words into the description of your mod
+This can be set up by putting certain words into the description of your mod.
 
 ## How do I set up extra data?
 
