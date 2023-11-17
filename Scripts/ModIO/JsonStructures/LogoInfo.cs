@@ -8,7 +8,7 @@ using Godot;
 namespace CoreLauncher.Scripts.ModIO.JsonStructures; 
 
 public class LogoInfo {
-    [JsonInclude] [JsonPropertyName("original")] public string LogoUrl;
+    [JsonInclude] [JsonPropertyName("thumb_320x180")] public string LogoUrl;
     public Image LogoImage;
 
     public async Task Init() {
