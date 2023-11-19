@@ -118,11 +118,11 @@ public static class ModManager {
             ModInfo modInfo = GetModInfo(modId);
 
             if (modInfo.HasDependencies) {
-                DependencyListInfo dependenciesList = await modInfo.GetDependencies();
+                List<int> dependenciesList = await modInfo.GetDependencies();
                 
-                foreach (DependencyInfo dependency in dependenciesList.Dependencies) {
-                    if (!result.Contains(dependency.Id)) {
-                        result.Add(dependency.Id);
+                foreach (int dependency in dependenciesList) {
+                    if (!result.Contains(dependency)) {
+                        result.Add(dependency);
                     }
                 }
             }
