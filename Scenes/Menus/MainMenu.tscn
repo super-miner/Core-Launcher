@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=31 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/ProfileList.cs" id="5_ax6fr"]
 [ext_resource type="PackedScene" uid="uid://bxalj6ldyic63" path="res://Scenes/DropShadow.tscn" id="5_fmcn0"]
 [ext_resource type="Texture2D" uid="uid://b5kyrqwybx057" path="res://Images/Icons/Minus.png" id="6_6n51t"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/DropdownMenuButton.cs" id="6_are5r"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/RemoveProfileButton.cs" id="7_onhks"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs" id="10_mm626"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsOption.cs" id="11_bg25y"]
@@ -26,6 +27,16 @@
 [ext_resource type="Theme" uid="uid://ugmnp05awb0c" path="res://Themes/DefualtTheme/Contrast.tres" id="19_ipapd"]
 [ext_resource type="Texture2D" uid="uid://bkhpatrg57ab5" path="res://Images/Icons/HeartSmall.png" id="20_qv3hg"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/CustomLinkButton.cs" id="21_r6au4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oyhup"]
+bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(0, 0, 0, 0.392157)
+shadow_size = 10
+shadow_offset = Vector2(0, 5)
 
 [sub_resource type="InputEventKey" id="InputEventKey_ifb3j"]
 device = -1
@@ -91,7 +102,7 @@ theme_override_fonts/font = ExtResource("4_m8q5e")
 text = "Profiles"
 
 [node name="AddButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options"]
-custom_minimum_size = Vector2(30, 25)
+custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_81ept")
@@ -104,8 +115,58 @@ icon = ExtResource("1_hfmwg")
 icon_alignment = 1
 script = ExtResource("3_hck76")
 
+[node name="Dropdown" type="Panel" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton"]
+visible = false
+top_level = true
+z_index = 10
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1549.0
+offset_top = -851.0
+offset_right = -1352.0
+offset_bottom = -781.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_81ept")
+theme_override_styles/panel = SubResource("StyleBoxFlat_oyhup")
+
+[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin"]
+layout_mode = 2
+
+[node name="ClientButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox" node_paths=PackedStringArray("_dropdown")]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+text = "Client"
+alignment = 0
+script = ExtResource("6_are5r")
+_dropdown = NodePath("../../../..")
+
+[node name="ServerButton2" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox" node_paths=PackedStringArray("_dropdown")]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+text = "Dedicated Server"
+alignment = 0
+script = ExtResource("6_are5r")
+_dropdown = NodePath("../../../..")
+
 [node name="RemoveButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options"]
-custom_minimum_size = Vector2(30, 25)
+custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_81ept")
@@ -395,7 +456,10 @@ mouse_filter = 2
 texture = ExtResource("1_rkllh")
 stretch_mode = 6
 
+[connection signal="OnItemSelected" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnProfileTypeSelected"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
+[connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" method="OnPressed"]
+[connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ServerButton2" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ServerButton2" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]

@@ -1,10 +1,15 @@
+AddProfileButton
+DropdownMenu
+MarginContainer
+Button
+VBoxContainer
+Panel
+MenuBar
+OptionButton
 CustomLinkButton
 LinkButton
 Container
-Button
 Control
-MarginContainer
-VBoxContainer
 TextureRect
 LinkText
 RichTextLabel
@@ -14,7 +19,6 @@ StateButton
 CheckBox
 CheckButton
 LoadingBarSegment
-Panel
 LineEdit
 LoadingBar
 ProgressBar
@@ -27,6 +31,3 @@ Tree
 ScrollContainer
 TextEdit
 TabContainer
-PopupPanel
-Popup
-MenuBar
