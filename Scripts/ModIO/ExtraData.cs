@@ -8,7 +8,7 @@ using Godot;
 namespace CoreLauncher.Scripts.ModIO; 
 
 public class ExtraData {
-    private static readonly Regex ExtraDataVariableRegex = new Regex(@"(.+):(.+)");
+    private static readonly Regex ExtraDataVariableRegex = new Regex(@"(.+?):(.+)");
     
     public List<int> Dependencies;
     public string DonationLink = "";

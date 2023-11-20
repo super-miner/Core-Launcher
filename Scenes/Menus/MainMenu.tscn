@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=29 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -23,6 +23,9 @@
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="17_chpd6"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="18_ooe8h"]
 [ext_resource type="Texture2D" uid="uid://veuu33emiei4" path="res://Images/Icons/Settings.png" id="18_qlm2n"]
+[ext_resource type="Theme" uid="uid://ugmnp05awb0c" path="res://Themes/DefualtTheme/Contrast.tres" id="19_ipapd"]
+[ext_resource type="Texture2D" uid="uid://bkhpatrg57ab5" path="res://Images/Icons/HeartSmall.png" id="20_qv3hg"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/CustomLinkButton.cs" id="21_r6au4"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ifb3j"]
 device = -1
@@ -292,6 +295,23 @@ layout_mode = 2
 mouse_filter = 2
 color = Color(0.101961, 0.0901961, 0.0784314, 1)
 
+[node name="DonateButton" type="Button" parent="MainConatiner/GameBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -81.0
+offset_top = 30.0
+offset_right = -26.0
+offset_bottom = -31.0
+focus_mode = 0
+theme = ExtResource("19_ipapd")
+icon = ExtResource("20_qv3hg")
+icon_alignment = 1
+script = ExtResource("21_r6au4")
+Link = "https://www.buymeacoffee.com/flown"
+
 [node name="PlayButton" type="Button" parent="MainConatiner/GameBar"]
 z_index = 100
 layout_mode = 1
@@ -380,4 +400,5 @@ stretch_mode = 6
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" method="OnTogglePressed"]
+[connection signal="pressed" from="MainConatiner/GameBar/DonateButton" to="MainConatiner/GameBar/DonateButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]

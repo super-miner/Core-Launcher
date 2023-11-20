@@ -1,0 +1,56 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://ugmnp05awb0c"]
+
+[ext_resource type="FontFile" uid="uid://dcmqu350lwf4x" path="res://Fonts/OpenSans/OpenSans-Medium.ttf" id="1_2peye"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ia25f"]
+bg_color = Color(0.270588, 0.25098, 0.231373, 1)
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+shadow_color = Color(0, 0, 0, 0.278431)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xtrxw"]
+bg_color = Color(0.270588, 0.25098, 0.231373, 1)
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+shadow_color = Color(0, 0, 0, 0.278431)
+shadow_size = 5
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgixo"]
+bg_color = Color(0.0313726, 0.027451, 0.0235294, 1)
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+shadow_color = Color(0, 0, 0, 0.278431)
+shadow_size = 5
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5e6p"]
+bg_color = Color(0.431373, 0.396078, 0.368627, 1)
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+shadow_color = Color(0, 0, 0, 0.278431)
+shadow_size = 5
+shadow_offset = Vector2(0, 2)
+
+[resource]
+Button/colors/font_color = Color(0.996078, 0.960784, 0.92549, 1)
+Button/colors/font_disabled_color = Color(0.270588, 0.25098, 0.231373, 1)
+Button/colors/font_focus_color = Color(0.996078, 0.960784, 0.92549, 1)
+Button/colors/font_hover_color = Color(0.996078, 0.960784, 0.92549, 1)
+Button/font_sizes/font_size = 20
+Button/fonts/font = ExtResource("1_2peye")
+Button/styles/focus = SubResource("StyleBoxFlat_ia25f")
+Button/styles/hover = SubResource("StyleBoxFlat_xtrxw")
+Button/styles/normal = SubResource("StyleBoxFlat_wgixo")
+Button/styles/pressed = SubResource("StyleBoxFlat_v5e6p")
+Label/colors/font_color = Color(0.996078, 0.960784, 0.92549, 1)
+Label/font_sizes/font_size = 20
+Label/fonts/font = ExtResource("1_2peye")

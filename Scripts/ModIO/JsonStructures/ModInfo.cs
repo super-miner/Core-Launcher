@@ -27,6 +27,20 @@ public class ModInfo {
 	public async Task Init() {
 		await Logo.Init();
 	}
+	
+	public ExtraData GetExtraData() {
+		if (_extraData == null) {
+			Match match = ExtraDataRegex.Match(Description);
+
+			if (!match.Success) {
+				return null;
+			}
+			
+			_extraData = ExtraData.FromString(match.Groups[1].ToString());
+		}
+		
+		return _extraData;
+	}
 
 	public async Task<List<int>> GetDependencies() {
 		if (!HasDependencies) {
@@ -50,18 +64,14 @@ public class ModInfo {
 		return _dependenciesList.GetDependencies();
 	}
 
-	public ExtraData GetExtraData() {
-		if (_extraData == null) {
-			Match match = ExtraDataRegex.Match(Description);
-
-			if (!match.Success) {
-				return null;
-			}
-			
-			_extraData = ExtraData.FromString(match.Groups[1].ToString());
-		}
+	public string GetDonationLink() {
+		ExtraData extraData = GetExtraData();
 		
-		return _extraData;
+		if (extraData != null && !string.IsNullOrEmpty(extraData.DonationLink)) {
+			return extraData.DonationLink;
+		}
+
+		return null;
 	}
 
 	public override string ToString() {

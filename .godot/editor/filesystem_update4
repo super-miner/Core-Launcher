@@ -1,9 +1,9 @@
-res://Scenes/Menus/LoadingMenu.tscn
-res://Themes/DefualtTheme/Normal.tres
+res://Scenes/Menus/MainMenu.tscn
 res://Themes/DefualtTheme/Special.tres
 res://Scripts/UI/Buttons/RemoveProfileButton.cs
 res://Themes/DefualtTheme/NormalFileExplorer.tres
-res://Scenes/Menus/MainMenu.tscn
+res://Themes/DefualtTheme/Contrast.tres
+res://Scenes/Menus/LoadingMenu.tscn
 res://Scenes/ListEntires/ProfileEntry.tscn
 res://Scenes/ListEntires/ModEntry.tscn
 res://Scenes/Menus/Setup/GetModIOAPIKey.tscn
@@ -39,4 +39,5 @@ res://Scripts/UI/ProfileList.cs
 res://Scripts/UI/ProfileListEntry.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
 res://Scripts/UI/Settings/ProfileSettingsOption.cs
-res://Scripts/ModIO/JsonStructures/ModInfo.cs
+res://Scripts/UI/Generic/LinkButton.cs
+res://Scripts/UI/Generic/CustomLinkButton.cs

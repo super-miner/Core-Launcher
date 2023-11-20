@@ -1,12 +1,14 @@
-Control
+CustomLinkButton
+LinkButton
+Container
 Button
+Control
 MarginContainer
 VBoxContainer
 TextureRect
 LinkText
 RichTextLabel
 HBoxContainer
-Container
 Label
 StateButton
 CheckBox
@@ -28,5 +30,3 @@ TabContainer
 PopupPanel
 Popup
 MenuBar
-VScrollBar
-ColorRect
