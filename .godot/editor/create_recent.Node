@@ -1,6 +1,11 @@
+HSeparator
+ItemListSeparator
+MarginContainer
+Container
+Label
+HBoxContainer
 AddProfileButton
 DropdownMenu
-MarginContainer
 Button
 VBoxContainer
 Panel
@@ -8,13 +13,10 @@ MenuBar
 OptionButton
 CustomLinkButton
 LinkButton
-Container
 Control
 TextureRect
 LinkText
 RichTextLabel
-HBoxContainer
-Label
 StateButton
 CheckBox
 CheckButton
@@ -29,5 +31,3 @@ ProfileSettingsOption
 Node
 Tree
 ScrollContainer
-TextEdit
-TabContainer

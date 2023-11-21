@@ -1,3 +1,4 @@
+res://Scenes/ListEntires
 res://Scripts/UI/Generic
 res://Scripts/ModIO/JsonStructures
 C:/Users/user/Desktop/Games/Modding/CoreKeeperModding/CoreLauncherBuilds/CoreLauncher_v1.0.0_Windows_x86_64
@@ -10,7 +11,6 @@ res://Scenes/Menus
 res://Themes/DefualtTheme
 res://Scripts/UI/Settings
 res://Themes
-res://Scenes/ListEntires
 C:/Program Files/JetBrains/JetBrains Rider 2023.2.2/bin
 C:/ProgramData/Microsoft/Windows/Start Menu/Programs/JetBrains
 res://Scripts

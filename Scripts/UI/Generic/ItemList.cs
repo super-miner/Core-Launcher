@@ -7,12 +7,18 @@ public partial class ItemList : VBoxContainer {
 	[Export] public PackedScene EntryScene;
 	
 	public List<ItemListEntry> Entries = new List<ItemListEntry>();
-	
-	public virtual ItemListEntry AddEntry(bool select = true, bool init = true) {
+
+	public virtual ItemListEntry AddEntry(string section, bool select = true, bool init = true) {
 		Node entryNode = EntryScene.Instantiate();
         
 		if (entryNode is ItemListEntry entry) {
 			AddChild(entry);
+
+			int separatorIndex = GetSeparatorIndex(section);
+			if (separatorIndex >= 0) {
+				MoveChild(entry, separatorIndex + 1);
+			}
+			
 			Entries.Add(entry);
 
 			entry.ItemList = this;
@@ -43,5 +49,17 @@ public partial class ItemList : VBoxContainer {
 		}
 
 		Entries = new List<ItemListEntry>();
+	}
+
+	public int GetSeparatorIndex(string separatorName) {
+		for (int i = 0; i < GetChildCount(); i++) {
+			Node child = GetChild(i);
+			
+			if (child is ItemListSeparator separator && separator.Label.Text == separatorName) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 }

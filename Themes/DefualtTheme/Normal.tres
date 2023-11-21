@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=37 format=3 uid="uid://cp0vpg6x6licf"]
+[gd_resource type="Theme" load_steps=38 format=3 uid="uid://cp0vpg6x6licf"]
 
 [ext_resource type="FontFile" uid="uid://dcmqu350lwf4x" path="res://Fonts/OpenSans/OpenSans-Medium.ttf" id="1_piwkj"]
 [ext_resource type="Texture2D" uid="uid://dbry8ayyjcsyn" path="res://Images/Icons/Checked.png" id="2_yiqae"]
@@ -63,6 +63,12 @@ corner_radius_bottom_left = 7
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_we5o3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3unvp"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_xsuph"]
+color = Color(0.270588, 0.25098, 0.231373, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_co3p2"]
 content_margin_left = 7.0
@@ -246,6 +252,7 @@ CheckButton/styles/hover = SubResource("StyleBoxEmpty_uxkut")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_o3osk")
 CheckButton/styles/normal = SubResource("StyleBoxEmpty_we5o3")
 CheckButton/styles/pressed = SubResource("StyleBoxEmpty_3unvp")
+HSeparator/styles/separator = SubResource("StyleBoxLine_xsuph")
 Label/colors/font_color = Color(0.996078, 0.960784, 0.92549, 1)
 Label/font_sizes/font_size = 20
 Label/fonts/font = ExtResource("1_piwkj")

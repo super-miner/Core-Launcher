@@ -7,6 +7,7 @@ namespace CoreLauncher.Scripts.UI;
 
 public partial class ProfileListEntry : SelectableItemListEntry {
     public new string Name = "";
+    public bool Server = false;
     public List<int> Mods = new List<int>();
     
     [Export] private Label _nameText;

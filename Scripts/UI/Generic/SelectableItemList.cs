@@ -9,8 +9,8 @@ public partial class SelectableItemList : ItemList {
     
     public int SelectedEntry = -1;
     
-    public new SelectableItemListEntry AddEntry(bool select = true) {
-        ItemListEntry entry = base.AddEntry(select);
+    public new SelectableItemListEntry AddEntry(string section, bool select = true) {
+        ItemListEntry entry = base.AddEntry(section, select);
 
         if (entry is SelectableItemListEntry selectableEntry) {
             if (select) {

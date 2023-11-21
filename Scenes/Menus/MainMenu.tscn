@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=32 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/RemoveProfileButton.cs" id="7_onhks"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs" id="10_mm626"]
 [ext_resource type="Script" path="res://Scripts/UI/Settings/ProfileSettingsOption.cs" id="11_bg25y"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/ItemListSeparator.cs" id="11_lw3bu"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="11_tprdv"]
 [ext_resource type="Script" path="res://Scripts/Menus/Main/Tabs/TabsManager.cs" id="12_4bc7j"]
 [ext_resource type="Script" path="res://Scripts/UI/ModList.cs" id="12_e3elj"]
@@ -141,13 +142,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
 
 [node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="ClientButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox" node_paths=PackedStringArray("_dropdown")]
 layout_mode = 2
@@ -157,7 +159,7 @@ alignment = 0
 script = ExtResource("6_are5r")
 _dropdown = NodePath("../../../..")
 
-[node name="ServerButton2" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox" node_paths=PackedStringArray("_dropdown")]
+[node name="ServerButton" type="Button" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox" node_paths=PackedStringArray("_dropdown")]
 layout_mode = 2
 theme = ExtResource("1_81ept")
 text = "Dedicated Server"
@@ -204,6 +206,44 @@ mouse_filter = 2
 theme_override_constants/separation = 10
 script = ExtResource("5_ax6fr")
 EntryScene = ExtResource("4_8m6cu")
+
+[node name="ProfileListSeparatorClient" type="MarginContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles" node_paths=PackedStringArray("Label")]
+layout_mode = 2
+script = ExtResource("11_lw3bu")
+Label = NodePath("HBoxContainer/Label")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileListSeparatorClient"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileListSeparatorClient/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+text = "Client"
+
+[node name="HSeparator" type="HSeparator" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileListSeparatorClient/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_81ept")
+
+[node name="ProfileListSeparatorServer" type="MarginContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles" node_paths=PackedStringArray("Label")]
+layout_mode = 2
+script = ExtResource("11_lw3bu")
+Label = NodePath("../ProfileListSeparatorClient/HBoxContainer/Label")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileListSeparatorServer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileListSeparatorServer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+text = "Dedicated Server"
+
+[node name="HSeparator" type="HSeparator" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileListSeparatorServer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_81ept")
 
 [node name="DropShadow" parent="MainConatiner/CentralMenu/ProfilesBar" instance=ExtResource("5_fmcn0")]
 layout_mode = 1
@@ -342,8 +382,8 @@ layout_mode = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 12.0
-offset_top = -47.0
-offset_right = 47.0
+offset_top = -57.0
+offset_right = 57.0
 offset_bottom = -12.0
 focus_mode = 0
 theme = ExtResource("1_81ept")
@@ -459,7 +499,7 @@ stretch_mode = 6
 [connection signal="OnItemSelected" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnProfileTypeSelected"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" method="OnPressed"]
-[connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ServerButton2" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ServerButton2" method="OnPressed"]
+[connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ServerButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ServerButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]

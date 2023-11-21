@@ -49,7 +49,7 @@ public partial class ModList : ItemList {
                 continue;
             }
             
-            ModListEntry modEntry = AddEntry(true, false);
+            ModListEntry modEntry = AddEntry("", true, false);
             modEntry.ModListId = i;
             modEntry.Init();
 
@@ -64,8 +64,8 @@ public partial class ModList : ItemList {
         CreateEntries();
     }
     
-    public new ModListEntry AddEntry(bool select = true, bool init = true) {
-        ItemListEntry entry = base.AddEntry(select, init);
+    public new ModListEntry AddEntry(string section, bool select = true, bool init = true) {
+        ItemListEntry entry = base.AddEntry(section, select, init);
 
         if (entry is ModListEntry modEntry) {
             return modEntry;
