@@ -1,10 +1,10 @@
-res://Scenes/Menus/MainMenu.tscn
+res://Scenes/Menus/LoadingMenu.tscn
 res://Themes/DefualtTheme/Normal.tres
 res://Themes/DefualtTheme/Special.tres
 res://Scripts/UI/Buttons/RemoveProfileButton.cs
 res://Themes/DefualtTheme/Contrast.tres
 res://Themes/DefualtTheme/NormalFileExplorer.tres
-res://Scenes/Menus/LoadingMenu.tscn
+res://Scenes/Menus/MainMenu.tscn
 res://Scenes/ListEntires/ProfileEntry.tscn
 res://Scenes/ListEntires/ModEntry.tscn
 res://Scenes/Menus/Setup/GetModIOAPIKey.tscn
@@ -31,6 +31,7 @@ res://Scripts/UI/Generic/FileExplorerButton.cs
 res://Scripts/UI/Generic/FileLineEdit.cs
 res://Scripts/UI/Generic/ItemList.cs
 res://Scripts/UI/Generic/ItemListEntry.cs
+res://Scripts/UI/Generic/ItemListSeparator.cs
 res://Scripts/UI/Generic/LinkText.cs
 res://Scripts/UI/Generic/LoadingBar.cs
 res://Scripts/UI/Generic/LoadingBarSegment.cs
@@ -43,4 +44,3 @@ res://Scripts/UI/ProfileList.cs
 res://Scripts/UI/ProfileListEntry.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
 res://Scripts/UI/Settings/ProfileSettingsOption.cs
-res://Scripts/UI/Generic/ItemListSeparator.cs

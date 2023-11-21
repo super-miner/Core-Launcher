@@ -32,9 +32,9 @@ public static class GameManager {
 		
 		if (selectableEntry is ProfileListEntry profileEntry) {
 			await ModManager.ManageMods(profileEntry.Mods);
+			
+			OS.Execute($"{FileUtil.GetPath(PathType.Steam)}/steam.exe", new [] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
 		}
-		
-		OS.Execute($"{FileUtil.GetPath(PathType.Steam)}/steam.exe", new [] {"-applaunch", "1621690"}, new Godot.Collections.Array());
 		
 		await Task.Delay(2000);
 			
