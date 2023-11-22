@@ -12,11 +12,13 @@ Godot provides lots of useful features -- especially for ui. Godot is also very 
 
 # Roadmap/TODO
 ## v1.1.0
-- Create system for mods to provide extra data in their descriptions
-- Allow use with the Core Keeper Dedicated Server
-- Add option to view mods in a grid instead of a list
+- ~~Create system for mods to provide extra data in their descriptions~~
+- ~~Allow use with the Core Keeper Dedicated Server~~
 - ~~Add a button to toggle the options screen~~
+- ~~Stop mods that have their security checks off from being loaded~~
+
 ## Beyond
+- Add option to view mods in a grid instead of a list
 - Automatic updates (to the launcher)
 - Menu for creating backups of the game / your world, character, etc. files
 - More customizability
@@ -29,3 +31,5 @@ Godot provides lots of useful features -- especially for ui. Godot is also very 
   - Faster client mod installations by changing state.json
   - Faster dedicated server installations by only installing/uninstalling the modmanifest.json file
 - Cache mod logos
+- Asynchronous fetching
+- A search bar for the mods list
