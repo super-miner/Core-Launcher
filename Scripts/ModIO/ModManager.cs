@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
+using CoreLauncher.Scripts.ModIO.LocalInfo;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.Systems;
@@ -27,9 +29,8 @@ public static class ModManager {
     
     public static bool HasLoaded = false;
     
-    private static readonly string _modsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
-    private static readonly string _dependenciesListUrl = "https://api.mod.io/v1/games/5289/mods/{mod_id}/dependencies?api_key={api_key}";
-    private static readonly Regex _localModsRegex = new Regex(@"CL_Mod_(\d+)_(.+)");
+    private static readonly string ModsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
+    private static readonly string DependenciesListUrl = "https://api.mod.io/v1/games/5289/mods/{mod_id}/dependencies?api_key={api_key}";
     
     public static ModsListInfo ModsList = null;
     public static string ApiKey = "";
@@ -52,16 +53,42 @@ public static class ModManager {
     }
     
     public static string GetUrl(UrlType urlType, ModInfo modInfo = null) {
+        string url = "";
+        
         switch (urlType) {
             case UrlType.ModsList:
-                return _modsListUrl.Replace("{api_key}", ApiKey);
+                url = ModsListUrl;
+                break;
             case UrlType.DependenciesList:
-                return _dependenciesListUrl.Replace("{api_key}", ApiKey).Replace("{mod_id}", $"{modInfo.Id}");
-            default:
-                return "";
+                url = DependenciesListUrl;
+                break;
         }
+
+        url = url.Replace("{api_key}", $"{ApiKey}");
+        if (modInfo != null) {
+            url = url.Replace("{mod_id}", $"{modInfo.Id}");
+        }
+
+        return url;
     }
 
+    public static ModInfo GetModInfo(int modId) {
+        return ModsList.Mods.FirstOrDefault(modInfo => modInfo.Id == modId);
+    }
+
+    public static LocalModInfo GetLocalModInfo(int modId) {
+        foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
+            string directoryName = FileUtil.GetDirectoryName(directoryPath);
+            LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
+
+            if (localModInfo.Id == modId) {
+                return localModInfo;
+            }
+        }
+
+        return null;
+    }
+    
     public static void SetApiKey(string apiKey) {
         ApiKey = apiKey;
 
@@ -69,7 +96,7 @@ public static class ModManager {
             FetchModsList();
         }
     }
-
+    
     public static async Task<bool> ValidateApiKey(string apiKey) {
         string tempApiKey = ApiKey;
         ApiKey = apiKey;
@@ -84,9 +111,48 @@ public static class ModManager {
 
         return true;
     }
+    
+    public static async Task<List<int>> GetDependencies(List<int> modsList) {
+        List<int> result = new List<int>(modsList);
+        
+        foreach (int modId in modsList) {
+            ModInfo modInfo = GetModInfo(modId);
 
-    public static ModInfo GetModInfo(int modId) {
-        return ModsList.Mods.FirstOrDefault(modInfo => modInfo.Id == modId);
+            if (modInfo.HasDependencies) {
+                List<int> dependenciesList = await modInfo.GetDependencies();
+                
+                foreach (int dependency in dependenciesList) {
+                    if (!result.Contains(dependency)) {
+                        result.Add(dependency);
+                    }
+                }
+            }
+        }
+
+        if (result.Count > modsList.Count) {
+            result = await GetDependencies(result);
+        }
+        
+        return result;
+    }
+
+    public static void RemoveOldModVersions() {
+        foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
+            string directoryName = FileUtil.GetDirectoryName(directoryPath);
+            LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
+            
+            if (localModInfo != null) {
+                ModInfo modInfo = GetModInfo(localModInfo.Id);
+
+                if (localModInfo.Version == modInfo.ModFile.Version) {
+                    continue;
+                }
+            }
+            
+            GD.Print($"Mod Manager: Found an outdated mod in the cache ({directoryName}), removing it from {directoryPath}.");
+                
+            FileUtil.DeleteDirectory(directoryPath);
+        }
     }
     
     public static async Task DownloadMods(List<int> modsList) {
@@ -96,23 +162,45 @@ public static class ModManager {
             
             InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", (double)i / modsList.Count, $"Downloading {modInfo.Name}...");
 
-            string localPath = modInfo.GetCachePath();
+            string localPath = modInfo.GetLocalDirectoryPath();
             if (FileUtil.DirectoryExists(localPath)) {
                 continue;
             }
             
-            string tempPath = $"{FileUtil.GetPath(PathType.AppData)}/Temp/ModTemp.zip";
+            string tempPath = FileUtil.GetPath(PathType.ModTemp);
             
-            GD.Print($"Mod Manager: Downloading files for {modInfo.Name} ({modInfo.Id})...");
+            GD.Print($"Mod Manager: Downloading files for {modInfo.Name} version {modInfo.ModFile.Version}..");
             
             await FetchManager.DownloadFile(modInfo.ModFile.Download.Url, tempPath);
             
-            GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} ({modInfo.Id}), unzipping...");
+            GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} version {modInfo.ModFile.Version}, unzipping to {localPath}...");
             
             FileUtil.UnzipToDirectory(tempPath, localPath);
-            FileUtil.DeleteFile(tempPath);
+            FileUtil.DeleteFile(tempPath); // TODO: Move this out of the for loop and see if it breaks
             
-            GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} ({modInfo.Id}).");
+            GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} version {modInfo.ModFile.Version} to {localPath}.");
+        }
+    }
+
+    public static void RemoveUnsafeMods() {
+        foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
+            string directoryName = FileUtil.GetDirectoryName(directoryPath);
+            LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
+            
+            try {
+                ModManifestInfo modManifest = FileUtil.ReadJsonFile<ModManifestInfo>($"{directoryPath}/ModManifest.json");
+
+                if (modManifest.SkipSafetyChecks) {
+                    GD.Print(
+                        $"Mod Manager: The skipSafetyChecks value for {localModInfo.Name} was set to true, deleting it.");
+                    FileUtil.DeleteDirectory(directoryPath);
+                }
+            }
+            catch (Exception exception) {
+                GD.Print(
+                    $"Mod Manager: The ModManifest.json for {localModInfo.Name} could not be found/parsed, deleting it.");
+                FileUtil.DeleteDirectory(directoryPath);
+            }
         }
     }
 
@@ -123,7 +211,7 @@ public static class ModManager {
             
             InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", (double)i / modsList.Count, $"Installing {modInfo.Name}...");
 
-            string localPath = modInfo.GetCachePath();
+            string localPath = modInfo.GetLocalDirectoryPath();
             if (!FileUtil.DirectoryExists(localPath)) {
                 continue;
             }
@@ -141,50 +229,53 @@ public static class ModManager {
     public static void UninstallMods(List<int> modsList) {
         string modsPath = GameManager.GetModsPath();
         
-        foreach (string filePath in FileUtil.GetDirectories(modsPath)) {
-            Match match = _localModsRegex.Match(filePath);
-
-            if (!match.Success) {
+        foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
+            string directoryName = FileUtil.GetDirectoryName(directoryPath);
+            LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
+            
+            if (localModInfo == null || modsList.Contains(localModInfo.Id)) {
                 continue;
             }
-            
-            string modNumberString = match.Groups[1].ToString();
-            int.TryParse(modNumberString, out int modNumber);
-
-            if (modsList.Contains(modNumber)) {
-                continue;
-            }
-            
-            string modName = match.Groups[2].ToString();
                     
-            FileUtil.DeleteDirectory(filePath);
+            FileUtil.DeleteDirectory(directoryPath);
                     
-            GD.Print($"Mod Manager: Deleted mod {modName} from {filePath}.");
+            GD.Print($"Mod Manager: Deleted mod {localModInfo.Name} from {directoryPath}.");
         }
     }
 
-    public static async Task<List<int>> GetDependencies(List<int> modsList) {
-        List<int> result = new List<int>(modsList);
-        
-        foreach (int modId in modsList) {
-            ModInfo modInfo = GetModInfo(modId);
+    public static async Task ManageMods(List<int> modsList) {
+        InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "Finding dependencies...");
+			
+        List<int> fullModsList = await GetDependencies(modsList);
+			
+        InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 1.0, "Found dependencies.");
+        InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModRemoval", 0.5, "Removing mods...");
 
-            if (modInfo.HasDependencies) {
-                DependencyListInfo dependenciesList = await modInfo.GetDependencies();
-                
-                foreach (DependencyInfo dependency in dependenciesList.Dependencies) {
-                    if (!result.Contains(dependency.Id)) {
-                        result.Add(dependency.Id);
-                    }
-                }
-            }
-        }
-
-        if (result.Count > modsList.Count) {
-            result = await GetDependencies(result);
-        }
+        RemoveOldModVersions();
+        UninstallMods(fullModsList);
+			
+        InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModRemoval", 1.0, "Removed mods.");
+        InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 0.0, "Downloading mods...");
+			
+        await DownloadMods(fullModsList);
+			
+        InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 1.0, "Downloaded mods.");
         
-        return result;
+        RemoveUnsafeMods();
+        
+        InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 0.0, "Installing mods...");
+
+        InstallMods(fullModsList);
+			
+        InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 1.0, "Installed mods.");
+    }
+
+    public static string GetModLocalDirectoryName(int id, string name, string version) {
+        return $"CL_Mod_{id}_{name.Replace(" ", "_")}_{version}";
+    }
+
+    public static string GetModLocalDirectoryPath(int id, string name, string version) {
+        return $"{FileUtil.GetPath(PathType.ModCache)}{GetModLocalDirectoryName(id, name, version)}";
     }
     
     private static void OnDeserializeStoredData() {

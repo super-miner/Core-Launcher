@@ -12,14 +12,26 @@ public partial class ModsTabManager : Control {
     [Export] private Label _modsLoadedLabel;
     [Export] private CheckBox _showLibraryModsCheckBox;
 
+    public override void _EnterTree() {
+        InstanceManager.AddInstance(this);
+    }
+    
     public override void _Ready() {
-        _modsLoadedLabel.Text = $"Showing {ModList.ModsShowing} out of {ModManager.ModsList.Mods.Count} mods.";
+        UpdateModsShowingText();
         _showLibraryModsCheckBox.ButtonPressed = ModList.ShowLibraryMods;
+    }
+    
+    public override void _ExitTree() {
+        InstanceManager.RemoveInstance(this);
     }
 
     public void OnShowLibraryModsCheckboxPressed() {
         ModList.SetShowLibraryMods(_showLibraryModsCheckBox.ButtonPressed);
-        
+
+        UpdateModsShowingText();
+    }
+
+    public void UpdateModsShowingText() {
         _modsLoadedLabel.Text = $"Showing {ModList.ModsShowing} out of {ModManager.ModsList.Mods.Count} mods.";
     }
 }

@@ -16,8 +16,6 @@ public partial class ModList : ItemList {
     public int ModsShowing = 0;
     
     public override void _EnterTree() {
-        InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent += OnItemSelected;
-        
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
         
@@ -27,7 +25,9 @@ public partial class ModList : ItemList {
     }
     
     public override void _Ready() {
-        CreateEntries();
+        InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent += OnItemSelected;
+        
+        RefreshModsList();
     }
 
     public override void _ExitTree() {
@@ -40,32 +40,48 @@ public partial class ModList : ItemList {
     }
 
     public void CreateEntries() {
-        ModsShowing = 0;
+        GD.Print("Creating entries.");
         
-        for (int i = 0; i < ModManager.ModsList.Mods.Count; i++) {
-            ModInfo modInfo = ModManager.ModsList.Mods[i];
-            
-            if (!ShowLibraryMods && modInfo.Name.Contains("CoreLib")) {
-                continue;
-            }
-            
-            ModListEntry modEntry = AddEntry(true, false);
-            modEntry.ModListId = i;
-            modEntry.Init();
+        ModsShowing = 0;
 
-            ModsShowing++;
+        ItemListEntry entry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
+
+        if (entry == null) {
+            return;
         }
+
+        if (entry is ProfileListEntry profileEntry) {
+            for (int i = 0; i < ModManager.ModsList.Mods.Count; i++) {
+                ModInfo modInfo = ModManager.ModsList.Mods[i];
+            
+                if ((!ShowLibraryMods && modInfo.GetLibrary()) || !(modInfo.GetServerSide() == profileEntry.Server || modInfo.GetClientSide() == !profileEntry.Server)) {
+                    continue;
+                }
+            
+                ModListEntry modEntry = AddEntry("", true, false);
+                modEntry.ModListId = i;
+                modEntry.Init();
+
+                ModsShowing++;
+            }
+        }
+    }
+    
+    public void RefreshModsList() {
+        ClearEntries();
+        CreateEntries();
+        
+        InstanceManager.GetInstance<ModsTabManager>().UpdateModsShowingText();
     }
 
     public void SetShowLibraryMods(bool showLibraryMods) {
         ShowLibraryMods = showLibraryMods;
         
-        ClearEntries();
-        CreateEntries();
+        RefreshModsList();
     }
     
-    public new ModListEntry AddEntry(bool select = true, bool init = true) {
-        ItemListEntry entry = base.AddEntry(select, init);
+    public new ModListEntry AddEntry(string section, bool select = true, bool init = true) {
+        ItemListEntry entry = base.AddEntry(section, select, init);
 
         if (entry is ModListEntry modEntry) {
             return modEntry;
@@ -87,7 +103,7 @@ public partial class ModList : ItemList {
     }
 
     private void OnItemSelected() {
-        UpdateButtonStates();
+        RefreshModsList();
     }
     
     private void OnDeserializeStoredData() {

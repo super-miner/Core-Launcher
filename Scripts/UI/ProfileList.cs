@@ -26,14 +26,16 @@ public partial class ProfileList : SelectableItemList {
         OnSerializeStoredData();
     }
     
-    public new ProfileListEntry AddEntry(bool select = true) {
-        ItemListEntry entry = base.AddEntry(select);
+    public new ProfileListEntry AddEntry(bool server, bool select = true) {
+        ItemListEntry entry = base.AddEntry(server ? "Dedicated Server" : "Client", select);
 
         if (Entries.Count == 1) {
             InstanceManager.GetInstance<MainMenuManager>().OptionsTabs.Visible = true;
         }
 
         if (entry is ProfileListEntry profileEntry) {
+            profileEntry.Server = server;
+            
             return profileEntry;
         }
         else {
@@ -60,7 +62,7 @@ public partial class ProfileList : SelectableItemList {
         }
         
         foreach (StoredProfileListEntry storedProfileEntry in storedProfiles) {
-            ProfileListEntry entry = AddEntry(false);
+            ProfileListEntry entry = AddEntry(storedProfileEntry.Server, false);
 
             entry.SetName(storedProfileEntry.Name);
             entry.Mods = storedProfileEntry.Mods ?? new List<int>();
@@ -76,6 +78,7 @@ public partial class ProfileList : SelectableItemList {
             if (entry is ProfileListEntry profileEntry) {
                 StoredProfileListEntry storedProfileEntry = new StoredProfileListEntry {
                     Name = profileEntry.Name,
+                    Server = profileEntry.Server,
                     Mods = profileEntry.Mods
                 };
                 

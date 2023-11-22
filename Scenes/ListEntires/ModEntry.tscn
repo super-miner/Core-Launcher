@@ -1,8 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://c76en0nxy0bs6"]
+[gd_scene load_steps=17 format=3 uid="uid://c76en0nxy0bs6"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_vm8d1"]
 [ext_resource type="Script" path="res://Scripts/UI/AddModButton.cs" id="2_1iw3e"]
 [ext_resource type="Script" path="res://Scripts/UI/ModListEntry.cs" id="2_s3ql8"]
+[ext_resource type="Theme" uid="uid://ugmnp05awb0c" path="res://Themes/DefualtTheme/Contrast.tres" id="3_6e43s"]
+[ext_resource type="Texture2D" uid="uid://bkhpatrg57ab5" path="res://Images/Icons/HeartSmall.png" id="4_jc8t0"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/CustomLinkButton.cs" id="5_l7t30"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nf05x"]
 bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
@@ -74,7 +77,7 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[node name="ModEntry" type="Panel" node_paths=PackedStringArray("_addButton", "_nameLabel", "_authorLabel", "_logoTexture")]
+[node name="ModEntry" type="Panel" node_paths=PackedStringArray("_addButton", "_nameLabel", "_authorLabel", "_logoTexture", "_donationButton")]
 custom_minimum_size = Vector2(0, 90)
 theme = ExtResource("1_vm8d1")
 theme_override_styles/panel = SubResource("StyleBoxFlat_nf05x")
@@ -83,6 +86,7 @@ _addButton = NodePath("Margin/HBox/AddModButton")
 _nameLabel = NodePath("Margin/HBox/Name")
 _authorLabel = NodePath("Margin/HBox/Author")
 _logoTexture = NodePath("Margin/HBox/Logo")
+_donationButton = NodePath("Margin/HBox/DonateButton")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -106,7 +110,7 @@ layout_mode = 2
 expand_mode = 3
 stretch_mode = 6
 
-[node name="Separator" type="Container" parent="Margin/HBox"]
+[node name="Separator1" type="Container" parent="Margin/HBox"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
@@ -122,11 +126,26 @@ theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 theme_override_font_sizes/font_size = 14
 text = "By: Mod Author..."
 
+[node name="Separator2" type="Container" parent="Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DonateButton" type="Button" parent="Margin/HBox"]
+custom_minimum_size = Vector2(55, 55)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("3_6e43s")
+icon = ExtResource("4_jc8t0")
+icon_alignment = 1
+script = ExtResource("5_l7t30")
+
+[node name="Separator3" type="Container" parent="Margin/HBox"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
 [node name="AddModButton" type="Control" parent="Margin/HBox" node_paths=PackedStringArray("_modEntry")]
 custom_minimum_size = Vector2(220, 40)
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
 script = ExtResource("2_1iw3e")
 _modEntry = NodePath("../../..")
 
@@ -171,6 +190,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ck148")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_bcf7r")
 text = "Added As Depenency"
 
+[connection signal="pressed" from="Margin/HBox/DonateButton" to="Margin/HBox/DonateButton" method="OnPressed"]
 [connection signal="pressed" from="Margin/HBox/AddModButton/NotAddedButton" to="Margin/HBox/AddModButton" method="OnAddPressed"]
 [connection signal="pressed" from="Margin/HBox/AddModButton/AddedButton" to="Margin/HBox/AddModButton" method="OnAddedPressed"]
 [connection signal="pressed" from="Margin/HBox/AddModButton/AddedAsDependencyButton" to="Margin/HBox/AddModButton" method="OnAddPressed"]

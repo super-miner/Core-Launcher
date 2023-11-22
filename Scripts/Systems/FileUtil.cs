@@ -10,7 +10,9 @@ namespace CoreLauncher.Scripts.Systems;
 public enum PathType {
     AppData,
     Project,
-    Steam
+    Steam,
+    ModCache,
+    ModTemp
 }
 
 public static class FileUtil {
@@ -33,6 +35,10 @@ public static class FileUtil {
                     GD.PrintErr("Could not find steam path in the registry.");
                     return "";
                 }
+            case PathType.ModCache:
+                return $"{GetPath(PathType.AppData)}ModCache/";
+            case PathType.ModTemp:
+                return $"{GetPath(PathType.AppData)}Temp/ModTemp.zip";
             default:
                 GD.PrintErr($"The case for GetPath({pathType.ToString()}) has not been implemented.");
                 return "";
@@ -128,6 +134,14 @@ public static class FileUtil {
 
     public static string[] GetDirectories(string path) {
         return Directory.GetDirectories(path);
+    }
+
+    public static string GetFileName(string path) {
+        return Path.GetFileName(path);
+    }
+    
+    public static string GetDirectoryName(string path) {
+        return Path.GetFileName(path.TrimEnd('/', '\\'));
     }
 
     public static void UnzipToDirectory(string zipPath, string directoryPath) {
