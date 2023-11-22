@@ -20,6 +20,7 @@ public class ModInfo {
 	[JsonInclude] [JsonPropertyName("modfile")] public ModFileInfo ModFile;
 	[JsonInclude] [JsonPropertyName("logo")] public LogoInfo Logo;
 	[JsonInclude] [JsonPropertyName("dependencies")] public bool HasDependencies;
+	[JsonInclude] [JsonPropertyName("tags")] public List<TagInfo> Tags = null;
 	
 	private DependencyListInfo _dependenciesList;
 	private ExtraData _extraData;
@@ -73,7 +74,51 @@ public class ModInfo {
 
 		return null;
 	}
+	
+	public bool GetServerSide() {
+		ExtraData extraData = GetExtraData();
+		
+		if (extraData != null) {
+			return extraData.ServerSide;
+		}
 
+		return true;
+	}
+
+	public bool GetClientSide() {
+		ExtraData extraData = GetExtraData();
+		
+		if (extraData != null) {
+			return extraData.ClientSide;
+		}
+
+		return true;
+	}
+	
+	public bool GetLibrary() {
+		if (GetTags().Contains("Library")) {
+			return true;
+		}
+		
+		ExtraData extraData = GetExtraData();
+		
+		if (extraData != null) {
+			return extraData.Library;
+		}
+
+		return false;
+	}
+	
+	public List<string> GetTags() {
+		List<string> output = new List<string>();
+
+		foreach (TagInfo tag in Tags) {
+			output.Add(tag.Name);
+		}
+
+		return output;
+	}
+	
 	public override string ToString() {
 		return ModManager.GetModLocalDirectoryName(Id, Name, ModFile.Version);
 	}

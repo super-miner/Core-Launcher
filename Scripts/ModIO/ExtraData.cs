@@ -12,6 +12,9 @@ public class ExtraData {
     
     public List<int> Dependencies;
     public string DonationLink = "";
+    public bool ServerSide = true;
+    public bool ClientSide = true;
+    public bool Library = false;
 
     public static ExtraData FromString(string extraDataString) {
         ExtraData output = new ExtraData();
@@ -49,6 +52,24 @@ public class ExtraData {
                 break;
             case "Donate":
                 DonationLink = variableValueString;
+                break;
+            case "ServerSide":
+                if (bool.TryParse(variableValueString, out bool serverSide)) {
+                    ServerSide = serverSide;
+                }
+
+                break;
+            case "ClientSide":
+                if (bool.TryParse(variableValueString, out bool clientSide)) {
+                    ClientSide = clientSide;
+                }
+
+                break;
+            case "Library":
+                if (bool.TryParse(variableValueString, out bool library)) {
+                    Library = library;
+                }
+
                 break;
         }
     }

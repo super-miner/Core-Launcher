@@ -43,7 +43,9 @@ public partial class ItemList : VBoxContainer {
 		Entries.Remove(entry);
 	}
 
-	public virtual void ClearEntries() {
+	public void ClearEntries() {
+		GD.Print("Clearing entries.");
+		
 		foreach (ItemListEntry entry in Entries) {
 			entry.QueueFree();
 		}
