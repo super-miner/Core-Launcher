@@ -17,12 +17,17 @@ Godot provides lots of useful features -- especially for ui. Godot is also very 
 - ~~Add a button to toggle the options screen~~
 - ~~Stop mods that have their security checks off from being loaded~~
 
+## v1.2.0
+- Manage the edge case of Core Keeper not being installed in the Steam path
+- Custom background image
+- Ask user to name their profile after pressing play if it remains unnamed
+- Include the mod and game configs in the profile specific info
+
 ## Beyond
 - Add option to view mods in a grid instead of a list
 - Automatic updates (to the launcher)
 - Menu for creating backups of the game / your world, character, etc. files
 - More customizability
-  - Custom background image
   - Custom themes
 - More settings
   - Edit game and mod configs from the launcher
