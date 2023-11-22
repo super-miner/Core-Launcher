@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -181,6 +182,28 @@ public static class ModManager {
         }
     }
 
+    public static void RemoveUnsafeMods() {
+        foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
+            string directoryName = FileUtil.GetDirectoryName(directoryPath);
+            LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
+            
+            try {
+                ModManifestInfo modManifest = FileUtil.ReadJsonFile<ModManifestInfo>($"{directoryPath}/ModManifest.json");
+
+                if (modManifest.SkipSafetyChecks) {
+                    GD.Print(
+                        $"Mod Manager: The skipSafetyChecks value for {localModInfo.Name} was set to true, deleting it.");
+                    FileUtil.DeleteDirectory(directoryPath);
+                }
+            }
+            catch (Exception exception) {
+                GD.Print(
+                    $"Mod Manager: The ModManifest.json for {localModInfo.Name} could not be found/parsed, deleting it.");
+                FileUtil.DeleteDirectory(directoryPath);
+            }
+        }
+    }
+
     public static void InstallMods(List<int> modsList) {
         for (int i = 0; i < modsList.Count; i++) {
             int modId = modsList[i];
@@ -237,6 +260,9 @@ public static class ModManager {
         await DownloadMods(fullModsList);
 			
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 1.0, "Downloaded mods.");
+        
+        RemoveUnsafeMods();
+        
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 0.0, "Installing mods...");
 
         InstallMods(fullModsList);
