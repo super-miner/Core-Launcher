@@ -11,7 +11,7 @@ From v1.1.0 onwards there will be the option to link things like donation links 
 Godot provides lots of useful features -- especially for ui. Godot is also very lightweight for a game engine which makes it a good choice for this project.
 
 # Roadmap/TODO
-## v1.1.0
+## ~~v1.1.0~~
 - ~~Create system for mods to provide extra data in their descriptions~~
 - ~~Allow use with the Core Keeper Dedicated Server~~
 - ~~Add a button to toggle the options screen~~
