@@ -147,6 +147,12 @@ public static class ModManager {
                 if (localModInfo.Version == modInfo.ModFile.Version) {
                     continue;
                 }
+                else {
+                    GD.Print($"Mod Manager: Mod likely outdated ({localModInfo.Version} != {modInfo.ModFile.Version})...");
+                }
+            }
+            else {
+                GD.Print($"Mod Manager: Could not discern local mod info from {directoryName}.");
             }
             
             GD.Print($"Mod Manager: Found an outdated mod in the cache ({directoryName}), removing it from {directoryPath}.");
@@ -204,7 +210,7 @@ public static class ModManager {
         }
     }
 
-    public static void InstallMods(List<int> modsList) {
+    public static void InstallMods(bool server, List<int> modsList) {
         for (int i = 0; i < modsList.Count; i++) {
             int modId = modsList[i];
             ModInfo modInfo = GetModInfo(modId);
@@ -216,7 +222,7 @@ public static class ModManager {
                 continue;
             }
             
-            string installPath = $"{GameManager.GetModsPath()}/CL_Mod_{modInfo.Id}_{modInfo.Name}";
+            string installPath = $"{GameManager.GetModsPath(server)}/CL_Mod_{modInfo.Id}_{modInfo.Name}_{modInfo.ModFile.Version}";
             
             GD.Print($"Mod Manager: Installing {modInfo.Name} from {localPath} to {installPath}.");
             
@@ -226,10 +232,10 @@ public static class ModManager {
         }
     }
     
-    public static void UninstallMods(List<int> modsList) {
-        string modsPath = GameManager.GetModsPath();
+    public static void UninstallMods(bool server, List<int> modsList) {
+        string modsPath = GameManager.GetModsPath(server);
         
-        foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
+        foreach (string directoryPath in FileUtil.GetDirectories(modsPath)) {
             string directoryName = FileUtil.GetDirectoryName(directoryPath);
             LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
             
@@ -243,7 +249,11 @@ public static class ModManager {
         }
     }
 
-    public static async Task ManageMods(List<int> modsList) {
+    public static async Task ManageMods(bool server, List<int> modsList) {
+        if (!FileUtil.DirectoryExists(FileUtil.GetPath(PathType.ModCache))) {
+            FileUtil.CreateDirectory(FileUtil.GetPath(PathType.ModCache));
+        }
+        
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "Finding dependencies...");
 			
         List<int> fullModsList = await GetDependencies(modsList);
@@ -252,7 +262,7 @@ public static class ModManager {
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModRemoval", 0.5, "Removing mods...");
 
         RemoveOldModVersions();
-        UninstallMods(fullModsList);
+        UninstallMods(server, fullModsList);
 			
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModRemoval", 1.0, "Removed mods.");
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", 0.0, "Downloading mods...");
@@ -265,7 +275,7 @@ public static class ModManager {
         
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 0.0, "Installing mods...");
 
-        InstallMods(fullModsList);
+        InstallMods(server, fullModsList);
 			
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 1.0, "Installed mods.");
     }

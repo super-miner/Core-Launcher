@@ -4,7 +4,7 @@ using CoreLauncher.Scripts.ModIO.JsonStructures;
 namespace CoreLauncher.Scripts.ModIO.LocalInfo; 
 
 public class LocalModInfo {
-    private static readonly Regex LocalModsRegex = new Regex(@"CL_Mod_(\d+)_(.+)_(.*)");
+    private static readonly Regex LocalModsRegex = new Regex(@"CL_Mod_(\d+)_(.+)_+?(.*)");
     
     public string Name;
     public int Id;

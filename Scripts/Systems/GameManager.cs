@@ -13,7 +13,9 @@ namespace CoreLauncher.Scripts.Systems;
 
 public static class GameManager {
 	public static readonly string CoreKeeperRelativePath = "/steamapps/common/Core Keeper";
+	public static readonly string CoreKeeperServerRelativePath = "/steamapps/common/Core Keeper Dedicated Server";
 	public static readonly string ModsRelativePath = "/CoreKeeper_Data/StreamingAssets/Mods";
+	public static readonly string ModsRelativeServerPath = "/CoreKeeperServer_Data/StreamingAssets/Mods";
 	
 	public static string SteamPath;
 	
@@ -31,7 +33,7 @@ public static class GameManager {
 		}
 		
 		if (selectableEntry is ProfileListEntry profileEntry) {
-			await ModManager.ManageMods(profileEntry.Mods);
+			await ModManager.ManageMods(profileEntry.Server, profileEntry.Mods);
 			
 			OS.Execute($"{FileUtil.GetPath(PathType.Steam)}/steam.exe", new [] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
 		}
@@ -45,8 +47,12 @@ public static class GameManager {
 		return FileUtil.GetPath(PathType.Steam) + CoreKeeperRelativePath;
 	}
 	
-	public static string GetModsPath() {
-		return GetCoreKeeperPath() + ModsRelativePath;
+	public static string GetCoreKeeperServerPath() {
+		return FileUtil.GetPath(PathType.Steam) + CoreKeeperServerRelativePath;
+	}
+	
+	public static string GetModsPath(bool server) {
+		return server ? GetCoreKeeperServerPath() + ModsRelativeServerPath : GetCoreKeeperPath() + ModsRelativePath;
 	}
 	
 	private static void OnDeserializeStoredData() {
