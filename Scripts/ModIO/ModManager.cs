@@ -257,6 +257,10 @@ public static class ModManager {
         if (!FileUtil.DirectoryExists(FileUtil.GetPath(PathType.ModCache))) {
             FileUtil.CreateDirectory(FileUtil.GetPath(PathType.ModCache));
         }
+
+        if (!FileUtil.DirectoryExists(GameManager.GetModsPath(server))) {
+            FileUtil.CreateDirectory(GameManager.GetModsPath(server));
+        }
         
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("Dependencies", 0.0, "Finding dependencies...");
 			

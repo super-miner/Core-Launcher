@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Godot;
@@ -27,12 +28,35 @@ public static class FileUtil {
                     return GameManager.SteamPath;
                 }
                 else {
-                    object pathObject = RegistryUtil.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
+                    string osName = OS.GetName();
+                    
+                    if (osName == "Windows") {
+                        object pathObject = RegistryUtil.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
 		
-                    if (pathObject is string pathString) {
-                        return pathString;
+                        if (pathObject is string pathString) {
+                            return pathString;
+                        }
+                        
+                        GD.PrintErr("Could not find steam path in the registry.");
+                        return "";
                     }
-                    GD.PrintErr("Could not find steam path in the registry.");
+                    else if (osName == "Linux") {
+                        /*Godot.Collections.Array output = new Godot.Collections.Array();
+                        int success = OS.Execute("bash", new string[] {"-c", "which", "steam"}, output);
+
+                        if (success >= 0 && output.Count > 0) {
+                            return output[0].AsString();
+                        }
+
+                        GD.PrintErr("There was an error executing the \"which steam\" command. Could not find steam path.");
+                        return "";*/
+
+                        return "~/.steam/steam";
+                    }
+                    else {
+                        GD.PrintErr($"Unrecognized operating system {osName}.");
+                    }
+
                     return "";
                 }
             case PathType.ModCache:
