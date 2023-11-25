@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using CoreLauncher.Scripts.ModIO.JsonStructures;
 using Godot;
 
 namespace CoreLauncher.Scripts.ModIO; 
@@ -46,6 +47,13 @@ public class ExtraData {
                 foreach (string variableItemString in splitValueStrings) {
                     if (int.TryParse(variableItemString, out int variableValue)) {
                         Dependencies.Add(variableValue);
+                    }
+                    else {
+                        ModInfo modInfo = ModManager.GetModInfo(variableItemString);
+
+                        if (modInfo != null) {
+                            Dependencies.Add(modInfo.Id);
+                        }
                     }
                 }
 

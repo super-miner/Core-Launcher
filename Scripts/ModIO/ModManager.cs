@@ -75,6 +75,10 @@ public static class ModManager {
     public static ModInfo GetModInfo(int modId) {
         return ModsList.Mods.FirstOrDefault(modInfo => modInfo.Id == modId);
     }
+    
+    public static ModInfo GetModInfo(string modName) {
+        return ModsList.Mods.FirstOrDefault(modInfo => modInfo.Name == modName);
+    }
 
     public static LocalModInfo GetLocalModInfo(int modId) {
         foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
