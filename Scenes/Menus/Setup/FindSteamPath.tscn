@@ -65,6 +65,7 @@ size_flags_horizontal = 3
 theme = ExtResource("2_jcuxh")
 placeholder_text = "Path: eg. C:\\Program Files (x86)\\Steam"
 script = ExtResource("3_g12u8")
+FolderMustContain = ["steamapps/common/Core Keeper"]
 _errorLabel = NodePath("../../ErrorLabel")
 _successLabel = NodePath("../../SuccessLabel")
 
