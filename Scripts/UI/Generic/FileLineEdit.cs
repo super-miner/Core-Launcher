@@ -1,3 +1,4 @@
+using System.IO;
 using CoreLauncher.Scripts.Systems;
 using Godot;
 using Godot.Collections;
@@ -50,7 +51,9 @@ public partial class FileLineEdit : LineEdit {
         }
         
         foreach (string contains in FolderMustContain) {
-            if (!FileUtil.DirectoryContains(Text, contains)) {
+            string combinedPath = Path.Combine(Text, contains);
+            
+            if (!FileUtil.FileExists(combinedPath) && !FileUtil.DirectoryExists(combinedPath)) {
                 outMsg = FileErrorText.Replace("{folderMustContain}", contains);
                 return false;
             }

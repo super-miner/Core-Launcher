@@ -34,8 +34,18 @@ public static class GameManager {
 		
 		if (selectableEntry is ProfileListEntry profileEntry) {
 			await ModManager.ManageMods(profileEntry.Server, profileEntry.Mods);
-			
-			OS.Execute($"{FileUtil.GetPath(PathType.Steam)}/steam.exe", new [] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+
+			string osName = OS.GetName();
+
+			if (osName == "Windows") {
+				OS.Execute("steam", new [] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+			}
+			else if (osName == "Linux") {
+				OS.Execute("steam", new string[] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+			}
+			else {
+				GD.PrintErr($"Unrecognized operating system {osName}.");
+			}
 		}
 		
 		await Task.Delay(2000);
