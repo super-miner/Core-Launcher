@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
@@ -13,6 +14,7 @@ public partial class ModListEntry : ItemListEntry {
 	
 	[Export] private StateButton _addButton;
 	[Export] private Label _nameLabel;
+	[Export] private Label _elevatedAccessLabel;
 	[Export] private Label _authorLabel;
 	[Export] private TextureRect _logoTexture;
 	[Export] private CustomLinkButton _donationButton;
@@ -21,6 +23,7 @@ public partial class ModListEntry : ItemListEntry {
 		ModInfo modInfo = GetModInfo();
 		
 		_nameLabel.Text = modInfo.Name;
+		_elevatedAccessLabel.Visible = modInfo.Tags.Any(tag => tag.Name == "Script (Elevated Access)");
 		_authorLabel.Text = $"By: {modInfo.Author.Username}";
 		_logoTexture.Texture = ImageTexture.CreateFromImage(modInfo.Logo.LogoImage);
 

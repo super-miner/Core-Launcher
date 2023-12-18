@@ -77,13 +77,14 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[node name="ModEntry" type="Panel" node_paths=PackedStringArray("_addButton", "_nameLabel", "_authorLabel", "_logoTexture", "_donationButton")]
+[node name="ModEntry" type="Panel" node_paths=PackedStringArray("_addButton", "_nameLabel", "_elevatedAccessLabel", "_authorLabel", "_logoTexture", "_donationButton")]
 custom_minimum_size = Vector2(0, 90)
 theme = ExtResource("1_vm8d1")
 theme_override_styles/panel = SubResource("StyleBoxFlat_nf05x")
 script = ExtResource("2_s3ql8")
 _addButton = NodePath("Margin/HBox/AddModButton")
 _nameLabel = NodePath("Margin/HBox/Name")
+_elevatedAccessLabel = NodePath("Margin/HBox/ElevatedAccess")
 _authorLabel = NodePath("Margin/HBox/Author")
 _logoTexture = NodePath("Margin/HBox/Logo")
 _donationButton = NodePath("Margin/HBox/DonateButton")
@@ -118,6 +119,12 @@ layout_mode = 2
 layout_mode = 2
 theme = ExtResource("1_vm8d1")
 text = "Mod Name..."
+
+[node name="ElevatedAccess" type="Label" parent="Margin/HBox"]
+layout_mode = 2
+theme = ExtResource("1_vm8d1")
+theme_override_colors/font_color = Color(0.878431, 0.121569, 0.121569, 1)
+text = "(Elevated Access)"
 
 [node name="Author" type="Label" parent="Margin/HBox"]
 layout_mode = 2
