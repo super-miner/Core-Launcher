@@ -34,6 +34,20 @@ public static class GameManager {
 		}
 		
 		if (selectableEntry is ProfileListEntry profileEntry) {
+			if (string.IsNullOrEmpty(profileEntry.GetName())) {
+				TaskCompletionSource<string> popupTask = new TaskCompletionSource<string>();
+				
+				InstanceManager.GetInstance<MainMenuManager>().NameProfilePopup.Open(popupTask);
+				
+				string popupResult = await popupTask.Task;
+
+				if (string.IsNullOrEmpty(popupResult)) {
+					return;
+				}
+				
+				profileEntry.SetName(popupResult);
+			}
+			
 			await ModManager.ManageMods(profileEntry.Server, profileEntry.Mods);
 
 			string osName = OS.GetName();
