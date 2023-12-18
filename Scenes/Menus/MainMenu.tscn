@@ -229,7 +229,7 @@ theme = ExtResource("1_81ept")
 [node name="ProfileListSeparatorServer" type="MarginContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles" node_paths=PackedStringArray("Label")]
 layout_mode = 2
 script = ExtResource("11_lw3bu")
-Label = NodePath("../ProfileListSeparatorClient/HBoxContainer/Label")
+Label = NodePath("HBoxContainer/Label")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileListSeparatorServer"]
 layout_mode = 2

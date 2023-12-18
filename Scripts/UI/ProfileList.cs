@@ -26,7 +26,7 @@ public partial class ProfileList : SelectableItemList {
         OnSerializeStoredData();
     }
     
-    public new ProfileListEntry AddEntry(bool server, bool select = true) {
+    public ProfileListEntry AddEntry(bool server, bool select = true) {
         ItemListEntry entry = base.AddEntry(server ? "Dedicated Server" : "Client", select);
 
         if (Entries.Count == 1) {
