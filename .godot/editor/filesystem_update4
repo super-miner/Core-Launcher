@@ -1,14 +1,15 @@
-res://Scenes/Menus/LoadingMenu.tscn
+res://Scenes/Menus/Setup/FindSteamPath.tscn
 res://Themes/DefualtTheme/Normal.tres
 res://Themes/DefualtTheme/Special.tres
 res://Scripts/UI/Buttons/RemoveProfileButton.cs
 res://Themes/DefualtTheme/Contrast.tres
 res://Themes/DefualtTheme/NormalFileExplorer.tres
+res://Scripts/Menus/Setup/FindSteamPath.cs
+res://Scenes/Menus/LoadingMenu.tscn
 res://Scenes/Menus/MainMenu.tscn
 res://Scenes/ListEntires/ProfileEntry.tscn
 res://Scenes/ListEntires/ModEntry.tscn
 res://Scenes/Menus/Setup/GetModIOAPIKey.tscn
-res://Scenes/Menus/Setup/FindSteamPath.tscn
 res://Scenes/Menus/Setup/SetupMenu.tscn
 res://Scripts/App.cs
 res://Scripts/Menus/Loading/LoadingManager.cs
@@ -16,7 +17,6 @@ res://Scripts/Menus/Main/MainMenuManager.cs
 res://Scripts/Menus/Main/Tabs/ModsTabManager.cs
 res://Scripts/Menus/Main/Tabs/TabsManager.cs
 res://Scripts/Menus/MenuManager.cs
-res://Scripts/Menus/Setup/FindSteamPath.cs
 res://Scripts/Menus/Setup/GetModIOAPIKey.cs
 res://Scripts/Menus/Setup/SetupPage.cs
 res://Scripts/Menus/Setup/SetupPagesManager.cs

@@ -17,7 +17,8 @@ public static class GameManager {
 	public static readonly string ModsRelativePath = "/CoreKeeper_Data/StreamingAssets/Mods";
 	public static readonly string ModsRelativeServerPath = "/CoreKeeperServer_Data/StreamingAssets/Mods";
 	
-	public static string SteamPath;
+	public static string SteamExePath;
+	public static string SteamGamesPath;
 	
 	public static void Init() {
 		StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
@@ -38,10 +39,10 @@ public static class GameManager {
 			string osName = OS.GetName();
 
 			if (osName == "Windows") {
-				OS.Execute("steam", new [] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+				OS.Execute($"{FileUtil.GetPath(PathType.SteamExe)}/steam.exe", new string[] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
 			}
 			else if (osName == "Linux") {
-				OS.Execute("steam", new string[] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+				OS.Execute($"{FileUtil.GetPath(PathType.SteamExe)}/steam", new string[] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
 			}
 			else {
 				GD.PrintErr($"Unrecognized operating system {osName}.");
@@ -54,11 +55,11 @@ public static class GameManager {
 	}
 
 	public static string GetCoreKeeperPath() {
-		return FileUtil.GetPath(PathType.Steam) + CoreKeeperRelativePath;
+		return FileUtil.GetPath(PathType.SteamGames) + CoreKeeperRelativePath;
 	}
 	
 	public static string GetCoreKeeperServerPath() {
-		return FileUtil.GetPath(PathType.Steam) + CoreKeeperServerRelativePath;
+		return FileUtil.GetPath(PathType.SteamGames) + CoreKeeperServerRelativePath;
 	}
 	
 	public static string GetModsPath(bool server) {
@@ -66,10 +67,12 @@ public static class GameManager {
 	}
 	
 	private static void OnDeserializeStoredData() {
-		SteamPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath;
+		SteamExePath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamExePath;
+		SteamGamesPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamesPath;
 	}
 
 	private static void OnSerializeStoredData() {
-		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath = SteamPath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamExePath = SteamExePath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamesPath = SteamGamesPath;
 	}
 }
