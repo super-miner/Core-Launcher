@@ -12,7 +12,6 @@ public partial class LoadingManager : Control {
 	[Export] public LoadingBar ProgressBar;
 	
 	[Export] private int _totalSteps;
-	[Export] private int _startDelay = 500;
 	[Export] private int _nextPageDelay = 500;
 	private int _stepsComplete;
 	
@@ -33,6 +32,10 @@ public partial class LoadingManager : Control {
 	}
 
 	public override void _Ready() {
+		SetupManager.Init();
+		GameManager.Init();
+		ModManager.Init();
+		
 		if (SetupManager.SetupComplete) {
 			ModManager.FetchModsList();
 		}

@@ -138,7 +138,7 @@ public static class FileUtil {
     }
 
     public static bool DirectoryContains(string path, string file) {
-        return File.Exists($"{path}\\{file}");
+        return File.Exists($"{path}/{file}");
     }
     
     public static bool DirectoryExists(string path) {

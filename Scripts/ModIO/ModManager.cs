@@ -176,6 +176,11 @@ public static class ModManager {
         
         GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} version {modInfo.ModFile.Version} to {downloadPath}.");
     }
+
+    public static void RemoveMod(int modId, string path) {
+        LocalModInfo localModInfo = GetLocalModInfo(modId, path);
+        FileUtil.DeleteDirectory(localModInfo.Path);
+    }
     
     public static bool IsModOutdated(LocalModInfo localModInfo) {
         ModInfo modInfo = GetModInfo(localModInfo.Id);

@@ -31,9 +31,33 @@ public static class ProfileManager {
         Profiles.Add(profile);
         return profile;
     }
+
+    public static bool ProfileTemplatesExist() {
+        return FileUtil.DirectoryExists(GetProfileTemplatePath(true)) && FileUtil.DirectoryExists(GetProfileTemplatePath(false));
+    }
+
+    public static void CreateProfileTemplates() {
+        CreateProfileTemplate(true);
+        CreateProfileTemplate(false);
+    }
+
+    public static void CreateProfileTemplate(bool server) {
+        string profileTemplatePath = GetProfileTemplatePath(server);
+
+        if (!FileUtil.DirectoryExists(profileTemplatePath)) {
+            FileUtil.CreateDirectory(profileTemplatePath);
+        }
+
+        string profileTemplateDataPath = $"{profileTemplatePath}CoreKeeperData/";
+        FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(server), profileTemplateDataPath);
+    }
     
     public static string GetProfilesPath() {
-        return $"{FileUtil.GetPath(PathType.Profiles)}";
+        return FileUtil.GetPath(PathType.Profiles);
+    }
+    
+    public static string GetProfileTemplatePath(bool server) {
+        return $"{FileUtil.GetPath(PathType.AppData)}Templates/{(server ? "ServerProfileTemplate" : "ProfileTemplate")}/";
     }
 
     private static void OnDeserializeStoredData() {

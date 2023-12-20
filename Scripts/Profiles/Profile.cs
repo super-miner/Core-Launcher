@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.ModIO;
+using CoreLauncher.Scripts.ModIO.JsonStructures;
 using CoreLauncher.Scripts.ModIO.LocalInfo;
 using CoreLauncher.Scripts.Profiles.JSON;
 using CoreLauncher.Scripts.Systems;
@@ -60,13 +61,14 @@ public class Profile {
     }
 
     public async Task Install() {
-        QueueOutdatedMods();
         await ManageQueuedMods();
         
+        FileUtil.DeleteDirectory(GameManager.GetCoreKeeperDataPath(Server));
         FileUtil.CopyDirectory(GetCoreKeeperDataPath(), GameManager.GetCoreKeeperDataPath(Server));
     }
 
     public void Uninstall() {
+        FileUtil.DeleteDirectory(GetCoreKeeperDataPath());
         FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(Server), GetCoreKeeperDataPath());
     }
 
@@ -78,27 +80,29 @@ public class Profile {
         _queuedMods.Remove(modId);
     }
 
-    public void QueueOutdatedMods() {
-        if (!FileUtil.DirectoryExists(GetModsPath())) {
-            FileUtil.CreateDirectory(GetModsPath());
-        }
-        
+    public async Task ManageQueuedMods() {
         foreach (string modDirectoryPath in FileUtil.GetDirectories(GetModsPath())) {
             LocalModInfo localModInfo = LocalModInfo.FromString(modDirectoryPath);
 
-            if (ModManager.IsModOutdated(localModInfo)) {
+            if (localModInfo == null) {
+                continue;
+            }
+            
+            ModInfo modInfo = ModManager.GetModInfo(localModInfo.Id);
+
+            if (localModInfo.Version != modInfo.ModFile.Version) {
+                GD.Print($"Profile: The mod {localModInfo.Name} is out of date updating ({localModInfo.Version}) -> ({modInfo.ModFile.Version})...");
+                
                 FileUtil.DeleteDirectory(modDirectoryPath);
-                QueueAddMod(localModInfo.Id);
+                _installedMods.Remove(localModInfo.Id);
             }
         }
-    }
-
-    public async Task ManageQueuedMods() {
+        
         List<int> queuedModsWithDependencies = await ModManager.GetDependencies(_queuedMods);
 
-        (List<int> addedMods, List<int> removedMods) modDeltas = ModManager.GetModDeltas(_installedMods, queuedModsWithDependencies);
-        
-        foreach (int modId in queuedModsWithDependencies) {
+        (List<int> addedMods, List<int> removedMods) = ModManager.GetModDeltas(_installedMods, queuedModsWithDependencies);
+
+        foreach (int modId in addedMods) {
             await ModManager.DownloadMod(modId, GetModsPath());
 
             LocalModInfo localModInfo = ModManager.GetLocalModInfo(modId, GetModsPath());
@@ -106,12 +110,14 @@ public class Profile {
                 GD.Print($"Profile: The mod {localModInfo.Name} appears to be elevated access but is not marked as such, removing it..."); //TODO: Put a pop up here to determine whether the user wants to continue with the installation of this mod.
                 
                 FileUtil.DeleteDirectory(localModInfo.Path);
-
-                continue;
             }
         }
 
-        _installedMods = new List<int>(_queuedMods);
+        foreach (int modId in removedMods) {
+            ModManager.RemoveMod(modId, GetModsPath());
+        }
+
+        _installedMods = new List<int>(queuedModsWithDependencies);
     }
 
     public List<int> GetAddedMods() {
