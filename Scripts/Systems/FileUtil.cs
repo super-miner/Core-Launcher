@@ -13,7 +13,7 @@ public enum PathType {
     Project,
     SteamExe,
     SteamGames,
-    ModCache,
+    Profiles,
     ModTemp
 }
 
@@ -84,8 +84,8 @@ public static class FileUtil {
 
                     return "";
                 }
-            case PathType.ModCache:
-                return $"{GetPath(PathType.AppData)}ModCache/";
+            case PathType.Profiles:
+                return $"{GetPath(PathType.AppData)}Profiles/";
             case PathType.ModTemp:
                 return $"{GetPath(PathType.AppData)}Temp/ModTemp.zip";
             default:

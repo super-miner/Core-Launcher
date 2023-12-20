@@ -276,6 +276,7 @@ anchor_bottom = 1.0
 theme_override_constants/margin_top = 10
 
 [node name="Tabs" type="TabContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin"]
+visible = false
 layout_mode = 2
 theme = ExtResource("1_81ept")
 script = ExtResource("12_4bc7j")

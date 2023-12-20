@@ -12,10 +12,12 @@ using Godot;
 namespace CoreLauncher.Scripts.Systems;
 
 public static class GameManager {
-	public static readonly string CoreKeeperRelativePath = "/steamapps/common/Core Keeper";
-	public static readonly string CoreKeeperServerRelativePath = "/steamapps/common/Core Keeper Dedicated Server";
-	public static readonly string ModsRelativePath = "/CoreKeeper_Data/StreamingAssets/Mods";
-	public static readonly string ModsRelativeServerPath = "/CoreKeeperServer_Data/StreamingAssets/Mods";
+	public static readonly string CoreKeeperRelativePath = "/steamapps/common/Core Keeper/";
+	public static readonly string CoreKeeperServerRelativePath = "/steamapps/common/Core Keeper Dedicated Server/";
+	/*public static readonly string ModsRelativePath = "/CoreKeeper_Data/StreamingAssets/Mods";
+	public static readonly string ModsRelativeServerPath = "/CoreKeeperServer_Data/StreamingAssets/Mods";*/
+	public static readonly string CoreKeeperDataRelativePath = "CoreKeeper_Data/";
+	public static readonly string CoreKeeperServerDataRelativePath = "CoreKeeperServer_Data/";
 	
 	public static string SteamExePath;
 	public static string SteamGamesPath;
@@ -47,16 +49,16 @@ public static class GameManager {
 				
 				profileEntry.SetName(popupResult);
 			}
-			
-			await ModManager.ManageMods(profileEntry.Server, profileEntry.Mods);
+
+			await profileEntry.Profile.Install();
 
 			string osName = OS.GetName();
 
 			if (osName == "Windows") {
-				OS.Execute($"{FileUtil.GetPath(PathType.SteamExe)}/steam.exe", new string[] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+				OS.Execute($"{FileUtil.GetPath(PathType.SteamExe)}/steam.exe", new string[] {"-applaunch", profileEntry.Profile.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
 			}
 			else if (osName == "Linux") {
-				OS.Execute($"{FileUtil.GetPath(PathType.SteamExe)}/steam", new string[] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+				OS.Execute($"{FileUtil.GetPath(PathType.SteamExe)}/steam", new string[] {"-applaunch", profileEntry.Profile.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
 			}
 			else {
 				GD.PrintErr($"Unrecognized operating system {osName}.");
@@ -76,8 +78,12 @@ public static class GameManager {
 		return FileUtil.GetPath(PathType.SteamGames) + CoreKeeperServerRelativePath;
 	}
 	
-	public static string GetModsPath(bool server) {
+	/*public static string GetModsPath(bool server) {
 		return server ? GetCoreKeeperServerPath() + ModsRelativeServerPath : GetCoreKeeperPath() + ModsRelativePath;
+	}*/
+	
+	public static string GetCoreKeeperDataPath(bool server) {
+		return server ? GetCoreKeeperServerPath() + CoreKeeperServerDataRelativePath : GetCoreKeeperPath() + CoreKeeperDataRelativePath;
 	}
 	
 	private static void OnDeserializeStoredData() {

@@ -54,7 +54,7 @@ public partial class ModList : ItemList {
             for (int i = 0; i < ModManager.ModsList.Mods.Count; i++) {
                 ModInfo modInfo = ModManager.ModsList.Mods[i];
             
-                if ((!ShowLibraryMods && modInfo.GetLibrary()) || !(modInfo.GetServerSide() == profileEntry.Server || modInfo.GetClientSide() == !profileEntry.Server)) {
+                if ((!ShowLibraryMods && modInfo.GetLibrary()) || !(modInfo.GetServerSide() == profileEntry.Profile.Server || modInfo.GetClientSide() == !profileEntry.Profile.Server)) {
                     continue;
                 }
             

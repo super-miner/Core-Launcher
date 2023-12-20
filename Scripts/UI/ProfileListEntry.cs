@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CoreLauncher.Scripts.Profiles;
 using CoreLauncher.Scripts.StoredData.StoredDataTypes;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
@@ -6,21 +7,19 @@ using Godot;
 namespace CoreLauncher.Scripts.UI; 
 
 public partial class ProfileListEntry : SelectableItemListEntry {
-    public new string Name = "";
-    public bool Server = false;
-    public List<int> Mods = new List<int>();
+    public Profile Profile;
     
     [Export] private Label _nameText;
 
     public string GetName() {
-        return Name;
+        return Profile.Name;
     }
 
     public void SetName(string name) {
-        Name = name;
+        Profile.Name = name;
 
-        if (!string.IsNullOrEmpty(Name)) {
-            _nameText.Text = Name;
+        if (!string.IsNullOrEmpty(Profile.Name)) {
+            _nameText.Text = Profile.Name;
         }
         else {
             _nameText.Text = "Name...";

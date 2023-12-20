@@ -47,6 +47,10 @@ public partial class SelectableItemList : ItemList {
         }
         return null;
     }
+    
+    public void SetSelectedEntry(SelectableItemListEntry selectedEntry) {
+        SetSelectedEntry(Entries.FindIndex(entry => entry == selectedEntry));
+    }
 
     public void SetSelectedEntry(int selectedEntry) {
         GetSelectedEntry()?.Deselect();
