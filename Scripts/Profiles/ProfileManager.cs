@@ -24,7 +24,7 @@ public static class ProfileManager {
         return profile;
     }
     
-    public static Profile AddProfile(string name, bool server) {
+    public static Profile CreateAndAddProfile(string name, bool server) {
         long currentTime = (long) (Time.GetUnixTimeFromSystem() * 1000.0);
         Profile profile = new Profile(currentTime.ToString(), name, server);
         

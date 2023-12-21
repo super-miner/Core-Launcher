@@ -29,16 +29,10 @@ public static class ModManager {
     
     public static bool HasLoaded = false;
     
-    private static readonly string ModsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
-    private static readonly string DependenciesListUrl = "https://api.mod.io/v1/games/5289/mods/{mod_id}/dependencies?api_key={api_key}";
+    private static readonly string ModsListUrl = "https://g-5289.modapi.io/v1/games/5289/mods?api_key=40460f9354653502fc6e4666f9f10cce";
+    private static readonly string DependenciesListUrl = "https://g-5289.modapi.io/v1/games/5289/mods/{mod_id}/dependencies?api_key=40460f9354653502fc6e4666f9f10cce";
     
     public static ModsListInfo ModsList = null;
-    public static string ApiKey = "";
-
-    public static void Init() {
-        StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
-        StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
-    }
 
     public static async void FetchModsList() {
         ModsList = null;
@@ -63,8 +57,7 @@ public static class ModManager {
                 url = DependenciesListUrl;
                 break;
         }
-
-        url = url.Replace("{api_key}", $"{ApiKey}");
+        
         if (modInfo != null) {
             url = url.Replace("{mod_id}", $"{modInfo.Id}");
         }
@@ -90,29 +83,6 @@ public static class ModManager {
         }
 
         return null;
-    }
-    
-    public static void SetApiKey(string apiKey) {
-        ApiKey = apiKey;
-
-        if (!string.IsNullOrEmpty(ApiKey) && SetupManager.SetupComplete) {
-            FetchModsList();
-        }
-    }
-    
-    public static async Task<bool> ValidateApiKey(string apiKey) {
-        string tempApiKey = ApiKey;
-        ApiKey = apiKey;
-        
-        HttpResponseMessage testMessageResponse = await FetchManager.Fetch(GetUrl(UrlType.ModsList));
-        
-        ApiKey = tempApiKey;
-        
-        if (testMessageResponse.StatusCode == HttpStatusCode.Unauthorized) {
-            return false;
-        }
-
-        return true;
     }
 
     public static (List<int>, List<int>) GetModDeltas(List<int> modsListOld, List<int> modsListNew) {
@@ -355,12 +325,4 @@ public static class ModManager {
     /*public static string GetModLocalDirectoryPath(int id, string name, string version) {
         return $"{FileUtil.GetPath(PathType.ModCache)}{GetModLocalDirectoryName(id, name, version)}";
     }*/
-    
-    private static void OnDeserializeStoredData() {
-        SetApiKey(StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().ModIOApiKey);
-    }
-    
-    private static void OnSerializeStoredData() {
-        StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().ModIOApiKey = ApiKey;
-    }
 }

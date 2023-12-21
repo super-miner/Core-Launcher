@@ -34,7 +34,6 @@ public partial class LoadingManager : Control {
 	public override void _Ready() {
 		SetupManager.Init();
 		GameManager.Init();
-		ModManager.Init();
 		
 		if (SetupManager.SetupComplete) {
 			ModManager.FetchModsList();

@@ -48,3 +48,4 @@ res://Scripts/UI/NameProfilePopup.cs
 res://Scenes/Menus/UI.tscn
 res://Scenes/Menus/PreloadingMenu.tscn
 res://Scripts/Menus/Loading/PreloadingManager.cs
+res://Scripts/ModIO/JsonStructures/ModsListInfo.cs

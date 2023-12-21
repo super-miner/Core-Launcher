@@ -27,6 +27,8 @@ public class Profile {
         Id = id;
         Name = name;
         Server = server;
+        
+        FileUtil.CopyDirectory(ProfileManager.GetProfileTemplatePath(Server), GetPath());
     }
 
     public void Deserialize() {

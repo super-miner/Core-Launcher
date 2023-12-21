@@ -10,7 +10,7 @@ namespace CoreLauncher.Scripts.UI.Buttons;
 public partial class AddProfileButton : DropdownMenu {
 	public void OnProfileTypeSelected(string name) {
 		if (InstanceManager.GetInstance<MainMenuManager>().ProfileList != null) {
-			Profile profile = ProfileManager.AddProfile("", name == "ServerButton");
+			Profile profile = ProfileManager.CreateAndAddProfile("", name == "ServerButton");
 			InstanceManager.GetInstance<MainMenuManager>().ProfileList.AddEntry(profile);
 		}
 		else {
