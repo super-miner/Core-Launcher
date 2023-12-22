@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.StoredData;
@@ -31,12 +32,15 @@ public partial class LoadingManager : Control {
 		}
 	}
 
-	public override void _Ready() {
+	public override async void _Ready() {
 		SetupManager.Init();
 		GameManager.Init();
 		
 		if (SetupManager.SetupComplete) {
-			ModManager.FetchModsList();
+			await ModManager.FetchModsList();
+		}
+		else {
+			InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
 		}
 	}
 
@@ -83,9 +87,6 @@ public partial class LoadingManager : Control {
 		
 		if (SetupManager.SetupComplete) {
 			StepComplete();
-		}
-		else {
-			InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
 		}
 	}
 }

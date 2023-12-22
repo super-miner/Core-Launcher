@@ -34,12 +34,13 @@ public static class ModManager {
     
     public static ModsListInfo ModsList = null;
 
-    public static async void FetchModsList() {
+    public static async Task FetchModsList() {
         ModsList = null;
         
         string jsonString = await FetchManager.FetchString(GetUrl(UrlType.ModsList));
         
         ModsList = JsonSerializer.Deserialize<ModsListInfo>(jsonString);
+        GD.Print("DEBUG 2");
         await ModsList.Init();
 
         HasLoaded = true;

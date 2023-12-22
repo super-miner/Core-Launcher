@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.Profiles;
+using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
@@ -11,7 +12,19 @@ public partial class PreloadingManager : Control {
     
     [Export] private int _nextPageDelay = 500;
 
-    public override async void _Ready() {
+    public override void _Ready() {
+        StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
+
+        if (StoredDataManager.HasDeserialized) {
+            OnStoredDataDeserialized();
+        }
+    }
+    
+    public void Finish() {
+        InstanceManager.GetInstance<MenuManager>().SetActiveMenu(0);
+    }
+
+    private async void OnStoredDataDeserialized() {
         ProfileManager.Init();
         
         if (!ProfileManager.ProfileTemplatesExist()) {
@@ -21,9 +34,5 @@ public partial class PreloadingManager : Control {
         await Task.Delay(_nextPageDelay);
 			
         CallDeferred("Finish");
-    }
-    
-    public void Finish() {
-        InstanceManager.GetInstance<MenuManager>().SetActiveMenu(0);
     }
 }

@@ -14,7 +14,8 @@ public class ModsListInfo {
 		for (int i = 0; i < Mods.Count; i++) {
 			ModInfo mod = Mods[i];
 			
-			InstanceManager.GetInstance<LoadingManager>().ProgressBar.SetValue("Mods", (double)i / ModManager.ModsList.Mods.Count, $"Loading data for mod {mod.Name}...");
+			GD.Print("DEBUG");
+			InstanceManager.GetInstance<LoadingManager>().ProgressBar.SetValue("Mods", (double)i / Mods.Count, $"Loading data for mod {mod.Name}...");
 			
 			await mod.Init();
 		}

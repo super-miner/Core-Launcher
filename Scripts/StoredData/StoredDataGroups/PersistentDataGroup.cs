@@ -6,8 +6,6 @@ public class PersistentDataGroup : StoredDataGroup {
     [JsonInclude] public bool SetupComplete = false;
     [JsonInclude] public string SteamExePath = "";
     [JsonInclude] public string SteamGamesPath = "";
-    [JsonInclude] public string ModIOApiKey = "";
-    [JsonInclude] public string ModIOUserID = "";
     
     public override string GetPath() {
         return "PersistantData.json";
