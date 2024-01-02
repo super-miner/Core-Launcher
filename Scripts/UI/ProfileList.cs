@@ -61,47 +61,12 @@ public partial class ProfileList : SelectableItemList {
             InstanceManager.GetInstance<MainMenuManager>().OptionsTabs.Visible = false;
         }
     }
-    
-    /*private void OnDeserializeStoredData() {
-        List<StoredProfileListEntry> storedProfiles = StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles;
-
-        if (storedProfiles.Count == 0) {
-            storedProfiles.Add(new StoredProfileListEntry());
-        }
-        
-        foreach (StoredProfileListEntry storedProfileEntry in storedProfiles) {
-            ProfileListEntry entry = AddEntry(storedProfileEntry.Server, false);
-
-            entry.SetName(storedProfileEntry.Name);
-            entry.Mods = storedProfileEntry.Mods ?? new List<int>();
-        }
-
-        int selectedEntry = StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().SelectedEntry;
-        SetSelectedEntry(selectedEntry >= 0 ? selectedEntry : 0);
-    }
-
-    private void OnSerializeStoredData() {
-        StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles.Clear();
-        foreach (ItemListEntry entry in Entries) {
-            if (entry is ProfileListEntry profileEntry) {
-                StoredProfileListEntry storedProfileEntry = new StoredProfileListEntry {
-                    Name = profileEntry.Name,
-                    Server = profileEntry.Server,
-                    Mods = profileEntry.Mods
-                };
-                
-                StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().Profiles.Add(storedProfileEntry);
-            }
-        }
-
-        StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().SelectedEntry = SelectedEntry;
-    }*/
 
     private void OnStoredDataDeserialized() {
-        GD.Print("DEBUG 1");
-        
         foreach (Profile profile in ProfileManager.Profiles) {
             AddEntry(profile, false);
         }
+        
+        SetSelectedEntry(0);
     }
 }

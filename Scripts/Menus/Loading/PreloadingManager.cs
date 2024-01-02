@@ -23,8 +23,6 @@ public partial class PreloadingManager : Control {
     public override void _Ready() {
         ProfileManager.Init();
         
-        GD.Print("DEBUG 2");
-        
         StoredDataManager.Deserialize();
     }
     
