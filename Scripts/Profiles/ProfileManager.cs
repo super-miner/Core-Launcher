@@ -36,6 +36,11 @@ public static class ProfileManager {
         return profile;
     }
 
+    public static void DeleteProfile(Profile profile) {
+        profile.Delete();
+        Profiles.Remove(profile);
+    }
+
     public static bool ProfileTemplatesExist() {
         return FileUtil.DirectoryExists(GetProfileTemplatePath(true)) && FileUtil.DirectoryExists(GetProfileTemplatePath(false));
     }

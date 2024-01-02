@@ -76,6 +76,10 @@ public class Profile {
         FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(Server), GetCoreKeeperDataPath());
     }
 
+    public void Delete() {
+        FileUtil.DeleteDirectory(GetPath());
+    }
+
     public void QueueAddMod(int modId) {
         _queuedMods.Add(modId);
     }
