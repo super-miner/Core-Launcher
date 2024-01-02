@@ -71,8 +71,13 @@ public class Profile {
         if (FileUtil.DirectoryExists(toPath)) {
             FileUtil.DeleteDirectory(toPath);
         }
-        
         FileUtil.CopyDirectory(GetCoreKeeperDataPath(), toPath);
+
+        toPath = GameManager.GetAppDataPath();
+        if (FileUtil.DirectoryExists(toPath)) {
+            FileUtil.DeleteDirectory(toPath);
+        }
+        FileUtil.CopyDirectory(GetAppDataPath(), toPath);
     }
 
     public void Uninstall() {
@@ -80,8 +85,13 @@ public class Profile {
         if (FileUtil.DirectoryExists(toPath)) {
             FileUtil.DeleteDirectory(toPath);
         }
-        
         FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(Server), toPath);
+        
+        toPath = GetAppDataPath();
+        if (FileUtil.DirectoryExists(toPath)) {
+            FileUtil.DeleteDirectory(toPath);
+        }
+        FileUtil.CopyDirectory(GameManager.GetAppDataPath(), toPath);
     }
 
     public void Delete() {
@@ -150,6 +160,10 @@ public class Profile {
 
     public string GetCoreKeeperDataPath() {
         return $"{GetPath()}CoreKeeperData/";
+    }
+    
+    public string GetAppDataPath() {
+        return $"{GetPath()}AppData/";
     }
     
     public string GetModsPath() {

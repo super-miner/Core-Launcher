@@ -51,6 +51,8 @@ public static class ProfileManager {
     }
 
     public static void CreateProfileTemplate(bool server) {
+        CreateBackup(server);
+        
         string profileTemplatePath = GetProfileTemplatePath(server);
 
         if (!FileUtil.DirectoryExists(profileTemplatePath)) {
@@ -60,10 +62,33 @@ public static class ProfileManager {
         string profileTemplateDataPath = $"{profileTemplatePath}CoreKeeperData/";
         FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(server), profileTemplateDataPath);
         
+        string profileTemplateAppDataPath = $"{profileTemplatePath}AppData/";
+        FileUtil.CopyDirectory(GameManager.GetAppDataPath(), profileTemplateAppDataPath);
+        
         string profileTemplateModsPath = $"{profileTemplatePath}CoreKeeperData/StreamingAssets/Mods/";
         foreach (string directoryPath in FileUtil.GetDirectories(profileTemplateModsPath)) {
             FileUtil.DeleteDirectory(directoryPath);
         }
+    }
+
+    public static void CreateBackup(bool server, bool backupDataOnly = false) {
+        string backupPath = GetBackupPath(server);
+
+        if (!FileUtil.DirectoryExists(backupPath)) {
+            FileUtil.CreateDirectory(backupPath);
+        }
+        
+        string backupDataPath = $"{backupPath}CoreKeeperData/";
+        if (!FileUtil.DirectoryExists(backupDataPath)) {
+            FileUtil.CreateDirectory(backupDataPath);
+        }
+        FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(server), backupDataPath);
+        
+        string backupAppDataPath = $"{backupPath}AppData/";
+        if (!FileUtil.DirectoryExists(backupAppDataPath)) {
+            FileUtil.CreateDirectory(backupAppDataPath);
+        }
+        FileUtil.CopyDirectory(GameManager.GetAppDataPath(), backupAppDataPath);
     }
     
     public static string GetProfilesPath() {
@@ -72,6 +97,12 @@ public static class ProfileManager {
     
     public static string GetProfileTemplatePath(bool server) {
         return $"{FileUtil.GetPath(PathType.AppData)}Templates/{(server ? "ServerProfileTemplate" : "ProfileTemplate")}/";
+    }
+    
+    public static string GetBackupPath(bool server) {
+        long currentTime = (long) (Time.GetUnixTimeFromSystem() * 1000.0);
+        
+        return $"{FileUtil.GetPath(PathType.AppData)}Backups/{(server ? "ServerBackups" : "ClientBackups")}/{currentTime}/";
     }
 
     private static void OnDeserializeStoredData() {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Godot;
+using Environment = System.Environment;
 
 namespace CoreLauncher.Scripts.Systems;
 
@@ -13,6 +14,7 @@ public enum PathType {
     Project,
     SteamExe,
     SteamGames,
+    CoreKeeperAppData,
     Profiles,
     ModTemp
 }
@@ -83,6 +85,18 @@ public static class FileUtil {
                     }
 
                     return "";
+                }
+            case PathType.CoreKeeperAppData:
+                if (!string.IsNullOrEmpty(GameManager.AppDataPath)) {
+                    return GameManager.AppDataPath;
+                }
+                else {
+                    string intermediatePath = $"{GetParentDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData))}\\LocalLow\\Pugstorm\\Core Keeper\\Steam";
+                    
+                    return GetDirectories(intermediatePath).FirstOrDefault(directoryPath => {
+                        string directoryName = GetDirectoryName(directoryPath);
+                        return directoryName != "unknown";
+                    }, "");
                 }
             case PathType.Profiles:
                 return $"{GetPath(PathType.AppData)}Profiles/";
@@ -171,7 +185,7 @@ public static class FileUtil {
         }
     }
 
-    public static string UpOneLevel(string path) {
+    public static string GetParentDirectory(string path) {
         DirectoryInfo directory = new DirectoryInfo(path);
         DirectoryInfo parentDirectory = directory.Parent;
         return parentDirectory != null ? parentDirectory.ToString() : null;

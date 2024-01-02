@@ -1,0 +1,286 @@
+[gd_scene load_steps=11 format=3 uid="uid://bv75ghh0fu0dp"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/Setup/FindPaths.cs" id="1_eam08"]
+[ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="2_7nibv"]
+[ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="3_4bh3v"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/FileLineEdit.cs" id="4_2rts7"]
+[ext_resource type="Texture2D" uid="uid://udrjjhyr7euf" path="res://Images/Icons/File.png" id="5_p6l4d"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/FileExplorerButton.cs" id="6_0ayy2"]
+[ext_resource type="Theme" uid="uid://ca310l130svfn" path="res://Themes/DefualtTheme/NormalFileExplorer.tres" id="7_n4i6g"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/FileExplorer.cs" id="8_us0c3"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="9_el1ry"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="10_1l0l7"]
+
+[node name="FindPaths" type="Control" node_paths=PackedStringArray("_steamExePathLineEdit", "_steamGamesPathLineEdit", "_appDataPathLineEdit", "_progressBar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eam08")
+_steamExePathLineEdit = NodePath("VBox/ExePathFilePicker/LineEdit")
+_steamGamesPathLineEdit = NodePath("VBox/GamesPathFilePicker/LineEdit")
+_appDataPathLineEdit = NodePath("VBox/AppDataPathFilePicker/LineEdit")
+_progressBar = NodePath("ProgressBar")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+anchor_left = 0.312
+anchor_right = 0.687
+anchor_bottom = 1.0
+offset_left = -0.200012
+offset_right = 5.80005
+alignment = 1
+
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("2_7nibv")
+theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
+theme_override_font_sizes/font_size = 70
+text = "File Locations"
+
+[node name="Description" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
+text = "Let Core Launcher know where important files are located on 
+your device."
+
+[node name="Separator" type="Container" parent="VBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="ExePathLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+text = "Select your steam executable path:"
+
+[node name="ExePathFilePicker" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="VBox/ExePathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+z_index = 10
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_4bh3v")
+placeholder_text = "Path: eg. C:\\Program Files (x86)\\Steam"
+script = ExtResource("4_2rts7")
+FolderMustContain = ["steam.exe"]
+_errorLabel = NodePath("../../ExePathErrorLabel")
+_successLabel = NodePath("../../ExePathSuccessLabel")
+
+[node name="Button" type="Button" parent="VBox/ExePathFilePicker"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("3_4bh3v")
+theme_override_constants/icon_max_width = 40
+icon = ExtResource("5_p6l4d")
+icon_alignment = 1
+script = ExtResource("6_0ayy2")
+
+[node name="FileExplorer" type="FileDialog" parent="VBox/ExePathFilePicker/Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+theme = ExtResource("7_n4i6g")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("8_us0c3")
+StartingDirectory = "/"
+
+[node name="ExePathErrorLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="ExePathSuccessLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Found path."
+
+[node name="Separator2" type="Container" parent="VBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="GamesPathLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+text = "Select your steam games path:"
+
+[node name="GamesPathLabel2" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
+text = "(Will be the same as the executable path on Windows)"
+
+[node name="GamesPathFilePicker" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="VBox/GamesPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+z_index = 10
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_4bh3v")
+placeholder_text = "Path: eg. C:\\Program Files (x86)\\Steam"
+script = ExtResource("4_2rts7")
+FolderMustContain = ["steamapps/common/Core Keeper", "steamapps/common/Core Keeper Dedicated Server"]
+_errorLabel = NodePath("../../GamesPathErrorLabel")
+_successLabel = NodePath("../../GamesPathSuccessLabel")
+
+[node name="Button" type="Button" parent="VBox/GamesPathFilePicker"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("3_4bh3v")
+theme_override_constants/icon_max_width = 40
+icon = ExtResource("5_p6l4d")
+icon_alignment = 1
+script = ExtResource("6_0ayy2")
+
+[node name="FileExplorer" type="FileDialog" parent="VBox/GamesPathFilePicker/Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+theme = ExtResource("7_n4i6g")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("8_us0c3")
+StartingDirectory = "/"
+
+[node name="GamesPathErrorLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="GamesPathSuccessLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Found path."
+
+[node name="Separator3" type="Container" parent="VBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="AppDataPathLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+text = "Select your Core Keeper app data path:"
+
+[node name="AppDataPathFilePicker" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="VBox/AppDataPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+z_index = 10
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_4bh3v")
+placeholder_text = "Path: eg. %AppData%/LocalLow/Pugstorm/Core Keeper/Steam/########"
+script = ExtResource("4_2rts7")
+FolderMustContain = ["prefs.json", "saves", "mods", "worlds", "ServerConfig.json"]
+_errorLabel = NodePath("../../AppDataPathErrorLabel")
+_successLabel = NodePath("../../AppDataPathSuccessLabel")
+
+[node name="Button" type="Button" parent="VBox/AppDataPathFilePicker"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("3_4bh3v")
+theme_override_constants/icon_max_width = 40
+icon = ExtResource("5_p6l4d")
+icon_alignment = 1
+script = ExtResource("6_0ayy2")
+
+[node name="FileExplorer" type="FileDialog" parent="VBox/AppDataPathFilePicker/Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+theme = ExtResource("7_n4i6g")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("8_us0c3")
+StartingDirectory = "/"
+
+[node name="AppDataPathErrorLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="AppDataPathSuccessLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_4bh3v")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Found path."
+
+[node name="Margin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 80
+
+[node name="ContinueButton" type="Button" parent="VBox/Margin"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_7nibv")
+theme_override_font_sizes/font_size = 30
+text = "CONTINUE"
+
+[node name="ProgressBar" type="ProgressBar" parent="." node_paths=PackedStringArray("_label")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_7nibv")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+script = ExtResource("9_el1ry")
+SmoothingCoefficient = 0.065
+_label = NodePath("ProgressLabel")
+
+[node name="ProgressLabel" type="Label" parent="ProgressBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 780.0
+offset_top = -43.0
+offset_right = -780.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_4bh3v")
+
+[node name="SteamPath" type="Node" parent="ProgressBar"]
+script = ExtResource("10_1l0l7")
+TotalPercent = 1.0
+
+[connection signal="text_changed" from="VBox/ExePathFilePicker/LineEdit" to="VBox/ExePathFilePicker/LineEdit" method="OnTextChanged"]
+[connection signal="pressed" from="VBox/ExePathFilePicker/Button" to="VBox/ExePathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="VBox/ExePathFilePicker/Button/FileExplorer" to="VBox/ExePathFilePicker/Button" method="OnDirectorySelected"]
+[connection signal="text_changed" from="VBox/GamesPathFilePicker/LineEdit" to="VBox/GamesPathFilePicker/LineEdit" method="OnTextChanged"]
+[connection signal="pressed" from="VBox/GamesPathFilePicker/Button" to="VBox/GamesPathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="VBox/GamesPathFilePicker/Button/FileExplorer" to="VBox/GamesPathFilePicker/Button" method="OnDirectorySelected"]
+[connection signal="text_changed" from="VBox/AppDataPathFilePicker/LineEdit" to="VBox/AppDataPathFilePicker/LineEdit" method="OnTextChanged"]
+[connection signal="pressed" from="VBox/AppDataPathFilePicker/Button" to="VBox/AppDataPathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="VBox/AppDataPathFilePicker/Button/FileExplorer" to="VBox/AppDataPathFilePicker/Button" method="OnDirectorySelected"]
+[connection signal="pressed" from="VBox/Margin/ContinueButton" to="." method="Continue"]

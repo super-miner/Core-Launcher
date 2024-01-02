@@ -12,35 +12,24 @@ public partial class PreloadingManager : Control {
     
     [Export] private int _nextPageDelay = 500;
 
-    public override void _EnterTree() {
-        StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
-
-        if (StoredDataManager.HasDeserialized) {
-            OnStoredDataDeserialized();
-        }
-    }
-
-    public override void _Ready() {
-        ProfileManager.Init();
-        
+    public override async void _Ready() {
         StoredDataManager.Deserialize();
-    }
-    
-    public override void _ExitTree() {
-        StoredDataManager.StoredDataDeserializedEvent -= OnStoredDataDeserialized;
-    }
-    
-    public void Finish() {
-        InstanceManager.GetInstance<MenuManager>().SetActiveMenu(0);
-    }
-
-    private async void OnStoredDataDeserialized() {
-        if (!ProfileManager.ProfileTemplatesExist()) {
-            ProfileManager.CreateProfileTemplates();
+        
+        SetupManager.Init();
+        
+        if (!SetupManager.SetupComplete) {
+            InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
+            return;
         }
+        
+        ProfileManager.Init();
         
         await Task.Delay(_nextPageDelay);
 			
         CallDeferred("Finish");
+    }
+    
+    public void Finish() {
+        InstanceManager.GetInstance<MenuManager>().SetActiveMenu(0);
     }
 }

@@ -14,6 +14,7 @@ namespace CoreLauncher.Scripts.Systems;
 public static class GameManager {
 	public static string SteamExePath;
 	public static string SteamGamesPath;
+	public static string AppDataPath;
 	
 	public static void Init() {
 		StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
@@ -73,6 +74,10 @@ public static class GameManager {
 	
 	public static string GetCoreKeeperDataPath(bool server) {
 		return server ? $"{GetCoreKeeperServerPath()}CoreKeeperServer_Data/" : $"{GetCoreKeeperPath()}CoreKeeper_Data/";
+	}
+
+	public static string GetAppDataPath() {
+		return AppDataPath;
 	}
 	
 	private static void OnDeserializeStoredData() {

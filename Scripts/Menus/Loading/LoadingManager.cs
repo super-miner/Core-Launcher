@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.ModIO;
+using CoreLauncher.Scripts.Profiles;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.Systems;
@@ -33,18 +34,12 @@ public partial class LoadingManager : Control {
 	}
 
 	public override async void _Ready() {
-		SetupManager.Init();
 		GameManager.Init();
 		
-		if (SetupManager.SetupComplete) {
-			await ModManager.FetchModsList();
+		await ModManager.FetchModsList();
 			
-			if (StoredDataManager.HasDeserialized) {
-				OnStoredDataDeserialized();
-			}
-		}
-		else {
-			InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
+		if (StoredDataManager.HasDeserialized) {
+			OnStoredDataDeserialized();
 		}
 	}
 
@@ -73,7 +68,7 @@ public partial class LoadingManager : Control {
 	}
 
 	public void Finish() {
-		InstanceManager.GetInstance<MenuManager>().SetActiveMenu(2);
+		InstanceManager.GetInstance<MenuManager>().SetActiveMenu(3);
 	}
 
 	private void OnModInfoLoaded() {
@@ -86,6 +81,10 @@ public partial class LoadingManager : Control {
 
 	private void OnStoredDataDeserialized() {
 		GD.Print("Loading Manager: Deserialized app data.");
+		
+		if (!ProfileManager.ProfileTemplatesExist()) {
+			ProfileManager.CreateProfileTemplates();
+		}
 		
 		if (SetupManager.SetupComplete) {
 			ProgressBar.SetValue("AppData", 1.0, "Loaded configs...");

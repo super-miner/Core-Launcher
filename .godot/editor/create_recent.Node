@@ -1,3 +1,5 @@
+DropdownMenu
+MenuBar
 HBoxContainer
 Button
 LineEdit
@@ -11,8 +13,6 @@ HSeparator
 ItemListSeparator
 Container
 AddProfileButton
-DropdownMenu
-MenuBar
 OptionButton
 CustomLinkButton
 LinkButton
