@@ -66,14 +66,22 @@ public class Profile {
 
     public async Task Install() {
         await ManageQueuedMods();
+
+        string toPath = GameManager.GetCoreKeeperDataPath(Server);
+        if (FileUtil.DirectoryExists(toPath)) {
+            FileUtil.DeleteDirectory(toPath);
+        }
         
-        FileUtil.DeleteDirectory(GameManager.GetCoreKeeperDataPath(Server));
-        FileUtil.CopyDirectory(GetCoreKeeperDataPath(), GameManager.GetCoreKeeperDataPath(Server));
+        FileUtil.CopyDirectory(GetCoreKeeperDataPath(), toPath);
     }
 
     public void Uninstall() {
-        FileUtil.DeleteDirectory(GetCoreKeeperDataPath());
-        FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(Server), GetCoreKeeperDataPath());
+        string toPath = GetCoreKeeperDataPath();
+        if (FileUtil.DirectoryExists(toPath)) {
+            FileUtil.DeleteDirectory(toPath);
+        }
+        
+        FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(Server), toPath);
     }
 
     public void Delete() {

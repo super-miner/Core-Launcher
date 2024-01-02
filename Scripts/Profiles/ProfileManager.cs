@@ -59,6 +59,11 @@ public static class ProfileManager {
 
         string profileTemplateDataPath = $"{profileTemplatePath}CoreKeeperData/";
         FileUtil.CopyDirectory(GameManager.GetCoreKeeperDataPath(server), profileTemplateDataPath);
+        
+        string profileTemplateModsPath = $"{profileTemplatePath}CoreKeeperData/StreamingAssets/Mods/";
+        foreach (string directoryPath in FileUtil.GetDirectories(profileTemplateModsPath)) {
+            FileUtil.DeleteDirectory(directoryPath);
+        }
     }
     
     public static string GetProfilesPath() {
