@@ -13,7 +13,7 @@ public static class InstanceManager {
             currentInstance.QueueFree();
         }
         
-        _instances.Add(typeof(T), instance);
+        _instances[typeof(T)] = instance;
     }
 
     public static void RemoveInstance<T>(T instance) where T : Node {

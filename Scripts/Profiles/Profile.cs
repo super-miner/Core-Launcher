@@ -27,13 +27,15 @@ public class Profile {
         Id = id;
         Name = name;
         Server = server;
-        
+
+        ulong startTime = Time.GetTicksMsec();
         FileUtil.CopyDirectory(ProfileManager.GetProfileTemplatePath(Server), GetPath());
+        GD.Print($"Time: {Time.GetTicksMsec() - startTime}");
     }
 
     public void Deserialize() {
         ProfileInfo profileInfo = FileUtil.ReadJsonFile<ProfileInfo>(GetConfigsPath());
-
+        
         Name = profileInfo.Name;
         Server = profileInfo.Server;
         _queuedMods = profileInfo.QueuedMods;

@@ -27,7 +27,9 @@ public partial class ProfileSettingsLineEdit : LineEdit {
     }
 
     public void OnProfileSelected() {
-        ReleaseFocus();
+        if (Node.IsInstanceValid(this)) {
+            ReleaseFocus();
+        }
         
         bool success = UpdateSetting();
 

@@ -11,16 +11,20 @@ using Godot;
 namespace CoreLauncher.Scripts.UI;
 
 public partial class ProfileList : SelectableItemList {
-    public override void _Ready() {
+    public override void _EnterTree() {
         StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
         
         if (StoredDataManager.HasDeserialized) {
             OnStoredDataDeserialized();
         }
     }
-    
-    public ProfileListEntry AddEntry(Profile profile, bool select = true) {
-        SelectableItemListEntry selectableEntry = base.AddEntry(profile.Server ? "Dedicated Server" : "Client", false);
+
+    public override void _ExitTree() {
+        StoredDataManager.StoredDataDeserializedEvent -= OnStoredDataDeserialized;
+    }
+
+    public ProfileListEntry AddEntry(Profile profile, bool select = true, bool init = true) {
+        SelectableItemListEntry selectableEntry = base.AddEntry(profile.Server ? "Dedicated Server" : "Client", false, false);
 
         if (Entries.Count == 1) {
             InstanceManager.GetInstance<MainMenuManager>().OptionsTabs.Visible = true;
@@ -34,6 +38,10 @@ public partial class ProfileList : SelectableItemList {
 
             if (select) {
                 SetSelectedEntry(profileEntry);
+            }
+
+            if (init) {
+                profileEntry.Init();
             }
             
             return profileEntry;
@@ -90,6 +98,8 @@ public partial class ProfileList : SelectableItemList {
     }*/
 
     private void OnStoredDataDeserialized() {
+        GD.Print("DEBUG 1");
+        
         foreach (Profile profile in ProfileManager.Profiles) {
             AddEntry(profile, false);
         }

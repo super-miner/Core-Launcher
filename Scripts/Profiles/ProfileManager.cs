@@ -15,6 +15,10 @@ public static class ProfileManager {
         
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
+
+        if (StoredDataManager.HasDeserialized) {
+            OnDeserializeStoredData();
+        }
     }
     
     public static Profile AddProfile(string id) {

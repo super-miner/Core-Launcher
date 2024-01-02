@@ -11,6 +11,10 @@ public partial class ProfileListEntry : SelectableItemListEntry {
     
     [Export] private Label _nameText;
 
+    public override void Init() {
+        SetName(GetName());
+    }
+
     public string GetName() {
         return Profile.Name;
     }

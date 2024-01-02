@@ -40,7 +40,6 @@ public static class ModManager {
         string jsonString = await FetchManager.FetchString(GetUrl(UrlType.ModsList));
         
         ModsList = JsonSerializer.Deserialize<ModsListInfo>(jsonString);
-        GD.Print("DEBUG 2");
         await ModsList.Init();
 
         HasLoaded = true;

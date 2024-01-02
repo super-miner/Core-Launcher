@@ -38,6 +38,10 @@ public partial class LoadingManager : Control {
 		
 		if (SetupManager.SetupComplete) {
 			await ModManager.FetchModsList();
+			
+			if (StoredDataManager.HasDeserialized) {
+				OnStoredDataDeserialized();
+			}
 		}
 		else {
 			InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
@@ -83,9 +87,9 @@ public partial class LoadingManager : Control {
 	private void OnStoredDataDeserialized() {
 		GD.Print("Loading Manager: Deserialized app data.");
 		
-		ProgressBar.SetValue("AppData", 1.0, "Loaded configs...");
-		
 		if (SetupManager.SetupComplete) {
+			ProgressBar.SetValue("AppData", 1.0, "Loaded configs...");
+			
 			StepComplete();
 		}
 	}

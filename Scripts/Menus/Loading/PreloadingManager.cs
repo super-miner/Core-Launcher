@@ -12,12 +12,24 @@ public partial class PreloadingManager : Control {
     
     [Export] private int _nextPageDelay = 500;
 
-    public override void _Ready() {
+    public override void _EnterTree() {
         StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
 
         if (StoredDataManager.HasDeserialized) {
             OnStoredDataDeserialized();
         }
+    }
+
+    public override void _Ready() {
+        ProfileManager.Init();
+        
+        GD.Print("DEBUG 2");
+        
+        StoredDataManager.Deserialize();
+    }
+    
+    public override void _ExitTree() {
+        StoredDataManager.StoredDataDeserializedEvent -= OnStoredDataDeserialized;
     }
     
     public void Finish() {
@@ -25,8 +37,6 @@ public partial class PreloadingManager : Control {
     }
 
     private async void OnStoredDataDeserialized() {
-        ProfileManager.Init();
-        
         if (!ProfileManager.ProfileTemplatesExist()) {
             ProfileManager.CreateProfileTemplates();
         }
