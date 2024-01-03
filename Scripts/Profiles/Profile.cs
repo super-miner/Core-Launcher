@@ -61,10 +61,14 @@ public class Profile {
             QueuedMods = _queuedMods
         };
         
+        GD.Print("DEBUG: Serializing profile");
         FileUtil.WriteJSONFile(GetConfigsPath(), profileInfo);
     }
 
     public async Task Install() {
+        ProfileManager.GetLastLoadedProfile()?.Uninstall();
+        ProfileManager.LastLoadedProfileId = Id;
+        
         await ManageQueuedMods();
 
         string toPath = GameManager.GetCoreKeeperDataPath(Server);

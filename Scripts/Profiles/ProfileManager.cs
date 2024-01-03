@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using CoreLauncher.Scripts.StoredData;
+using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.Systems;
 using Godot;
 
 namespace CoreLauncher.Scripts.Profiles; 
 
 public static class ProfileManager {
+    public static string LastLoadedProfileId = "";
     public static List<Profile> Profiles = new List<Profile>();
 
     public static void Init() {
@@ -105,6 +108,10 @@ public static class ProfileManager {
         return $"{FileUtil.GetPath(PathType.AppData)}Backups/{(server ? "ServerBackups" : "ClientBackups")}/{currentTime}/";
     }
 
+    public static Profile GetLastLoadedProfile() {
+        return Profiles.FirstOrDefault(profile => profile.Id == LastLoadedProfileId);
+    }
+
     private static void OnDeserializeStoredData() {
         foreach (string projectDirectoryPath in FileUtil.GetDirectories(GetProfilesPath())) {
             string projectDirectoryName = FileUtil.GetDirectoryName(projectDirectoryPath);
@@ -112,11 +119,15 @@ public static class ProfileManager {
             Profile profile = AddProfile(projectDirectoryName);
             profile.Deserialize();
         }
+
+        LastLoadedProfileId = StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().LastLoadedIntId;
     }
 
     private static void OnSerializeStoredData() {
         foreach (Profile profile in Profiles) {
             profile.Serialize();
         }
+        
+        StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().LastLoadedIntId = LastLoadedProfileId;
     }
 }
