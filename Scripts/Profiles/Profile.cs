@@ -81,6 +81,10 @@ public class Profile {
     }
 
     public void Uninstall() {
+        if (!FileUtil.DirectoryExists(GetPath())) {
+            FileUtil.CreateDirectory(GetPath());
+        }
+        
         string toPath = GetCoreKeeperDataPath();
         if (FileUtil.DirectoryExists(toPath)) {
             FileUtil.DeleteDirectory(toPath);

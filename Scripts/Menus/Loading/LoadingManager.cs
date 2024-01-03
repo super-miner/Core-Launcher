@@ -68,7 +68,7 @@ public partial class LoadingManager : Control {
 	}
 
 	public void Finish() {
-		InstanceManager.GetInstance<MenuManager>().SetActiveMenu(3);
+		InstanceManager.GetInstance<MenuManager>().SetActiveMenu(2);
 	}
 
 	private void OnModInfoLoaded() {

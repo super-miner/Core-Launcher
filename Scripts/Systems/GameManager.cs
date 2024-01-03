@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using System.IO.Compression;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.Menus.Main;
-using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.UI;
@@ -77,16 +74,18 @@ public static class GameManager {
 	}
 
 	public static string GetAppDataPath() {
-		return AppDataPath;
+		return $"{AppDataPath}/";
 	}
 	
 	private static void OnDeserializeStoredData() {
 		SteamExePath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamExePath;
 		SteamGamesPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamesPath;
+		AppDataPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().AppDataPath;
 	}
 
 	private static void OnSerializeStoredData() {
 		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamExePath = SteamExePath;
 		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamesPath = SteamGamesPath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().AppDataPath = AppDataPath;
 	}
 }
