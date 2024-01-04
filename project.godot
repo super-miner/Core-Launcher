@@ -20,7 +20,6 @@ config/icon="res://Images/Icons/AppIcon.png"
 window/size/viewport_width=1600
 window/size/viewport_height=900
 window/subwindows/embed_subwindows=false
-window/stretch/mode="canvas_items"
 
 [dotnet]
 

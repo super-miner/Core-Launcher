@@ -34,8 +34,6 @@ public partial class LoadingManager : Control {
 	}
 
 	public override async void _Ready() {
-		GameManager.Init();
-		
 		await ModManager.FetchModsList();
 			
 		if (StoredDataManager.HasDeserialized) {

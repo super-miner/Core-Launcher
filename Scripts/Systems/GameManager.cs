@@ -16,6 +16,10 @@ public static class GameManager {
 	public static void Init() {
 		StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
 		StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
+
+		if (StoredDataManager.HasDeserialized) {
+			OnDeserializeStoredData();
+		}
 	}
 	
 	public static async void RunGame() {

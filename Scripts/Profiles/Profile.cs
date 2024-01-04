@@ -61,7 +61,6 @@ public class Profile {
             QueuedMods = _queuedMods
         };
         
-        GD.Print("DEBUG: Serializing profile");
         FileUtil.WriteJSONFile(GetConfigsPath(), profileInfo);
     }
 

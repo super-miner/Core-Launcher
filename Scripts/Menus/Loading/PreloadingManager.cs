@@ -16,8 +16,11 @@ public partial class PreloadingManager : Control {
         StoredDataManager.Deserialize();
         
         SetupManager.Init();
+        GameManager.Init();
         
         if (!SetupManager.SetupComplete) {
+            ProfileManager.Init();
+            
             InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
             return;
         }
