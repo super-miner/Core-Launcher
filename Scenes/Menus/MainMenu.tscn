@@ -186,7 +186,6 @@ script = ExtResource("7_onhks")
 [node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
-mouse_filter = 2
 theme = ExtResource("1_81ept")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
