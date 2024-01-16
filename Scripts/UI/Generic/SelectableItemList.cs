@@ -14,7 +14,7 @@ public partial class SelectableItemList : ItemList {
 
         if (entry is SelectableItemListEntry selectableEntry) {
             if (select) {
-                SetSelectedEntry(entry.Id);
+                SetSelectedEntry(selectableEntry);
             }
 
             selectableEntry.ItemList = this;
@@ -38,6 +38,9 @@ public partial class SelectableItemList : ItemList {
 
         if (SelectedEntry >= Entries.Count) {
             SetSelectedEntry(Entries.Count - 1);
+        }
+        else {
+            SetSelectedEntry(SelectedEntry);
         }
     }
     
