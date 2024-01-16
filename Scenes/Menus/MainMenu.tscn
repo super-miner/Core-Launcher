@@ -312,6 +312,7 @@ size_flags_horizontal = 3
 focus_mode = 1
 theme = ExtResource("1_81ept")
 placeholder_text = "Name..."
+max_length = 24
 script = ExtResource("10_mm626")
 
 [node name="ProfileSettingsOption" type="Node" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input"]
@@ -539,6 +540,7 @@ text = "Please name the selected profile before continuing:"
 layout_mode = 2
 theme = ExtResource("1_81ept")
 placeholder_text = "Name..."
+max_length = 24
 
 [node name="HBoxContainer" type="HBoxContainer" parent="InvalidNamePopup/MarginContainer/VBoxContainer"]
 layout_mode = 2
