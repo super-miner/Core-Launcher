@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CoreLauncher.Scripts.Systems;
 using Godot;
 
@@ -41,11 +42,23 @@ public static class StoredDataManager {
         
         DeserializeStoredDataEvent?.Invoke();
         StoredDataDeserializedEvent?.Invoke();
+
+        if (DeserializeStoredDataEvent != null) {
+            foreach (Delegate _delegate in DeserializeStoredDataEvent.GetInvocationList()) {
+                GD.Print($"Stored Data Manager: Called deserialization function {_delegate.Method.DeclaringType}.{_delegate.Method.Name}(...)");
+            }
+        }
     }
 
     public static void Serialize() {
         SerializeStoredDataEvent?.Invoke();
-        
+
+        if (DeserializeStoredDataEvent != null) {
+            foreach (Delegate _delegate in SerializeStoredDataEvent.GetInvocationList()) {
+                GD.Print($"Stored Data Manager: Called serialization function {_delegate.Method.DeclaringType}.{_delegate.Method.Name}(...)");
+            }
+        }
+
         foreach (StoredDataGroup group in _groups.Values) {
             string path = GetPath() + group.GetPath();
             

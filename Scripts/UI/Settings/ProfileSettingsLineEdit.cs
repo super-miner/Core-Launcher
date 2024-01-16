@@ -27,6 +27,10 @@ public partial class ProfileSettingsLineEdit : LineEdit {
     }
 
     public void OnProfileSelected() {
+        if (!Node.IsInstanceValid(this)) {
+            return;
+        }
+        
         ReleaseFocus();
         
         bool success = UpdateSetting();
@@ -41,6 +45,10 @@ public partial class ProfileSettingsLineEdit : LineEdit {
     }
 
     private bool UpdateSetting() {
+        if (!Node.IsInstanceValid(this)) {
+            return false;
+        }
+        
         string textTemp = Text;
         bool success = _settingsOption.GetSetting(ref textTemp);
         Text = textTemp;

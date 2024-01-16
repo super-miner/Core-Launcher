@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=33 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -28,6 +28,7 @@
 [ext_resource type="Theme" uid="uid://ugmnp05awb0c" path="res://Themes/DefualtTheme/Contrast.tres" id="19_ipapd"]
 [ext_resource type="Texture2D" uid="uid://bkhpatrg57ab5" path="res://Images/Icons/HeartSmall.png" id="20_qv3hg"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/CustomLinkButton.cs" id="21_r6au4"]
+[ext_resource type="Script" path="res://Scripts/UI/NameProfilePopup.cs" id="29_wblnm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oyhup"]
 bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
@@ -48,7 +49,7 @@ unicode = 112
 [sub_resource type="Shortcut" id="Shortcut_aaq3q"]
 events = [SubResource("InputEventKey_ifb3j")]
 
-[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "PlayProgressBar", "OptionsTabs")]
+[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "NameProfilePopup", "PlayProgressBar", "OptionsTabs")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -56,6 +57,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qb7sc")
 ProfileList = NodePath("MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles")
+NameProfilePopup = NodePath("InvalidNamePopup")
 PlayProgressBar = NodePath("MainConatiner/GameBar/ProgressBar")
 OptionsTabs = NodePath("MainConatiner/CentralMenu/MainScreen/Margin/Tabs")
 
@@ -184,7 +186,6 @@ script = ExtResource("7_onhks")
 [node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
-mouse_filter = 2
 theme = ExtResource("1_81ept")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
@@ -229,7 +230,7 @@ theme = ExtResource("1_81ept")
 [node name="ProfileListSeparatorServer" type="MarginContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles" node_paths=PackedStringArray("Label")]
 layout_mode = 2
 script = ExtResource("11_lw3bu")
-Label = NodePath("../ProfileListSeparatorClient/HBoxContainer/Label")
+Label = NodePath("HBoxContainer/Label")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles/ProfileListSeparatorServer"]
 layout_mode = 2
@@ -274,6 +275,7 @@ anchor_bottom = 1.0
 theme_override_constants/margin_top = 10
 
 [node name="Tabs" type="TabContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin"]
+visible = false
 layout_mode = 2
 theme = ExtResource("1_81ept")
 script = ExtResource("12_4bc7j")
@@ -309,6 +311,7 @@ size_flags_horizontal = 3
 focus_mode = 1
 theme = ExtResource("1_81ept")
 placeholder_text = "Name..."
+max_length = 24
 script = ExtResource("10_mm626")
 
 [node name="ProfileSettingsOption" type="Node" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input"]
@@ -366,7 +369,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 60
 
 [node name="Mods" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/ScrollContainer/Margin"]
 layout_mode = 2
@@ -496,6 +499,65 @@ mouse_filter = 2
 texture = ExtResource("1_rkllh")
 stretch_mode = 6
 
+[node name="InvalidNamePopup" type="Window" parent="." node_paths=PackedStringArray("_nameLineEdit")]
+title = "Name the selected profile"
+initial_position = 1
+size = Vector2i(700, 135)
+visible = false
+script = ExtResource("29_wblnm")
+_nameLineEdit = NodePath("MarginContainer/VBoxContainer/NameLineEdit")
+
+[node name="Panel" type="Panel" parent="InvalidNamePopup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_81ept")
+
+[node name="MarginContainer" type="MarginContainer" parent="InvalidNamePopup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InvalidNamePopup/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="InvalidNamePopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+text = "Please name the selected profile before continuing:"
+
+[node name="NameLineEdit" type="LineEdit" parent="InvalidNamePopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+placeholder_text = "Name..."
+max_length = 24
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InvalidNamePopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="OK" type="Button" parent="InvalidNamePopup/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_81ept")
+text = "OK"
+
+[node name="Cancel" type="Button" parent="InvalidNamePopup/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_81ept")
+text = "Cancel"
+
 [connection signal="OnItemSelected" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnProfileTypeSelected"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" method="OnPressed"]
@@ -506,3 +568,6 @@ stretch_mode = 6
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" method="OnTogglePressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/DonateButton" to="MainConatiner/GameBar/DonateButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]
+[connection signal="close_requested" from="InvalidNamePopup" to="InvalidNamePopup" method="OnCloseRequested"]
+[connection signal="pressed" from="InvalidNamePopup/MarginContainer/VBoxContainer/HBoxContainer/OK" to="InvalidNamePopup" method="OnOkButtonPressed"]
+[connection signal="pressed" from="InvalidNamePopup/MarginContainer/VBoxContainer/HBoxContainer/Cancel" to="InvalidNamePopup" method="OnCancelButtonPressed"]

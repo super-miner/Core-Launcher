@@ -5,14 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Godot;
+using Environment = System.Environment;
 
 namespace CoreLauncher.Scripts.Systems;
 
 public enum PathType {
     AppData,
     Project,
-    Steam,
-    ModCache,
+    SteamExe,
+    SteamGames,
+    CoreKeeperAppData,
+    Profiles,
     ModTemp
 }
 
@@ -23,9 +26,9 @@ public static class FileUtil {
                 return ProjectSettings.GlobalizePath("user://");
             case PathType.Project:
                 return ProjectSettings.GlobalizePath("res://");
-            case PathType.Steam:
-                if (!string.IsNullOrEmpty(GameManager.SteamPath)) {
-                    return GameManager.SteamPath;
+            case PathType.SteamExe:
+                if (!string.IsNullOrEmpty(GameManager.SteamExePath)) {
+                    return GameManager.SteamExePath;
                 }
                 else {
                     string osName = OS.GetName();
@@ -41,16 +44,6 @@ public static class FileUtil {
                         return "";
                     }
                     else if (osName == "Linux") {
-                        /*Godot.Collections.Array output = new Godot.Collections.Array();
-                        int success = OS.Execute("bash", new string[] {"-c", "which", "steam"}, output);
-
-                        if (success >= 0 && output.Count > 0) {
-                            return output[0].AsString();
-                        }
-
-                        GD.PrintErr("There was an error executing the \"which steam\" command. Could not find steam path.");
-                        return "";*/
-
                         return "~/.steam/steam";
                     }
                     else {
@@ -59,8 +52,54 @@ public static class FileUtil {
 
                     return "";
                 }
-            case PathType.ModCache:
-                return $"{GetPath(PathType.AppData)}ModCache/";
+            case PathType.SteamGames:
+                if (!string.IsNullOrEmpty(GameManager.SteamGamesPath)) {
+                    return GameManager.SteamGamesPath;
+                }
+                else {
+                    string osName = OS.GetName();
+                    
+                    if (osName == "Windows") {
+                        object pathObject = RegistryUtil.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
+		
+                        if (pathObject is string pathString) {
+                            return pathString;
+                        }
+                        
+                        GD.PrintErr("Could not find steam path in the registry.");
+                        return "";
+                    }
+                    else if (osName == "Linux") {
+                        Godot.Collections.Array output = new Godot.Collections.Array();
+                        int success = OS.Execute("bash", new string[] {"-c", "which", "steam"}, output);
+
+                        if (success >= 0 && output.Count > 0) {
+                            return output[0].AsString();
+                        }
+
+                        GD.PrintErr("There was an error executing the \"which steam\" command. Could not find steam path.");
+                        return "";
+                    }
+                    else {
+                        GD.PrintErr($"Unrecognized operating system {osName}.");
+                    }
+
+                    return "";
+                }
+            case PathType.CoreKeeperAppData:
+                if (!string.IsNullOrEmpty(GameManager.AppDataPath)) {
+                    return GameManager.AppDataPath;
+                }
+                else {
+                    string intermediatePath = $"{GetParentDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData))}\\LocalLow\\Pugstorm\\Core Keeper\\Steam";
+                    
+                    return GetDirectories(intermediatePath).FirstOrDefault(directoryPath => {
+                        string directoryName = GetDirectoryName(directoryPath);
+                        return directoryName != "unknown";
+                    }, "");
+                }
+            case PathType.Profiles:
+                return $"{GetPath(PathType.AppData)}Profiles/";
             case PathType.ModTemp:
                 return $"{GetPath(PathType.AppData)}Temp/ModTemp.zip";
             default:
@@ -113,7 +152,7 @@ public static class FileUtil {
     }
 
     public static bool DirectoryContains(string path, string file) {
-        return File.Exists($"{path}\\{file}");
+        return File.Exists($"{path}/{file}");
     }
     
     public static bool DirectoryExists(string path) {
@@ -146,7 +185,7 @@ public static class FileUtil {
         }
     }
 
-    public static string UpOneLevel(string path) {
+    public static string GetParentDirectory(string path) {
         DirectoryInfo directory = new DirectoryInfo(path);
         DirectoryInfo parentDirectory = directory.Parent;
         return parentDirectory != null ? parentDirectory.ToString() : null;

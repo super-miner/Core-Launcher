@@ -29,18 +29,12 @@ public static class ModManager {
     
     public static bool HasLoaded = false;
     
-    private static readonly string ModsListUrl = "https://api.mod.io/v1/games/5289/mods?api_key={api_key}";
-    private static readonly string DependenciesListUrl = "https://api.mod.io/v1/games/5289/mods/{mod_id}/dependencies?api_key={api_key}";
+    private static readonly string ModsListUrl = "https://g-5289.modapi.io/v1/games/5289/mods?api_key=40460f9354653502fc6e4666f9f10cce";
+    private static readonly string DependenciesListUrl = "https://g-5289.modapi.io/v1/games/5289/mods/{mod_id}/dependencies?api_key=40460f9354653502fc6e4666f9f10cce";
     
     public static ModsListInfo ModsList = null;
-    public static string ApiKey = "";
 
-    public static void Init() {
-        StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
-        StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
-    }
-
-    public static async void FetchModsList() {
+    public static async Task FetchModsList() {
         ModsList = null;
         
         string jsonString = await FetchManager.FetchString(GetUrl(UrlType.ModsList));
@@ -63,8 +57,7 @@ public static class ModManager {
                 url = DependenciesListUrl;
                 break;
         }
-
-        url = url.Replace("{api_key}", $"{ApiKey}");
+        
         if (modInfo != null) {
             url = url.Replace("{mod_id}", $"{modInfo.Id}");
         }
@@ -80,10 +73,9 @@ public static class ModManager {
         return ModsList.Mods.FirstOrDefault(modInfo => modInfo.Name == modName);
     }
 
-    public static LocalModInfo GetLocalModInfo(int modId) {
-        foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
-            string directoryName = FileUtil.GetDirectoryName(directoryPath);
-            LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
+    public static LocalModInfo GetLocalModInfo(int modId, string modsDirectoryPath) {
+        foreach (string directoryPath in FileUtil.GetDirectories(modsDirectoryPath)) {
+            LocalModInfo localModInfo = LocalModInfo.FromString(directoryPath);
 
             if (localModInfo.Id == modId) {
                 return localModInfo;
@@ -92,28 +84,24 @@ public static class ModManager {
 
         return null;
     }
-    
-    public static void SetApiKey(string apiKey) {
-        ApiKey = apiKey;
 
-        if (!string.IsNullOrEmpty(ApiKey) && SetupManager.SetupComplete) {
-            FetchModsList();
+    public static (List<int>, List<int>) GetModDeltas(List<int> modsListOld, List<int> modsListNew) {
+        List<int> addedMods = new List<int>();
+        List<int> removedMods = new List<int>();
+
+        foreach (int modId in modsListNew) {
+            if (!modsListOld.Contains(modId)) {
+                addedMods.Add(modId);
+            }
         }
-    }
-    
-    public static async Task<bool> ValidateApiKey(string apiKey) {
-        string tempApiKey = ApiKey;
-        ApiKey = apiKey;
         
-        HttpResponseMessage testMessageResponse = await FetchManager.Fetch(GetUrl(UrlType.ModsList));
-        
-        ApiKey = tempApiKey;
-        
-        if (testMessageResponse.StatusCode == HttpStatusCode.Unauthorized) {
-            return false;
+        foreach (int modId in modsListOld) {
+            if (!modsListNew.Contains(modId)) {
+                removedMods.Add(modId);
+            }
         }
 
-        return true;
+        return (addedMods, removedMods);
     }
     
     public static async Task<List<int>> GetDependencies(List<int> modsList) {
@@ -139,8 +127,50 @@ public static class ModManager {
         
         return result;
     }
+    
+    public static async Task DownloadMod(int modId, string path) {
+        ModInfo modInfo = GetModInfo(modId);
 
-    public static void RemoveOldModVersions() {
+        string downloadPath = $"{path}{GetModLocalDirectoryName(modId, modInfo.Name, modInfo.ModFile.Version)}";
+        string tempPath = FileUtil.GetPath(PathType.ModTemp);
+        
+        GD.Print($"Mod Manager: Downloading files for {modInfo.Name} version {modInfo.ModFile.Version}..");
+        
+        await FetchManager.DownloadFile(modInfo.ModFile.Download.Url, tempPath);
+        
+        GD.Print($"Mod Manager: Finished downloading files for {modInfo.Name} version {modInfo.ModFile.Version}, unzipping to {downloadPath}...");
+        
+        FileUtil.CreateDirectory(downloadPath);
+        FileUtil.UnzipToDirectory(tempPath, downloadPath);
+        FileUtil.DeleteFile(tempPath);
+        
+        GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} version {modInfo.ModFile.Version} to {downloadPath}.");
+    }
+
+    public static void RemoveMod(int modId, string path) {
+        LocalModInfo localModInfo = GetLocalModInfo(modId, path);
+        FileUtil.DeleteDirectory(localModInfo.Path);
+    }
+    
+    public static bool IsModOutdated(LocalModInfo localModInfo) {
+        ModInfo modInfo = GetModInfo(localModInfo.Id);
+        return localModInfo.Version != modInfo.ModFile.Version;
+    }
+    
+    public static bool IsModSafe(LocalModInfo localModInfo) {
+        try {
+            ModManifestInfo modManifest = FileUtil.ReadJsonFile<ModManifestInfo>($"{localModInfo.Path}/ModManifest.json");
+
+            ModInfo modInfo = GetModInfo(localModInfo.Id);
+
+            return !(modManifest.SkipSafetyChecks && !modInfo.IsElevatedAccess());
+        }
+        catch (Exception exception) {
+            return false;
+        }
+    }
+
+    /*public static void RemoveOldModVersions() {
         foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
             string directoryName = FileUtil.GetDirectoryName(directoryPath);
             LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
@@ -163,9 +193,9 @@ public static class ModManager {
                 
             FileUtil.DeleteDirectory(directoryPath);
         }
-    }
+    }*/
     
-    public static async Task DownloadMods(List<int> modsList) {
+    /*public static async Task DownloadMods(List<int> modsList) {
         for (int i = 0; i < modsList.Count; i++) {
             int modId = modsList[i];
             ModInfo modInfo = GetModInfo(modId);
@@ -190,9 +220,9 @@ public static class ModManager {
             
             GD.Print($"Mod Manager: Finished unzipping files for {modInfo.Name} version {modInfo.ModFile.Version} to {localPath}.");
         }
-    }
+    }*/
 
-    public static void RemoveUnsafeMods() {
+    /*public static void RemoveUnsafeMods() {
         foreach (string directoryPath in FileUtil.GetDirectories(FileUtil.GetPath(PathType.ModCache))) {
             string directoryName = FileUtil.GetDirectoryName(directoryPath);
             LocalModInfo localModInfo = LocalModInfo.FromString(directoryName);
@@ -212,9 +242,9 @@ public static class ModManager {
                 FileUtil.DeleteDirectory(directoryPath);
             }
         }
-    }
+    }*/
 
-    public static void InstallMods(bool server, List<int> modsList) {
+    /*public static void InstallMods(bool server, List<int> modsList) {
         for (int i = 0; i < modsList.Count; i++) {
             int modId = modsList[i];
             ModInfo modInfo = GetModInfo(modId);
@@ -286,21 +316,13 @@ public static class ModManager {
         InstallMods(server, fullModsList);
 			
         InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModInstalls", 1.0, "Installed mods.");
-    }
-
+    }*/
+    
     public static string GetModLocalDirectoryName(int id, string name, string version) {
         return $"CL_Mod_{id}_{name.Replace(" ", "_")}_{version}";
     }
 
-    public static string GetModLocalDirectoryPath(int id, string name, string version) {
+    /*public static string GetModLocalDirectoryPath(int id, string name, string version) {
         return $"{FileUtil.GetPath(PathType.ModCache)}{GetModLocalDirectoryName(id, name, version)}";
-    }
-    
-    private static void OnDeserializeStoredData() {
-        SetApiKey(StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().ModIOApiKey);
-    }
-    
-    private static void OnSerializeStoredData() {
-        StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().ModIOApiKey = ApiKey;
-    }
+    }*/
 }

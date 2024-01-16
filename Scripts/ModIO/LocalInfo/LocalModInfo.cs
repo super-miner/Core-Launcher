@@ -1,11 +1,13 @@
 using System.Text.RegularExpressions;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
+using CoreLauncher.Scripts.Systems;
 
 namespace CoreLauncher.Scripts.ModIO.LocalInfo; 
 
 public class LocalModInfo {
     private static readonly Regex LocalModsRegex = new Regex(@"CL_Mod_(\d+)_(.+)_+?(.*)");
-    
+
+    public string Path;
     public string Name;
     public int Id;
     public string Version;
@@ -14,14 +16,16 @@ public class LocalModInfo {
         
     }
 
-    public LocalModInfo(string name, int id, string version) {
+    public LocalModInfo(string path, string name, int id, string version) {
+        Path = path;
         Name = name;
         Id = id;
         Version = version;
     }
     
-    public static LocalModInfo FromString(string modDirectory) {
-        Match match = LocalModsRegex.Match(modDirectory);
+    public static LocalModInfo FromString(string modDirectoryPath) {
+        string modDirectoryName = FileUtil.GetDirectoryName(modDirectoryPath);
+        Match match = LocalModsRegex.Match(modDirectoryName);
 
         if (!match.Success) {
             return null;
@@ -36,7 +40,8 @@ public class LocalModInfo {
         else {
             return null;
         }
-        
+
+        localModInfo.Path = modDirectoryPath;
         localModInfo.Name = match.Groups[2].ToString();
         localModInfo.Version = match.Groups[3].ToString();
 
@@ -45,9 +50,5 @@ public class LocalModInfo {
 
     public string ToString(LocalModInfo localModInfo) {
         return ModManager.GetModLocalDirectoryName(Id, Name, Version);
-    }
-
-    public string GetLocalDirectoryPath() {
-        return ModManager.GetModLocalDirectoryPath(Id, Name, Version);
     }
 }
