@@ -10,6 +10,10 @@ From v1.1.0 onwards there will be the option to link things like donation links 
 ### Godot is a game engine, so why am I using it for this project?
 Godot provides lots of useful features -- especially for ui. Godot is also very lightweight for a game engine which makes it a good choice for this project.
 
+# Known Bugs
+- Your keybinds aren't individual to each profile
+- Not a bug but you may experience some freezing when doing certain actions, this is expected and will be fixed in the next major update
+
 # Roadmap/TODO
 ## ~~v1.1.0~~
 - ~~Create system for mods to provide extra data in their descriptions~~
