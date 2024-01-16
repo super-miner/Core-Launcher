@@ -18,6 +18,8 @@ public partial class NameProfilePopup : Window {
     }
 
     public void Close(string result) {
+        _nameLineEdit.Text = "";
+        
         _task.SetResult(result);
         _task = null;
 

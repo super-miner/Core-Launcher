@@ -7,7 +7,7 @@ res://Themes/DefualtTheme/NormalFileExplorer.tres
 res://Scenes/Menus/MainMenu.tscn
 res://Scenes/ListEntires/ProfileEntry.tscn
 res://Scenes/ListEntires/ModEntry.tscn
-res://Scenes/Menus/Setup/FindSteamPath.tscn
+res://Scenes/Menus/Setup/FindPaths.tscn
 res://Scenes/Menus/Setup/SetupMenu.tscn
 res://Scenes/Menus/PreloadingMenu.tscn
 res://Scenes/Menus/UI.tscn
@@ -18,7 +18,7 @@ res://Scripts/Menus/Main/MainMenuManager.cs
 res://Scripts/Menus/Main/Tabs/ModsTabManager.cs
 res://Scripts/Menus/Main/Tabs/TabsManager.cs
 res://Scripts/Menus/MenuManager.cs
-res://Scripts/Menus/Setup/FindSteamPath.cs
+res://Scripts/Menus/Setup/FindPaths.cs
 res://Scripts/Menus/Setup/SetupPage.cs
 res://Scripts/Menus/Setup/SetupPagesManager.cs
 res://Scripts/UI/AddModButton.cs
@@ -46,5 +46,3 @@ res://Scripts/UI/ProfileList.cs
 res://Scripts/UI/ProfileListEntry.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
 res://Scripts/UI/Settings/ProfileSettingsOption.cs
-res://Scenes/Menus/Setup/FindPaths.tscn
-res://Scripts/Menus/Setup/FindPaths.cs

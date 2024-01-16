@@ -72,7 +72,7 @@ FolderMustContain = ["steam.exe"]
 _errorLabel = NodePath("../../ExePathErrorLabel")
 _successLabel = NodePath("../../ExePathSuccessLabel")
 
-[node name="Button" type="Button" parent="VBox/ExePathFilePicker"]
+[node name="Button" type="Button" parent="VBox/ExePathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_4bh3v")
@@ -80,6 +80,8 @@ theme_override_constants/icon_max_width = 40
 icon = ExtResource("5_p6l4d")
 icon_alignment = 1
 script = ExtResource("6_0ayy2")
+_fileExplorer = NodePath("FileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
 
 [node name="FileExplorer" type="FileDialog" parent="VBox/ExePathFilePicker/Button"]
 title = "Open a Directory"
@@ -135,7 +137,7 @@ FolderMustContain = ["steamapps/common/Core Keeper", "steamapps/common/Core Keep
 _errorLabel = NodePath("../../GamesPathErrorLabel")
 _successLabel = NodePath("../../GamesPathSuccessLabel")
 
-[node name="Button" type="Button" parent="VBox/GamesPathFilePicker"]
+[node name="Button" type="Button" parent="VBox/GamesPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_4bh3v")
@@ -143,6 +145,8 @@ theme_override_constants/icon_max_width = 40
 icon = ExtResource("5_p6l4d")
 icon_alignment = 1
 script = ExtResource("6_0ayy2")
+_fileExplorer = NodePath("FileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
 
 [node name="FileExplorer" type="FileDialog" parent="VBox/GamesPathFilePicker/Button"]
 title = "Open a Directory"
@@ -192,7 +196,7 @@ FolderMustContain = ["prefs.json", "saves", "mods", "worlds", "ServerConfig.json
 _errorLabel = NodePath("../../AppDataPathErrorLabel")
 _successLabel = NodePath("../../AppDataPathSuccessLabel")
 
-[node name="Button" type="Button" parent="VBox/AppDataPathFilePicker"]
+[node name="Button" type="Button" parent="VBox/AppDataPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_4bh3v")
@@ -200,6 +204,8 @@ theme_override_constants/icon_max_width = 40
 icon = ExtResource("5_p6l4d")
 icon_alignment = 1
 script = ExtResource("6_0ayy2")
+_fileExplorer = NodePath("FileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
 
 [node name="FileExplorer" type="FileDialog" parent="VBox/AppDataPathFilePicker/Button"]
 title = "Open a Directory"
