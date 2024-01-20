@@ -88,8 +88,8 @@ public static class FileUtil {
                     return "";
                 }
             case PathType.SteamGamesServer:
-                if (!string.IsNullOrEmpty(GameManager.SteamGamesPath)) {
-                    return GameManager.SteamGamesPath;
+                if (!string.IsNullOrEmpty(GameManager.SteamGamesServerPath)) {
+                    return GameManager.SteamGamesServerPath;
                 }
                 else {
                     return GetPath(PathType.SteamGames);
