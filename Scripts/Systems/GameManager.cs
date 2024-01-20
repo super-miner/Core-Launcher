@@ -11,6 +11,7 @@ namespace CoreLauncher.Scripts.Systems;
 public static class GameManager {
 	public static string SteamExePath;
 	public static string SteamGamesPath;
+	public static string SteamGamesServerPath;
 	public static string AppDataPath;
 	
 	public static void Init() {
@@ -70,7 +71,7 @@ public static class GameManager {
 	}
 	
 	public static string GetCoreKeeperServerPath() {
-		return $"{FileUtil.GetPath(PathType.SteamGames)}/steamapps/common/Core Keeper Dedicated Server/";
+		return $"{FileUtil.GetPath(PathType.SteamGamesServer)}/steamapps/common/Core Keeper Dedicated Server/";
 	}
 	
 	public static string GetCoreKeeperDataPath(bool server) {
@@ -84,12 +85,14 @@ public static class GameManager {
 	private static void OnDeserializeStoredData() {
 		SteamExePath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamExePath;
 		SteamGamesPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamesPath;
+		SteamGamesServerPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamesServerPath;
 		AppDataPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().AppDataPath;
 	}
 
 	private static void OnSerializeStoredData() {
 		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamExePath = SteamExePath;
 		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamesPath = SteamGamesPath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamesServerPath = SteamGamesServerPath;
 		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().AppDataPath = AppDataPath;
 	}
 }

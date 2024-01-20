@@ -38,6 +38,7 @@ public partial class FindPaths : SetupPage {
         
         GameManager.SteamExePath = _steamExePathLineEdit.Text;
         GameManager.SteamGamesPath = _steamGamesPathLineEdit.Text;
+        GameManager.SteamGamesServerPath = _steamGamesPathLineEdit.Text;
         GameManager.AppDataPath = _appDataPathLineEdit.Text;
         
         _progressBar.SetValue("SteamPath", 1.0, "Set path.");

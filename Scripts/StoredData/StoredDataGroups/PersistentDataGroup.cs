@@ -7,6 +7,7 @@ public class PersistentDataGroup : StoredDataGroup {
     [JsonInclude] public bool SetupComplete = false;
     [JsonInclude] public string SteamExePath = "";
     [JsonInclude] public string SteamGamesPath = "";
+    [JsonInclude] public string SteamGamesServerPath = "";
     [JsonInclude] public string AppDataPath = "";
     
     public override string GetPath() {

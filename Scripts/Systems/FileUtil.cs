@@ -14,6 +14,7 @@ public enum PathType {
     Project,
     SteamExe,
     SteamGames,
+    SteamGamesServer,
     CoreKeeperAppData,
     Profiles,
     ModTemp
@@ -85,6 +86,13 @@ public static class FileUtil {
                     }
 
                     return "";
+                }
+            case PathType.SteamGamesServer:
+                if (!string.IsNullOrEmpty(GameManager.SteamGamesPath)) {
+                    return GameManager.SteamGamesPath;
+                }
+                else {
+                    return GetPath(PathType.SteamGames);
                 }
             case PathType.CoreKeeperAppData:
                 if (!string.IsNullOrEmpty(GameManager.AppDataPath)) {
