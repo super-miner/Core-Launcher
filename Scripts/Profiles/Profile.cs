@@ -114,7 +114,13 @@ public class Profile {
     }
 
     public async Task ManageQueuedMods() {
-        foreach (string modDirectoryPath in FileUtil.GetDirectories(GetModsPath())) {
+        string modsPath = GetModsPath();
+
+        if (!FileUtil.DirectoryExists(modsPath)) {
+            FileUtil.CreateDirectory(modsPath);
+        }
+        
+        foreach (string modDirectoryPath in FileUtil.GetDirectories(modsPath)) {
             LocalModInfo localModInfo = LocalModInfo.FromString(modDirectoryPath);
 
             if (localModInfo == null) {
