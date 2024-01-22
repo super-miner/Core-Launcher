@@ -1,11 +1,12 @@
+Label
+CheckBox
+HBoxContainer
 DropdownMenu
 MenuBar
-HBoxContainer
 Button
 LineEdit
 VBoxContainer
 MarginContainer
-Label
 Panel
 Control
 Window
@@ -20,7 +21,6 @@ TextureRect
 LinkText
 RichTextLabel
 StateButton
-CheckBox
 CheckButton
 LoadingBarSegment
 LoadingBar

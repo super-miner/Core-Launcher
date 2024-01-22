@@ -65,22 +65,36 @@ public class Profile {
     }
 
     public async Task Install() {
-        ProfileManager.GetLastLoadedProfile()?.Uninstall();
-        ProfileManager.LastLoadedProfileId = Id;
+        ProfileManager.GetLastLoadedProfile(Server)?.Uninstall();
+        if (Server) {
+            ProfileManager.LastLoadedServerProfileId = Id;
+        }
+        else {
+            ProfileManager.LastLoadedClientProfileId = Id;
+        }
         
         await ManageQueuedMods();
 
-        string toPath = GameManager.GetCoreKeeperDataPath(Server);
-        if (FileUtil.DirectoryExists(toPath)) {
-            FileUtil.DeleteDirectory(toPath);
+        if (ProfileManager.OnlyCopyMods) {
+            string toPath = $"{GameManager.GetCoreKeeperDataPath(Server)}StreamingAssets/Mods/";
+            if (FileUtil.DirectoryExists(toPath)) {
+                FileUtil.DeleteDirectory(toPath);
+            }
+            FileUtil.CopyDirectory(GetModsPath(), toPath);
         }
-        FileUtil.CopyDirectory(GetCoreKeeperDataPath(), toPath);
+        else {
+            string toPath = GameManager.GetCoreKeeperDataPath(Server);
+            if (FileUtil.DirectoryExists(toPath)) {
+                FileUtil.DeleteDirectory(toPath);
+            }
+            FileUtil.CopyDirectory(GetCoreKeeperDataPath(), toPath);
 
-        toPath = GameManager.GetAppDataPath();
-        if (FileUtil.DirectoryExists(toPath)) {
-            FileUtil.DeleteDirectory(toPath);
+            toPath = GameManager.GetAppDataPath();
+            if (FileUtil.DirectoryExists(toPath)) {
+                FileUtil.DeleteDirectory(toPath);
+            }
+            FileUtil.CopyDirectory(GetAppDataPath(), toPath);
         }
-        FileUtil.CopyDirectory(GetAppDataPath(), toPath);
     }
 
     public void Uninstall() {

@@ -9,6 +9,7 @@ public class PersistentDataGroup : StoredDataGroup {
     [JsonInclude] public string SteamGamesPath = "";
     [JsonInclude] public string SteamGamesServerPath = "";
     [JsonInclude] public string AppDataPath = "";
+    [JsonInclude] public bool OnlyCopyMods = true;
     
     public override string GetPath() {
         return "PersistantData.json";

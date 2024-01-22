@@ -8,7 +8,9 @@ using Godot;
 namespace CoreLauncher.Scripts.Profiles; 
 
 public static class ProfileManager {
-    public static string LastLoadedProfileId = "";
+    public static string LastLoadedClientProfileId = "";
+    public static string LastLoadedServerProfileId = "";
+    public static bool OnlyCopyMods = true;
     public static List<Profile> Profiles = new List<Profile>();
 
     public static void Init() {
@@ -111,8 +113,8 @@ public static class ProfileManager {
         return $"{FileUtil.GetPath(PathType.AppData)}Backups/{(server ? "ServerBackups" : "ClientBackups")}/{currentTime}/";
     }
 
-    public static Profile GetLastLoadedProfile() {
-        return Profiles.FirstOrDefault(profile => profile.Id == LastLoadedProfileId);
+    public static Profile GetLastLoadedProfile(bool server) {
+        return server ? Profiles.FirstOrDefault(profile => profile.Id == LastLoadedServerProfileId) : Profiles.FirstOrDefault(profile => profile.Id == LastLoadedClientProfileId);
     }
 
     private static void OnDeserializeStoredData() {
@@ -123,7 +125,9 @@ public static class ProfileManager {
             profile.Deserialize();
         }
 
-        LastLoadedProfileId = StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().LastLoadedIntId;
+        LastLoadedClientProfileId = StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().LastLoadedIntId;
+        LastLoadedServerProfileId = StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().LastLoadedIntServerId;
+        OnlyCopyMods = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().OnlyCopyMods;
     }
 
     private static void OnSerializeStoredData() {
@@ -131,6 +135,8 @@ public static class ProfileManager {
             profile.Serialize();
         }
         
-        StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().LastLoadedIntId = LastLoadedProfileId;
+        StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().LastLoadedIntId = LastLoadedClientProfileId;
+        StoredDataManager.GetStoredDataGroup<ProfileDataGroup>().LastLoadedIntServerId = LastLoadedServerProfileId;
+        StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().OnlyCopyMods = OnlyCopyMods;
     }
 }
