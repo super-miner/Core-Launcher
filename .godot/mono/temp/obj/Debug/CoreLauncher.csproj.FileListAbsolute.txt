@@ -34,3 +34,4 @@ C:\Users\marsh\OneDrive\Documents\Games\CoreLauncher\CoreLauncher\.godot\mono\te
 C:\Users\marsh\OneDrive\Documents\Games\CoreLauncher\CoreLauncher\.godot\mono\temp\obj\Debug\ref\CoreLauncher.dll
 C:\Users\marsh\OneDrive\Documents\Games\CoreLauncher\CoreLauncher\.godot\mono\temp\bin\Debug\CMDSearch.dll
 C:\Users\marsh\OneDrive\Documents\Games\CoreLauncher\CoreLauncher\.godot\mono\temp\bin\Debug\CMDSearch.pdb
+C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\Debug\CoreLauncher.sourcelink.json
