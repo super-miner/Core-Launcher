@@ -17,6 +17,7 @@ public partial class App : Node {
     public override void _Ready() {
         SetupManager.Init();
         GameManager.Init();
+        ModManager.Init();
         
         StoredDataManager.Deserialize();
     }

@@ -34,6 +34,14 @@ public static class ModManager {
     
     public static ModsListInfo ModsList = null;
 
+    public static void Init() {
+        StoredDataManager.StoredDataDeserializedEvent += OnStoredDataDeserialized;
+
+        if (StoredDataManager.HasDeserialized) {
+            OnStoredDataDeserialized();
+        }
+    }
+    
     public static async void FetchModsList() {
         ModsList = null;
         
@@ -118,7 +126,7 @@ public static class ModManager {
             if (localModInfo != null) {
                 ModInfo modInfo = GetModInfo(localModInfo.Id);
 
-                if (localModInfo.Version == modInfo.ModFile.Version) {
+                if ((localModInfo.Version ?? "") == (modInfo.ModFile.Version ?? "")) {
                     continue;
                 }
                 else {
@@ -139,13 +147,13 @@ public static class ModManager {
         for (int i = 0; i < modsList.Count; i++) {
             int modId = modsList[i];
             ModInfo modInfo = GetModInfo(modId);
-            
-            InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", (double)i / modsList.Count, $"Downloading {modInfo.Name}...");
 
             string localPath = modInfo.GetLocalDirectoryPath();
             if (FileUtil.DirectoryExists(localPath)) {
                 continue;
             }
+            
+            InstanceManager.GetInstance<MainMenuManager>()?.PlayProgressBar.SetValue("ModDownloads", (double)i / modsList.Count, $"Downloading {modInfo.Name}...");
             
             string tempPath = FileUtil.GetPath(PathType.ModTemp);
             
@@ -170,9 +178,9 @@ public static class ModManager {
             try {
                 ModManifestInfo modManifest = FileUtil.ReadJsonFile<ModManifestInfo>($"{directoryPath}/ModManifest.json");
 
-                if (modManifest.SkipSafetyChecks) {
+                if (modManifest.SkipSafetyChecks && !GetModInfo(localModInfo.Id).Tags.Exists(tag => tag.Name == "Script (Elevated Access)")) {
                     GD.Print(
-                        $"Mod Manager: The skipSafetyChecks value for {localModInfo.Name} was set to true, deleting it.");
+                        $"Mod Manager: The skipSafetyChecks value for {localModInfo.Name} was set to true without having the proper tag, deleting it.");
                     FileUtil.DeleteDirectory(directoryPath);
                 }
             }
@@ -264,5 +272,11 @@ public static class ModManager {
 
     public static string GetModLocalDirectoryPath(int id, string name, string version) {
         return $"{FileUtil.GetPath(PathType.ModCache)}{GetModLocalDirectoryName(id, name, version)}";
+    }
+
+    private static void OnStoredDataDeserialized() {
+        if (SetupManager.SetupComplete) {
+            FetchModsList();
+        }
     }
 }

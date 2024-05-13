@@ -37,7 +37,7 @@ public static class GameManager {
 
 			string osName = OS.GetName();
 
-			if (osName == "Windows") {
+			/*if (osName == "Windows") {
 				OS.Execute("steam", new [] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
 			}
 			else if (osName == "Linux") {
@@ -45,7 +45,9 @@ public static class GameManager {
 			}
 			else {
 				GD.PrintErr($"Unrecognized operating system {osName}.");
-			}
+			}*/
+			
+			OS.ShellOpen("steam://rungameid/1621690");
 		}
 		
 		await Task.Delay(2000);
