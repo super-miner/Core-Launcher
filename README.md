@@ -17,6 +17,10 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
     Issues
   </a>
   •
+  <a href="https://buymeacoffee.com/flown" target="_blank">
+    Donate
+  </a>
+  •
   <a href="Info/UsingCL_Data.md">
     Info for Mod Devs
   </a>
