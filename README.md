@@ -9,10 +9,6 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
     Discord
   </a>
   •
-  <a href="https://github.com/super-miner/Core-Launcher">
-    GitHub
-  </a>
-  •
   <a href="https://github.com/super-miner/Core-Launcher/issues">
     Issues
   </a>
