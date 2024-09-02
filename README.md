@@ -1,30 +1,43 @@
 ![Core Launcher](Banner.png)
 
-# CoreLauncher
-This is a custom game launcher made for the game Core Keeper.
+# Core Launcher
+Core Launcher is a custom game launcher made for the game Core Keeper. It is made using Godot and supports Windows and Linux.
+<p align="center">
+  <a href="https://discord.com/channels/851842678340845600/1173510418690490458">
+    Discord
+  </a>
+  •
+  <a href="https://github.com/super-miner/Core-Launcher">
+    GitHub
+  </a>
+  •
+  <a href="https://github.com/super-miner/Core-Launcher/issues">
+    Issues
+  </a>
+  •
+  <a href="Info/UsingExtraData.md">
+    Info for Mod Devs
+  </a>
+</p>
 
-# Info for Mod Developers (CL_Data)
-From v1.1.0 onwards there is an option to link things like donation pagess so that they show up in the launcher. Please read [this](Info/UsingExtraData.md) for more info.
+## Installation
+To install Core Launcher download the latest full release from [here](https://github.com/super-miner/Core-Launcher/releases), extract the file, and run CoreLauncher.exe.
 
-# Why Godot?
-### Godot is a game engine, so why am I using it for this project?
-Godot provides lots of useful features -- especially for ui. Godot is also very lightweight for a game engine which makes it a good choice for this project.
-
-# Roadmap/TODO
-## ~~v1.1.0~~ (Done)
+## Roadmap/TODO
+### ~~v1.1.0~~ ([Released](https://github.com/super-miner/Core-Launcher/releases))
 - ~~Create system for mods to provide extra data in their descriptions~~
 - ~~Allow use with the Core Keeper Dedicated Server~~
 - ~~Add a button to toggle the options screen~~
 - ~~Stop mods that have their security checks off from being loaded~~
 
-## v1.3.0
+### v1.3.0
 - Filtering out world saves from the Mods page
 - Support for seperate server and client Mods folder paths
 - Load mod thumbnails as needed instead of all at the start increasing startup times
 - Filtering mods by version
 - Replace the Godot boot screen with a Core Launcher one
 
-## Beyond
+### Beyond
 - Make the launcher provide info on what mods are elevated access
 - Edit mod configs from the launcher
 - Add a search bar to the mods list
@@ -35,3 +48,6 @@ Godot provides lots of useful features -- especially for ui. Godot is also very 
 - Change the icon of the .exe file to Core Launcher's icon
 - Automatic updates (to the launcher)
 - Add an option to view mods in a grid instead of a list
+
+## Info for Mod Developers (CL_Data)
+From v1.1.0 onwards there is an option to link things like donation pagess so that they show up in the launcher. Please read [this](Info/UsingExtraData.md) for more info.
