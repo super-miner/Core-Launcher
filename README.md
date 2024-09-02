@@ -3,7 +3,7 @@
 # Core Launcher
 ![Screenshot of Core Launcher](https://github.com/user-attachments/assets/72a78cb0-9211-415a-912d-1e2388b4d9e1)
 
-Core Launcher is a custom game launcher made for the game <strong>Core Keeper</strong> that allows switching between multiple sets of mods known as mod profiles. It supports installing mods on both the Client and Server and runs on Windows and Linux.
+Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong> that allows switching between multiple sets of mods known as mod profiles. It supports installing mods on both the Client and Server and runs on Windows and Linux.
 <p align="center">
   <a href="https://discord.com/channels/851842678340845600/1173510418690490458" target="_blank">
     Discord
@@ -17,7 +17,7 @@ Core Launcher is a custom game launcher made for the game <strong>Core Keeper</s
     Issues
   </a>
   •
-  <a href="Info/UsingExtraData.md">
+  <a href="Info/UsingCL_Data.md">
     Info for Mod Devs
   </a>
 </p>
