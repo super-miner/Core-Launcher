@@ -41,6 +41,7 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 - Load mod thumbnails as needed instead of all at the start increasing startup times
 - Filtering mods by version
 - Replace the Godot boot screen with a Core Launcher one
+- Sorting mods in the mods menu
 
 ### Beyond
 - Make the launcher provide info on what mods are elevated access
