@@ -7,7 +7,7 @@ Here are some examples of data you can add:
 - Whether or not your mod is server-side or client-side
 - Whether or not your mod is a library
 
-## How do I set up CL_Data for my mod?
+## Setting up CL_Data for your mod
 
 CL_Data can be implemented by including a `CL_Data()` section in your mod's description on mod.io.
 
