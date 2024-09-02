@@ -23,7 +23,7 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 </p>
 
 ## Installation
-1. Downlaod the latest release from [here](https://github.com/super-miner/Core-Launcher/releases)
+1. Download the latest release from [here](https://github.com/super-miner/Core-Launcher/releases)
 2. Extract the downloaded zip file
 3. Run `CoreLauncher.exe`
 4. Follow the setup instructions in the launcher
