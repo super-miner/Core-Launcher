@@ -42,4 +42,4 @@ res://Scripts/UI/ProfileList.cs
 res://Scripts/UI/ProfileListEntry.cs
 res://Scripts/UI/Settings/ProfileSettingsLineEdit.cs
 res://Scripts/UI/Settings/ProfileSettingsOption.cs
-res://Scripts/ModIO/JsonStructures/DependencyListInfo.cs
+res://Scripts/ModIO/ModManager.cs

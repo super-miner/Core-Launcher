@@ -47,7 +47,7 @@ public static class GameManager {
 				GD.PrintErr($"Unrecognized operating system {osName}.");
 			}*/
 			
-			OS.ShellOpen("steam://rungameid/1621690");
+			OS.ShellOpen($"steam://rungameid/{(profileEntry.Server ? 1963720 : 1621690)}");
 		}
 		
 		await Task.Delay(2000);
