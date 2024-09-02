@@ -3,7 +3,7 @@
 # Core Launcher
 Core Launcher is a custom game launcher made for the game Core Keeper. It is made using Godot and supports Windows and Linux.
 <p align="center">
-  <a href="https://discord.com/channels/851842678340845600/1173510418690490458">
+  <a href="https://discord.com/channels/851842678340845600/1173510418690490458" target="_blank">
     Discord
   </a>
   •
