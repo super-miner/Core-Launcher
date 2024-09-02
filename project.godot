@@ -14,6 +14,8 @@ config/name="Core Launcher (An Unofficial Launcher for Core Keeper)"
 run/main_scene="res://Scenes/Menus/UI.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 config/icon="res://Images/Icons/AppIcon.png"
+config/macos_native_icon="res://Images/Icons/AppIcon.png"
+config/windows_native_icon="res://Images/Icons/AppIcon.png"
 
 [display]
 
