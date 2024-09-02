@@ -50,4 +50,4 @@ To install Core Launcher download the latest full release from [here](https://gi
 - Add an option to view mods in a grid instead of a list
 
 ## Info for Mod Developers (CL_Data)
-From v1.1.0 onwards there is an option to link things like donation pagess so that they show up in the launcher. Please read [this](Info/UsingExtraData.md) for more info.
+From v1.1.0 onwards there is an option to link things like donation pagess so that they show up in the launcher. Please read [this](Info/UsingCL_Data.md) for more info.
