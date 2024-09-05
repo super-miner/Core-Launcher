@@ -30,10 +30,18 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 
 ## Usage
 
-- Create a profile to start adding mods.
-- Use profiles to create sets of mods to switch between.
-- Clicking the Play button will launch the game through its usual launch method. Once mods are installed, you don't need to launch via Core Launcher.
-- Dedicated Servers at the default Steam install location will appear in the list and can also be managed. There is not currently a way to manually add a server listing.
+- Create a profile using the add button to start adding mods
+
+    ![The add button near the top left of the window](https://github.com/user-attachments/assets/d0cfa8c4-4041-4dcf-889c-3d1e828a8263)
+  
+- Use profiles to create sets of mods to switch between
+- Clicking the "PLAY" button will launch the game through Steam
+
+    ![PlayButton](https://github.com/user-attachments/assets/ee66adf7-e2aa-4e2d-81c3-2a8a87f48bda)
+
+- Once mods are installed, you don't need to launch via Core Launcher
+- Dedicated Servers at the default Steam install location will appear in the list and can also be managed
+  - There is not currently a way to change the server or client location
 
 ## Roadmap
 
