@@ -43,7 +43,7 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 5. Dedicated Servers at the default Steam install location will appear in the list and can also be managed
 
 > [!Note]
-> There is not currently a way to change the server or client location
+> There is currently no way to change the server or client location
 
 ## Roadmap
 
