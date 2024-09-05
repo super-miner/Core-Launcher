@@ -28,12 +28,14 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 3. Run `CoreLauncher.exe`
 4. Follow the setup instructions in the launcher
 
+## Usage
+
+- Create a profile to start adding mods.
+- Use profiles to create sets of mods to switch between.
+- Clicking the Play button will launch the game through its usual launch method. Once mods are installed, you don't need to launch via Core Launcher.
+- Dedicated Servers at the default Steam install location will appear in the list and can also be managed. There is not currently a way to manually add a server listing.
+
 ## Roadmap
-### ~~v1.1.0~~ ([Released](https://github.com/super-miner/Core-Launcher/releases))
-- ~~Create system for mods to provide extra data in their descriptions~~
-- ~~Allow use with the Core Keeper Dedicated Server~~
-- ~~Add a button to toggle the options screen~~
-- ~~Stop mods that have their security checks off from being loaded~~
 
 ### v1.3.0
 - Filtering out world saves from the Mods page
