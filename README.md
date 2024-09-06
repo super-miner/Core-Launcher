@@ -47,13 +47,20 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 
 ## Roadmap
 
-### v1.3.0
+### v1.3.0 (expands upon v1.1.x features, not v1.2.x)
+- Replace the Godot boot screen with a Core Launcher one
+- Controller support (partial steam deck support)
+- Display mode versions on the Mods page
+- Automatically create a server and client profile when starting up the app for the first time
+- Partial support for seperate server and client Mods folder paths by editing config files
+- Xbox Gamepass support
+
+### v1.4.0
 - Filtering out world saves from the Mods page
-- Support for seperate server and client Mods folder paths
 - Load mod thumbnails as needed instead of all at the start increasing startup times
 - Filtering mods by version
-- Replace the Godot boot screen with a Core Launcher one
 - Sorting mods in the mods menu
+- Full support for seperate server and client Mods folder paths
 
 ### Beyond
 - Make the launcher provide info on what mods are elevated access
