@@ -20,6 +20,10 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
   <a href="Info/UsingCL_Data.md">
     Info for Mod Devs
   </a>
+  •
+  <a href="CONTRIBUTING.md">
+    Contributing
+  </a>
 </p>
 
 ## Installation
@@ -76,3 +80,6 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 
 ## Info for Mod Developers (CL_Data)
 From v1.1.0 onwards there is an option to link things like donation pagess so that they show up in the launcher. Please read [this](Info/UsingCL_Data.md) for more info.
+
+## Contributing
+You can find information on how to contribute to Core Launcher [here](CONTRIBUTING.md).
