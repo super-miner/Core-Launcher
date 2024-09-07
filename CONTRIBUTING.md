@@ -12,9 +12,14 @@ If you have a suggestion or would like to report a bug you can create an [Issue]
 
 If you would like to solve an [Issue](https://github.com/super-miner/Core-Launcher/issues) you can do so by making a Pull Request.
 
+### Setup:
+Core Launcher uses the .NET version of Godot 4.2.2 which can be downloaded from [here](https://godotengine.org/download/archive/).
+
+Once Godot has finished downloading you can run Godot and select `Import` in the top left and navigate to the root folder of the project on your machine.
+
 ### Creating a Pull Request:
 1. Make a fork of the repository
-2. Create a branch on your forked version of the repository named `<issue number>/<issue name>`
+2. Create a branch on your forked version of the repository named `<issue number>_<issue name>`
 
 > [!Note]
 > If no Issue exists for the problem you would like to solve, please create one.
