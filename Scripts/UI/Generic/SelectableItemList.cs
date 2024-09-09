@@ -9,15 +9,19 @@ public partial class SelectableItemList : ItemList {
     
     public int SelectedEntry = -1;
     
-    public new SelectableItemListEntry AddEntry(string section, bool select = true) {
-        ItemListEntry entry = base.AddEntry(section, select);
+    public new SelectableItemListEntry AddEntry(string section, bool select = true, bool init = true) {
+        ItemListEntry entry = base.AddEntry(section, select, false);
 
         if (entry is SelectableItemListEntry selectableEntry) {
             if (select) {
-                SetSelectedEntry(entry.Id);
+                SetSelectedEntry(selectableEntry);
             }
 
             selectableEntry.ItemList = this;
+
+            if (init) {
+                selectableEntry.Init();
+            }
             
             return selectableEntry;
         }
@@ -35,6 +39,9 @@ public partial class SelectableItemList : ItemList {
         if (SelectedEntry >= Entries.Count) {
             SetSelectedEntry(Entries.Count - 1);
         }
+        else {
+            SetSelectedEntry(SelectedEntry);
+        }
     }
     
     public SelectableItemListEntry GetSelectedEntry() {
@@ -46,6 +53,10 @@ public partial class SelectableItemList : ItemList {
             }
         }
         return null;
+    }
+    
+    public void SetSelectedEntry(SelectableItemListEntry selectedEntry) {
+        SetSelectedEntry(Entries.FindIndex(entry => entry == selectedEntry));
     }
 
     public void SetSelectedEntry(int selectedEntry) {

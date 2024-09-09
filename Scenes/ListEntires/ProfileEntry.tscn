@@ -59,7 +59,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 68.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 10
@@ -77,6 +77,7 @@ theme_override_colors/font_color = Color(1, 0.964706, 0.929412, 1)
 theme_override_fonts/font = ExtResource("1_h6qob")
 theme_override_font_sizes/font_size = 20
 text = "Name..."
+autowrap_mode = 3
 
 [node name="SettingsButton" type="Button" parent="Button/Margin/HBox"]
 visible = false

@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.ModIO;
+using CoreLauncher.Scripts.Profiles;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.Systems;
@@ -12,7 +14,6 @@ public partial class LoadingManager : Control {
 	[Export] public LoadingBar ProgressBar;
 	
 	[Export] private int _totalSteps;
-	[Export] private int _startDelay = 500;
 	[Export] private int _nextPageDelay = 500;
 	private int _stepsComplete;
 	
@@ -32,9 +33,11 @@ public partial class LoadingManager : Control {
 		}
 	}
 
-	public override void _Ready() {
-		if (SetupManager.SetupComplete) {
-			ModManager.FetchModsList();
+	public override async void _Ready() {
+		await ModManager.FetchModsList();
+			
+		if (StoredDataManager.HasDeserialized) {
+			OnStoredDataDeserialized();
 		}
 	}
 
@@ -77,13 +80,14 @@ public partial class LoadingManager : Control {
 	private void OnStoredDataDeserialized() {
 		GD.Print("Loading Manager: Deserialized app data.");
 		
-		ProgressBar.SetValue("AppData", 1.0, "Loaded configs...");
+		if (!ProfileManager.ProfileTemplatesExist()) {
+			ProfileManager.CreateProfileTemplates();
+		}
 		
 		if (SetupManager.SetupComplete) {
+			ProgressBar.SetValue("AppData", 1.0, "Loaded configs...");
+			
 			StepComplete();
-		}
-		else {
-			InstanceManager.GetInstance<MenuManager>().SetActiveMenu(1);
 		}
 	}
 }

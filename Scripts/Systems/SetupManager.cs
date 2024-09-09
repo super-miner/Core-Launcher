@@ -9,6 +9,10 @@ public static class SetupManager {
     public static void Init() {
         StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
         StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
+
+        if (StoredDataManager.HasDeserialized) {
+            OnDeserializeStoredData();
+        }
     }
     
     private static void OnDeserializeStoredData() {

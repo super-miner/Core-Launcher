@@ -22,7 +22,6 @@ public partial class ItemList : VBoxContainer {
 			Entries.Add(entry);
 
 			entry.ItemList = this;
-			entry.Id = Entries.Count - 1;
 
 			if (init) {
 				entry.Init();
