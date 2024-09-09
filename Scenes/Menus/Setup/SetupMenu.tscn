@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_7esm2"]
 [ext_resource type="Script" path="res://Scripts/Menus/Setup/SetupPagesManager.cs" id="1_cm7yd"]
-[ext_resource type="PackedScene" uid="uid://bv75ghh0fu0dp" path="res://Scenes/Menus/Setup/FindPaths.tscn" id="2_s12by"]
+[ext_resource type="PackedScene" uid="uid://bv75ghh0fu0dp" path="res://Scenes/Menus/Setup/FindSteamPath.tscn" id="2_ori1u"]
 [ext_resource type="PackedScene" uid="uid://c1n73swpkdwjh" path="res://Scenes/Menus/MainMenu.tscn" id="4_7klup"]
 
 [node name="OnboardingMenu" type="Control"]
@@ -13,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cm7yd")
-_pages = [ExtResource("2_s12by")]
+_pages = [ExtResource("2_ori1u")]
 _mainMenuScene = ExtResource("4_7klup")
 
 [node name="Background" type="Panel" parent="."]
