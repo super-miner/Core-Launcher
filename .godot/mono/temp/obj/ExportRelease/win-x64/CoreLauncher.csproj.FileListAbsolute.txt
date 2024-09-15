@@ -220,7 +220,6 @@ C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\t
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\bin\ExportRelease\win-x64\hostfxr.dll
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\bin\ExportRelease\win-x64\hostpolicy.dll
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\bin\ExportRelease\win-x64\mscordaccore.dll
-C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\bin\ExportRelease\win-x64\mscordaccore_amd64_amd64_6.0.2523.51912.dll
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\bin\ExportRelease\win-x64\mscordbi.dll
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\bin\ExportRelease\win-x64\mscorrc.dll
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\bin\ExportRelease\win-x64\msquic.dll
@@ -231,9 +230,10 @@ C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\t
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\CoreLauncher.AssemblyInfo.cs
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\CoreLauncher.csproj.CoreCompileInputs.cache
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\CoreLauncher.sourcelink.json
-C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\CoreLauncher.csproj.CopyComplete
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\CoreLauncher.dll
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\refint\CoreLauncher.dll
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\CoreLauncher.pdb
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\CoreLauncher.genruntimeconfig.cache
 C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\ref\CoreLauncher.dll
+C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\bin\ExportRelease\win-x64\mscordaccore_amd64_amd64_6.0.3024.21525.dll
+C:\Users\user\Desktop\Games\Modding\CoreKeeperModding\CoreLauncher\.godot\mono\temp\obj\ExportRelease\win-x64\CoreLaun.04ACF3C0.Up2Date

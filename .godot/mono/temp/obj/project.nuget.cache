@@ -1,15 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "JJjVDtB6KZg=",
+  "dgSpecHash": "hw0bpRn7ITw=",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\Desktop\\Games\\Modding\\CoreKeeperModding\\CoreLauncher\\CoreLauncher.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\godot.sourcegenerators\\4.1.3\\godot.sourcegenerators.4.1.3.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\godotsharp\\4.1.3\\godotsharp.4.1.3.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\godotsharpeditor\\4.1.3\\godotsharpeditor.4.1.3.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.30\\microsoft.netcore.app.ref.6.0.30.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.app.runtime.linux-x64\\6.0.30\\microsoft.netcore.app.runtime.linux-x64.6.0.30.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.30\\microsoft.windowsdesktop.app.ref.6.0.30.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.30\\microsoft.aspnetcore.app.ref.6.0.30.nupkg.sha512"
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.30\\microsoft.aspnetcore.app.ref.6.0.30.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.linux-x64\\6.0.30\\microsoft.aspnetcore.app.runtime.linux-x64.6.0.30.nupkg.sha512"
   ],
   "logs": []
 }

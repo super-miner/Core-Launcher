@@ -27,6 +27,10 @@ window/subwindows/embed_subwindows=false
 
 project/assembly_name="CoreLauncher"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_icon/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
