@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
@@ -13,6 +14,7 @@ public partial class ModListEntry : ItemListEntry {
 	
 	[Export] private StateButton _addButton;
 	[Export] private Label _nameLabel;
+	[Export] private Label _elevatedAccessLabel;
 	[Export] private Label _authorLabel;
 	[Export] private TextureRect _logoTexture;
 	[Export] private CustomLinkButton _donationButton;
@@ -21,6 +23,7 @@ public partial class ModListEntry : ItemListEntry {
 		ModInfo modInfo = GetModInfo();
 		
 		_nameLabel.Text = modInfo.Name;
+		_elevatedAccessLabel.Visible = modInfo.IsElevatedAccess();
 		_authorLabel.Text = $"By: {modInfo.Author.Username}";
 		_logoTexture.Texture = ImageTexture.CreateFromImage(modInfo.Logo.LogoImage);
 
@@ -40,11 +43,12 @@ public partial class ModListEntry : ItemListEntry {
 		
 		SelectableItemListEntry selectableEntry = InstanceManager.GetInstance<MainMenuManager>().ProfileList.GetSelectedEntry();
 		if (selectableEntry is ProfileListEntry profileEntry) {
-			if (profileEntry.Mods.Contains(modInfo.Id)) {
+			List<int> profileEntryMods = profileEntry.Profile.GetAddedMods();
+			if (profileEntryMods.Contains(modInfo.Id)) {
 				_addButton.SetState("AddedButton");
 			}
 			else {
-				List<int> dependencies = await ModManager.GetDependencies(profileEntry.Mods);
+				List<int> dependencies = await ModManager.GetDependencies(profileEntryMods);
 				
 				if (dependencies.Contains(modInfo.Id)) {
 					_addButton.SetState("AddedAsDependencyButton");

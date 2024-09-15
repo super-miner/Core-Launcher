@@ -11,6 +11,7 @@ public partial class MainMenuManager : Node {
     public static event OnMainMenuManagerLoaded MainMenuManagerLoadedEvent;
     
     [Export] public ProfileList ProfileList;
+    [Export] public NameProfilePopup NameProfilePopup;
     [Export] public LoadingBar PlayProgressBar;
     [Export] public TabContainer OptionsTabs;
 

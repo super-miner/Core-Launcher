@@ -1,4 +1,5 @@
 using CoreLauncher.Scripts.ModIO;
+using CoreLauncher.Scripts.Profiles;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.Systems;
 using Godot;
@@ -12,14 +13,6 @@ public partial class App : Node {
             
             GetTree().Quit();
         }
-    }
-
-    public override void _Ready() {
-        SetupManager.Init();
-        GameManager.Init();
-        ModManager.Init();
-        
-        StoredDataManager.Deserialize();
     }
 
     private void OnQuit() {

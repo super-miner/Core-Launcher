@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -41,6 +42,10 @@ public class ModInfo {
 		}
 		
 		return _extraData;
+	}
+
+	public bool IsElevatedAccess() {
+		return Tags.Any(tag => tag.Name == "Script (Elevated Access)");
 	}
 
 	public async Task<List<int>> GetDependencies() {
@@ -121,9 +126,5 @@ public class ModInfo {
 	
 	public override string ToString() {
 		return ModManager.GetModLocalDirectoryName(Id, Name, ModFile.Version);
-	}
-	
-	public string GetLocalDirectoryPath() {
-		return ModManager.GetModLocalDirectoryPath(Id, Name, ModFile.Version);
 	}
 }

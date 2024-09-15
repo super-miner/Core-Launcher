@@ -16,6 +16,6 @@ public partial class SelectableItemListEntry : ItemListEntry {
     }
     
     public void OnPressed() {
-        ItemList.SetSelectedEntry(Id);
+        ItemList.SetSelectedEntry(this);
     }
 }
