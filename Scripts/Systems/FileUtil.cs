@@ -17,7 +17,9 @@ public enum PathType {
     SteamGamesServer,
     CoreKeeperAppData,
     Profiles,
-    ModTemp
+    ModTemp,
+    GameApp,
+    ServerApp
 }
 
 public static class FileUtil {
@@ -35,7 +37,7 @@ public static class FileUtil {
                     string osName = OS.GetName();
                     
                     if (osName == "Windows") {
-                        object pathObject = RegistryUtil.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
+                        object pathObject = RegistryUtil.GetValue(@"SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath");
 		
                         if (pathObject is string pathString) {
                             return pathString;
@@ -54,42 +56,47 @@ public static class FileUtil {
                     return "";
                 }
             case PathType.SteamGames:
-                if (!string.IsNullOrEmpty(GameManager.SteamGamesPath)) {
-                    return GameManager.SteamGamesPath;
+                if (!string.IsNullOrEmpty(GameManager.SteamGamePath)) {
+                    return GameManager.SteamGamePath;
                 }
                 else {
                     string osName = OS.GetName();
                     
-                    if (osName == "Windows") {
-                        object pathObject = RegistryUtil.GetValue("SOFTWARE\\Wow6432Node\\Valve\\Steam", "InstallPath");
+                    switch (osName)
+                    {
+                        case "Windows":
+                        {
+                            object pathObject = RegistryUtil.GetValue(@"SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath");
 		
-                        if (pathObject is string pathString) {
-                            return pathString;
-                        }
+                            if (pathObject is string pathString) {
+                                return pathString;
+                            }
                         
-                        GD.PrintErr("Could not find steam path in the registry.");
-                        return "";
-                    }
-                    else if (osName == "Linux") {
-                        Godot.Collections.Array output = new Godot.Collections.Array();
-                        int success = OS.Execute("bash", new string[] {"-c", "which", "steam"}, output);
-
-                        if (success >= 0 && output.Count > 0) {
-                            return output[0].AsString();
+                            GD.PrintErr("Could not find steam path in the registry.");
+                            return "";
                         }
+                        case "Linux":
+                        {
+                            Godot.Collections.Array output = new Godot.Collections.Array();
+                            int success = OS.Execute("bash", new string[] {"-c", "which", "steam"}, output);
 
-                        GD.PrintErr("There was an error executing the \"which steam\" command. Could not find steam path.");
-                        return "";
-                    }
-                    else {
-                        GD.PrintErr($"Unrecognized operating system {osName}.");
+                            if (success >= 0 && output.Count > 0) {
+                                return output[0].AsString();
+                            }
+
+                            GD.PrintErr("There was an error executing the \"which steam\" command. Could not find steam path.");
+                            return "";
+                        }
+                        default:
+                            GD.PrintErr($"Unrecognized operating system {osName}.");
+                            break;
                     }
 
                     return "";
                 }
             case PathType.SteamGamesServer:
-                if (!string.IsNullOrEmpty(GameManager.SteamGamesServerPath)) {
-                    return GameManager.SteamGamesServerPath;
+                if (!string.IsNullOrEmpty(GameManager.SteamGameServerPath)) {
+                    return GameManager.SteamGameServerPath;
                 }
                 else {
                     return GetPath(PathType.SteamGames);
@@ -99,7 +106,7 @@ public static class FileUtil {
                     return GameManager.AppDataPath;
                 }
                 else {
-                    string intermediatePath = $"{GetParentDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData))}\\LocalLow\\Pugstorm\\Core Keeper\\Steam";
+                    string intermediatePath = $@"{GetParentDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData))}\LocalLow\Pugstorm\Core Keeper\Steam";
                     
                     return GetDirectories(intermediatePath).FirstOrDefault(directoryPath => {
                         string directoryName = GetDirectoryName(directoryPath);
@@ -110,22 +117,79 @@ public static class FileUtil {
                 return $"{GetPath(PathType.AppData)}Profiles/";
             case PathType.ModTemp:
                 return $"{GetPath(PathType.AppData)}Temp/ModTemp.zip";
+            case PathType.GameApp:
+            {
+                var pathObject = RegistryUtil.GetValue(@"SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath");
+                if (pathObject is string pathString)
+                {
+                    var libraryData = SteamLibraryParser.ReadSteamLibraryFile(pathString+@"\steamapps\libraryfolders.vdf");
+                    foreach (var entry in libraryData)
+                    {
+                        foreach (var appId in entry.Value.Where(appId => appId == "1621690"))
+                        {
+                            GD.Print($@"Found {appId} in {entry.Key}!");
+                            return entry.Key.Replace(@"\\", @"\");
+                        }
+                    }
+                }
+                
+                GD.PrintErr("Could not find game path.");
+                return "";
+            }
+            case PathType.ServerApp:
+            {
+                var pathObject = RegistryUtil.GetValue(@"SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath");
+                if (pathObject is string pathString) {
+                    var libraryData = SteamLibraryParser.ReadSteamLibraryFile(pathString+@"\steamapps\libraryfolders.vdf");
+                    foreach (var entry in libraryData)
+                    {
+                        foreach (var appId in entry.Value.Where(appId => appId == "1963720"))
+                        {
+                            // Core Keeper Dedicated Server
+                            GD.Print($@"Found {appId} in {entry.Key}!");
+                            return entry.Key.Replace(@"\\", @"\");
+                        }
+                    }
+                }
+                
+                GD.PrintErr("Could not find game path.");
+                return "";
+            }
+
             default:
                 GD.PrintErr($"The case for GetPath({pathType.ToString()}) has not been implemented.");
                 return "";
         }
     }
 
+    /// <summary>
+    /// Serializes an object to a JSON string and writes it to a specified file path.
+    /// </summary>
+    /// <param name="path">The file path where the JSON content will be written.</param>
+    /// <param name="text">The object to be serialized to JSON format.</param>
+    /// <remarks>
+    /// Utilizes the <see cref="JsonSerializer"/> with indented formatting for readability.
+    /// Calls <see cref="FileUtil.WriteTextFile"/> to handle the actual file writing operation.
+    /// </remarks>
     public static void WriteTextFile(string path, string text) {
         FileInfo fileInfo = new FileInfo(path);
         DirectoryInfo fileDirectory = fileInfo.Directory; // TODO: Make this use FileUtil functions
-        if (fileDirectory != null && !fileDirectory.Exists) {
+        if (fileDirectory is { Exists: false }) {
             fileDirectory.Create();
         }
         
         File.WriteAllText(path, text);
     }
-    
+
+    /// <summary>
+    /// Serializes the given object to a JSON string and writes it to the specified file path.
+    /// </summary>
+    /// <param name="path">The file path where the JSON content will be written.</param>
+    /// <param name="data">The object to be serialized to JSON format.</param>
+    /// <remarks>
+    /// Utilizes the <see cref="JsonSerializer"/> with indented formatting for readability.
+    /// Leverages the <see cref="FileUtil.WriteTextFile"/> method to handle the actual file writing operation.
+    /// </remarks>
     public static void WriteJSONFile(string path, object data) {
         JsonSerializerOptions options = new JsonSerializerOptions {
             WriteIndented = true
@@ -144,7 +208,17 @@ public static class FileUtil {
 
         return JsonSerializer.Deserialize<T>(jsonString);
     }
-    
+
+    /// <summary>
+    /// Reads a JSON file from the specified path and deserializes it into an object of the given type.
+    /// This method utilizes the `System.Text.Json.JsonSerializer` for deserialization.
+    /// </summary>
+    /// <param name="returnType">The type of the object to deserialize the JSON data into.</param>
+    /// <param name="path">The path of the JSON file to read and deserialize.</param>
+    /// <returns>An object of the specified type containing the data deserialized from the JSON file.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the specified path is null or empty.</exception>
+    /// <exception cref="System.IO.FileNotFoundException">Thrown when the file at the specified path does not exist.</exception>
+    /// <exception cref="System.Text.Json.JsonException">Thrown when the JSON is invalid or cannot be deserialized into the specified type.</exception>
     public static object ReadJsonFile(Type returnType, string path) {
         string jsonString = ReadTextFile(path);
 
@@ -159,6 +233,15 @@ public static class FileUtil {
         Directory.Delete(path, true);
     }
 
+    /// <summary>
+    /// Checks if a specific file exists within a given directory.
+    /// </summary>
+    /// <param name="path">The path to the directory to check.</param>
+    /// <param name="file">The name of the file to look for within the directory.</param>
+    /// <returns>Returns true if the file exists in the specified directory; otherwise, false.</returns>
+    /// <remarks>
+    /// This method utilizes the <see cref="File.Exists"/> method to determine the existence of the file.
+    /// </remarks>
     public static bool DirectoryContains(string path, string file) {
         return File.Exists($"{path}/{file}");
     }
