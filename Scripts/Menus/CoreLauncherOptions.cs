@@ -48,13 +48,13 @@ public partial class CoreLauncherOptions : MarginContainer
 			case "Game":
 			{
 				GD.Print(info);
-				OS.ShellOpen(GameManager.SteamGamePath+@"\steamapps\common\Core Keeper");
+				OS.ShellOpen(GameManager.SteamGamePath);
 				return;
 			}
 			case "Server":
 			{
 				GD.Print(info);
-				OS.ShellOpen(ServerPath.Text+@"\steamapps\common\Core Keeper Dedicated Server");
+				OS.ShellOpen(ServerPath.Text);
 				return;
 			}
 			case "AppData":
