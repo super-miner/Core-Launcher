@@ -128,7 +128,7 @@ public static class FileUtil {
                         foreach (var appId in entry.Value.Where(appId => appId == "1621690"))
                         {
                             GD.Print($@"Found {appId} in {entry.Key}!");
-                            return entry.Key.Replace(@"\\", @"\");
+                            return entry.Key.Replace(@"\\", @"\")+@"\steamapps\common\Core Keeper";
                         }
                     }
                 }
@@ -147,7 +147,7 @@ public static class FileUtil {
                         {
                             // Core Keeper Dedicated Server
                             GD.Print($@"Found {appId} in {entry.Key}!");
-                            return entry.Key.Replace(@"\\", @"\");
+                            return entry.Key.Replace(@"\\", @"\")+@"\steamapps\common\Core Keeper Dedicated Server";
                         }
                     }
                 }
