@@ -1,3 +1,4 @@
+res://Images/Icons
 res://Scripts/ModIO
 C:/Users/user/Desktop/Games/Modding/CoreKeeperModding/CoreLauncherBuilds/CoreLauncher_v1.1.5_Windows_x86_64
 C:/Users/user/Desktop/Games/Modding/CoreKeeperModding/CoreLauncherBuilds/CoreLauncher_v1.1.5_Linux_x86_64
@@ -13,7 +14,6 @@ res://Scripts/ModIO/JsonStructures
 C:/Users/user/Desktop/Games/Modding/CoreKeeperModding/CoreLauncherBuilds/CoreLauncher_v1.0.0_Windows_x86_64
 res://Scripts/Menus/Setup
 res://Scripts/Menus/Loading
-res://Images/Icons
 res://Scenes
 res://Scenes/Menus
 res://Themes/DefualtTheme
