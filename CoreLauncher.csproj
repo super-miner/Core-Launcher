@@ -9,6 +9,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include=".godot\mono\temp\" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove=".godot\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove=".godot\**" />
   </ItemGroup>
 </Project>
