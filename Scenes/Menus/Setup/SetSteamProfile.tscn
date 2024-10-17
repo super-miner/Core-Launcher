@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cu7c84nrcktis"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/Setup/FindSteamPath.cs" id="1_xqhvv"]
+[ext_resource type="Script" path="res://Scripts/Menus/Setup/FindPaths.cs" id="1_jetxx"]
 [ext_resource type="Theme" uid="uid://chrjy83gamx77" path="res://Themes/DefualtTheme/Special.tres" id="2_sgssd"]
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="3_fede2"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/FileLineEdit.cs" id="4_xwlfs"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="9_efd8q"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="10_cyaia"]
 
-[node name="FindSteamPath" type="Control" node_paths=PackedStringArray("_steamExePathLineEdit", "_steamGamesPathLineEdit", "_progressBar")]
+[node name="FindSteamPath" type="Control" node_paths=PackedStringArray("_steamExePathLineEdit", "_steamGamePathLineEdit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,10 +20,9 @@ offset_left = 1.0
 offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_xqhvv")
+script = ExtResource("1_jetxx")
 _steamExePathLineEdit = NodePath("VBox/ExePathFilePicker/LineEdit")
-_steamGamesPathLineEdit = NodePath("VBox/GamesPathFilePicker/LineEdit")
-_progressBar = NodePath("ProgressBar")
+_steamGamePathLineEdit = NodePath("VBox/GamesPathFilePicker/LineEdit")
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -70,7 +69,7 @@ FolderMustContain = ["steam.exe"]
 _errorLabel = NodePath("../../ExePathErrorLabel")
 _successLabel = NodePath("../../ExePathSuccessLabel")
 
-[node name="Button" type="Button" parent="VBox/ExePathFilePicker"]
+[node name="Button" type="Button" parent="VBox/ExePathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_fede2")
@@ -78,6 +77,8 @@ theme_override_constants/icon_max_width = 40
 icon = ExtResource("5_enc62")
 icon_alignment = 1
 script = ExtResource("6_bj5ts")
+_fileExplorer = NodePath("FileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
 
 [node name="FileExplorer" type="FileDialog" parent="VBox/ExePathFilePicker/Button"]
 title = "Open a Directory"
@@ -133,7 +134,7 @@ FolderMustContain = ["steamapps/common/Core Keeper", "steamapps/common/Core Keep
 _errorLabel = NodePath("../../GamesPathErrorLabel")
 _successLabel = NodePath("../../GamesPathSuccessLabel")
 
-[node name="Button" type="Button" parent="VBox/GamesPathFilePicker"]
+[node name="Button" type="Button" parent="VBox/GamesPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_fede2")
@@ -141,6 +142,8 @@ theme_override_constants/icon_max_width = 40
 icon = ExtResource("5_enc62")
 icon_alignment = 1
 script = ExtResource("6_bj5ts")
+_fileExplorer = NodePath("FileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
 
 [node name="FileExplorer" type="FileDialog" parent="VBox/GamesPathFilePicker/Button"]
 title = "Open a Directory"

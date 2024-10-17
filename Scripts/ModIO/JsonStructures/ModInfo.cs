@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.Systems.Fetch;
 using Godot;
 
@@ -27,6 +26,7 @@ public class ModInfo {
 	private ExtraData _extraData;
 
 	public async Task Init() {
+		GD.Print($"Mod: [{Name}] by [{Author.Username}] has: [{Tags.Any(tag => tag.Name == "Script (Elevated Access)")}]");
 		await Logo.Init();
 	}
 	

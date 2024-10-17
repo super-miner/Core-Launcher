@@ -18,6 +18,7 @@ public enum PathType {
     CoreKeeperAppData,
     Profiles,
     ModTemp,
+    ModCache,
     GameApp,
     ServerApp
 }
@@ -36,21 +37,24 @@ public static class FileUtil {
                 else {
                     string osName = OS.GetName();
                     
-                    if (osName == "Windows") {
-                        object pathObject = RegistryUtil.GetValue(@"SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath");
+                    switch (osName)
+                    {
+                        case "Windows":
+                        {
+                            object pathObject = RegistryUtil.GetValue(@"SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath");
 		
-                        if (pathObject is string pathString) {
-                            return pathString;
-                        }
+                            if (pathObject is string pathString) {
+                                return pathString;
+                            }
                         
-                        GD.PrintErr("Could not find steam path in the registry.");
-                        return "";
-                    }
-                    else if (osName == "Linux") {
-                        return "~/.steam/steam";
-                    }
-                    else {
-                        GD.PrintErr($"Unrecognized operating system {osName}.");
+                            GD.PrintErr("Could not find steam path in the registry.");
+                            return "";
+                        }
+                        case "Linux":
+                            return "~/.steam/steam";
+                        default:
+                            GD.PrintErr($"Unrecognized operating system {osName}.");
+                            break;
                     }
 
                     return "";
@@ -117,6 +121,8 @@ public static class FileUtil {
                 return $"{GetPath(PathType.AppData)}Profiles/";
             case PathType.ModTemp:
                 return $"{GetPath(PathType.AppData)}Temp/ModTemp.zip";
+            case PathType.ModCache:
+                return $"{GetPath(PathType.AppData)}Cache/";
             case PathType.GameApp:
             {
                 var pathObject = RegistryUtil.GetValue(@"SOFTWARE\Wow6432Node\Valve\Steam", "InstallPath");

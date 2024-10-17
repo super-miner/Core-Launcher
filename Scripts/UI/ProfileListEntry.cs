@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using CoreLauncher.Scripts.Profiles;
-using CoreLauncher.Scripts.StoredData.StoredDataTypes;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 

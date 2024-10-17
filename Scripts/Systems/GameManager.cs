@@ -70,15 +70,22 @@ public static class GameManager {
 	}
 
 	public static string GetCoreKeeperPath() {
-		return $"{FileUtil.GetPath(PathType.SteamGames)}/steamapps/common/Core Keeper/";
+		return $"{FileUtil.GetPath(PathType.SteamGames)}";
 	}
 	
 	public static string GetCoreKeeperServerPath() {
-		return $"{FileUtil.GetPath(PathType.SteamGamesServer)}/steamapps/common/Core Keeper Dedicated Server/";
+		return $"{FileUtil.GetPath(PathType.SteamGamesServer)}";
 	}
 	
+	public static string GetModsPath(bool isServer = false) {
+		if (isServer)
+		{ return $@"{FileUtil.GetPath(PathType.SteamGamesServer)}\CoreKeeperServer_Data\StreamingAssets\Mods"; }
+		return $@"{FileUtil.GetPath(PathType.SteamGamesServer)}\CoreKeeper_Data\StreamingAssets\Mods";
+		
+	}
+	 
 	public static string GetCoreKeeperDataPath(bool server) {
-		return server ? $"{GetCoreKeeperServerPath()}CoreKeeperServer_Data/" : $"{GetCoreKeeperPath()}CoreKeeper_Data/";
+		return server ? $@"{GetCoreKeeperServerPath()}\CoreKeeperServer_Data\" : $@"{GetCoreKeeperPath()}\CoreKeeper_Data\";
 	}
 
 	public static string GetAppDataPath() {

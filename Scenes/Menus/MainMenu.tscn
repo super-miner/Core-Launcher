@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=39 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -22,14 +22,15 @@
 [ext_resource type="Script" path="res://Scripts/UI/ModList.cs" id="12_e3elj"]
 [ext_resource type="Script" path="res://Scripts/Menus/Main/Tabs/ModsTabManager.cs" id="12_jy5iy"]
 [ext_resource type="PackedScene" uid="uid://c76en0nxy0bs6" path="res://Scenes/ListEntires/ModEntry.tscn" id="13_4fbd0"]
+[ext_resource type="Script" path="res://Scripts/Menus/Main/OptionsPanelController.cs" id="14_q7umy"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="17_chpd6"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="18_ooe8h"]
 [ext_resource type="Texture2D" uid="uid://veuu33emiei4" path="res://Images/Icons/Settings.png" id="18_qlm2n"]
 [ext_resource type="Theme" uid="uid://ugmnp05awb0c" path="res://Themes/DefualtTheme/Contrast.tres" id="19_ipapd"]
-[ext_resource type="Script" path="res://Scripts/Menus/CoreLauncherOptions.cs" id="20_bvsnk"]
 [ext_resource type="Texture2D" uid="uid://bkhpatrg57ab5" path="res://Images/Icons/HeartSmall.png" id="20_qv3hg"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/CustomLinkButton.cs" id="21_r6au4"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/FileLineEdit.cs" id="21_rua1n"]
+[ext_resource type="Script" path="res://Scripts/Menus/CoreLauncherOptions.cs" id="21_slxsk"]
 [ext_resource type="Texture2D" uid="uid://udrjjhyr7euf" path="res://Images/Icons/File.png" id="22_3kivl"]
 [ext_resource type="Script" path="res://Scripts/UI/NameProfilePopup.cs" id="29_wblnm"]
 
@@ -43,6 +44,9 @@ shadow_color = Color(0, 0, 0, 0.392157)
 shadow_size = 10
 shadow_offset = Vector2(0, 5)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y78sb"]
+blend_mode = 3
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s7vrd"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ifb3j"]
@@ -54,7 +58,7 @@ unicode = 112
 [sub_resource type="Shortcut" id="Shortcut_aaq3q"]
 events = [SubResource("InputEventKey_ifb3j")]
 
-[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "PlayProgressBar", "OptionsTabs")]
+[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "NameProfilePopup", "PlayProgressBar", "OptionsTabs")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -62,8 +66,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qb7sc")
 ProfileList = NodePath("MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles")
+NameProfilePopup = NodePath("InvalidNamePopup")
 PlayProgressBar = NodePath("MainConatiner/GameBar/ProgressBar")
-OptionsTabs = NodePath("MainConatiner/CentralMenu/MainScreen/Margin/Tabs")
+OptionsTabs = NodePath("MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs")
 
 [node name="MainConatiner" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -272,19 +277,26 @@ patch_margin_top = 124
 patch_margin_right = 124
 patch_margin_bottom = 124
 
-[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen"]
+[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen" node_paths=PackedStringArray("_optionsTabContainer", "_optionsPanelContainer")]
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource("14_q7umy")
+_optionsTabContainer = NodePath("MarginContainer/Tabs")
+_optionsPanelContainer = NodePath("CoreLauncherOptions")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin"]
+layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="Tabs" type="TabContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin"]
+[node name="Tabs" type="TabContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer" node_paths=PackedStringArray("_optionsPanelContainer")]
 layout_mode = 2
 theme = ExtResource("1_81ept")
-current_tab = 2
+current_tab = 1
 script = ExtResource("12_4bc7j")
+_optionsPanelContainer = NodePath("../../CoreLauncherOptions")
 
-[node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs"]
+[node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -292,25 +304,25 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 7
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options"]
 layout_mode = 2
 theme = ExtResource("1_81ept")
 horizontal_scroll_mode = 0
 
-[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer"]
+[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Name" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox"]
+[node name="Name" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name"]
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name"]
 layout_mode = 2
 theme = ExtResource("1_81ept")
 text = "Name: "
 
-[node name="Input" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name"]
+[node name="Input" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 1
@@ -319,12 +331,11 @@ placeholder_text = "Name..."
 max_length = 24
 script = ExtResource("10_mm626")
 
-[node name="ProfileSettingsOption" type="Node" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input"]
+[node name="ProfileSettingsOption" type="Node" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input"]
 script = ExtResource("11_bg25y")
 SettingName = "Name"
 
-[node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" node_paths=PackedStringArray("ModList", "_modsLoadedLabel", "_showLibraryModsCheckBox")]
-visible = false
+[node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs" node_paths=PackedStringArray("ModList", "_modsLoadedLabel", "_showLibraryModsCheckBox")]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -335,48 +346,48 @@ ModList = NodePath("VBox/ScrollContainer/Margin/Mods")
 _modsLoadedLabel = NodePath("VBox/TabSettings/HBox/ModsShown")
 _showLibraryModsCheckBox = NodePath("VBox/TabSettings/HBox/CheckButton")
 
-[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods"]
+[node name="VBox" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods"]
 layout_mode = 2
 
-[node name="TabSettings" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox"]
+[node name="TabSettings" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox"]
 layout_mode = 2
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 5
 
-[node name="HBox" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings"]
+[node name="HBox" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings"]
 layout_mode = 2
 
-[node name="ModsShown" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox"]
+[node name="ModsShown" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings/HBox"]
 layout_mode = 2
 theme = ExtResource("1_81ept")
 text = "Showing 0 out of 0 mods."
 
-[node name="Separator" type="Container" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox"]
+[node name="Separator" type="Container" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CheckButton" type="CheckBox" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox"]
+[node name="CheckButton" type="CheckBox" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings/HBox"]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_81ept")
 text = "Show Library Mods"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_81ept")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/ScrollContainer"]
+[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 60
 
-[node name="Mods" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/ScrollContainer/Margin"]
+[node name="Mods" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/ScrollContainer/Margin"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -384,219 +395,216 @@ theme_override_constants/separation = 10
 script = ExtResource("12_e3elj")
 EntryScene = ExtResource("13_4fbd0")
 
-[node name="Core Launcher" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" node_paths=PackedStringArray("SteamPath", "GamePath", "ServerPath", "AppDataPath", "SteamButton")]
+[node name="CoreLauncherOptions" type="PanelContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin" node_paths=PackedStringArray("_steamPath", "_gamePath", "_serverPath", "_appDataPath")]
+visible = false
+material = SubResource("CanvasItemMaterial_y78sb")
 layout_mode = 2
-script = ExtResource("20_bvsnk")
-SteamPath = NodePath("ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit")
-GamePath = NodePath("ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit")
-ServerPath = NodePath("ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit")
-AppDataPath = NodePath("ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit")
-SteamButton = NodePath("ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/Button")
+script = ExtResource("21_slxsk")
+_steamPath = NodePath("MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit")
+_gamePath = NodePath("MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit")
+_serverPath = NodePath("MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit")
+_appDataPath = NodePath("MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher"]
+[node name="MarginContainer" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions"]
 layout_mode = 2
+size_flags_horizontal = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_constants/margin_top = 10
-
-[node name="Directories" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer"]
+[node name="Directories" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories"]
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Directories"
 horizontal_alignment = 1
 justification_flags = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SteamPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
 
-[node name="SteamPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath"]
 layout_mode = 2
 
-[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
 layout_mode = 2
 text = "Path to Steam: "
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
+[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
 custom_minimum_size = Vector2(22.805, 0)
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
-custom_minimum_size = Vector2(355, 0)
+[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+custom_minimum_size = Vector2(597, 0)
 layout_mode = 2
 script = ExtResource("21_rua1n")
 FolderMustContain = ["steam.exe"]
 _errorLabel = NodePath("../../Label/Label2")
 _successLabel = NodePath("../../Label/Label2")
 
-[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
+[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 icon = ExtResource("22_3kivl")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath"]
+[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/Label"]
+[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/Label"]
 custom_minimum_size = Vector2(173.44, 0)
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/Label"]
+[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/Label"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 
-[node name="HSeparator3" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="HSeparator3" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
 
-[node name="GamePath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="GamePath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath"]
+[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
 layout_mode = 2
 text = "Path to Game: "
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
+[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
 custom_minimum_size = Vector2(25.88, 0)
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
-custom_minimum_size = Vector2(355, 0)
+[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+custom_minimum_size = Vector2(597, 0)
 layout_mode = 2
 script = ExtResource("21_rua1n")
 FolderMustContain = ["CoreKeeper.exe"]
 _errorLabel = NodePath("../../HBoxContainer/Label2")
 _successLabel = NodePath("../../HBoxContainer/Label2")
 
-[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
+[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 icon = ExtResource("22_3kivl")
 icon_alignment = 1
 expand_icon = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath/HBoxContainer"]
+[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/HBoxContainer"]
 custom_minimum_size = Vector2(173.44, 0)
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath/HBoxContainer"]
+[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 
-[node name="HSeparator2" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
 
-[node name="ServerPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="ServerPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath"]
+[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
 layout_mode = 2
 text = "Path to Server: "
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
+[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
 custom_minimum_size = Vector2(20.995, 0)
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
-custom_minimum_size = Vector2(355, 0)
+[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+custom_minimum_size = Vector2(597, 0)
 layout_mode = 2
 script = ExtResource("21_rua1n")
 FolderMustContain = ["CoreKeeperServer.exe"]
 _errorLabel = NodePath("../../Label/Label2")
 _successLabel = NodePath("../../Label/Label2")
 
-[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
+[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 icon = ExtResource("22_3kivl")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath"]
+[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath/Label"]
+[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/Label"]
 custom_minimum_size = Vector2(173.44, 0)
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath/Label"]
+[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/Label"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 
-[node name="HSeparator" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
 
-[node name="AppDataPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="AppDataPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath"]
+[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit"]
+[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit"]
 layout_mode = 2
 text = "Path to App data: "
 
-[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
-custom_minimum_size = Vector2(355, 0)
+[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+custom_minimum_size = Vector2(597, 0)
 layout_mode = 2
 script = ExtResource("21_rua1n")
 FolderMustContain = ["prefs.json", "worlds", "saves", "mods", "ServerConfig.json"]
 _errorLabel = NodePath("../../Label/Label2")
 _successLabel = NodePath("../../Label/Label2")
 
-[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit"]
+[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit"]
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 icon = ExtResource("22_3kivl")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath"]
+[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath/Label"]
+[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/Label"]
 custom_minimum_size = Vector2(173.44, 0)
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath/Label"]
+[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/Label"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 
-[node name="HSeparator4" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="HSeparator4" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_s7vrd")
 
-[node name="Buttons" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer"]
+[node name="Buttons" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 100
+theme_override_constants/separation = 65
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(46.805, 0)
+[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(234.94, 0)
 layout_mode = 2
 
-[node name="Save" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/Buttons"]
+[node name="Save" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
 layout_mode = 2
 text = "Save"
 
-[node name="Cancel" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/Buttons"]
+[node name="Cancel" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
 layout_mode = 2
 text = "Cancel"
 
@@ -619,6 +627,24 @@ custom_minimum_size = Vector2(0, 116)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.101961, 0.0901961, 0.0784314, 1)
+
+[node name="CLOptionsButton" type="Button" parent="MainConatiner/GameBar"]
+z_index = 100
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -22.5
+offset_right = -95.0
+offset_bottom = 22.5
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("1_81ept")
+icon = ExtResource("18_qlm2n")
 
 [node name="DonateButton" type="Button" parent="MainConatiner/GameBar"]
 layout_mode = 1
@@ -784,14 +810,10 @@ text = "Cancel"
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ServerButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ServerButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" method="OnPressed"]
-[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
-[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher" method="_on_button_button_down" binds= ["Steam"]]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher" method="_on_button_button_down" binds= ["Game"]]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher" method="_on_button_button_down" binds= ["Server"]]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher" method="_on_button_button_down" binds= ["AppData"]]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher/ScrollContainer/MarginContainer/Directories/VBoxContainer/Buttons/Save" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs/Core Launcher" method="_on_save_button_down"]
-[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/Tabs" method="OnTogglePressed"]
+[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
+[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
+[connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs" method="OnTogglePressed"]
+[connection signal="pressed" from="MainConatiner/GameBar/CLOptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin" method="TogglePanel"]
 [connection signal="pressed" from="MainConatiner/GameBar/DonateButton" to="MainConatiner/GameBar/DonateButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]
 [connection signal="close_requested" from="InvalidNamePopup" to="InvalidNamePopup" method="OnCloseRequested"]

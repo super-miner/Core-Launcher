@@ -3,7 +3,9 @@ using Godot;
 
 namespace CoreLauncher.Scripts.Menus.Main.Tabs; 
 
-public partial class TabsManager : TabContainer {
+public partial class TabsManager : TabContainer
+{
+    [Export] private PanelContainer _optionsPanelContainer;
     public override void _EnterTree() {
         InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent += OnItemSelected;
     }
@@ -13,6 +15,8 @@ public partial class TabsManager : TabContainer {
     }
 
     public void OnTogglePressed() {
+        if (_optionsPanelContainer.Visible)
+        { _optionsPanelContainer.Visible = false; }
         Visible = !Visible;
     }
 

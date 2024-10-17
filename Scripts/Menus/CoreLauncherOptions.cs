@@ -1,68 +1,65 @@
+using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
-// using CoreLauncher.Scripts.UI.Generic;
 using Godot;
 
 namespace CoreLauncher.Scripts.Menus;
 
-public partial class CoreLauncherOptions : MarginContainer
+public partial class CoreLauncherOptions : PanelContainer
 {
-	[Export] private FileLineEdit SteamPath;
-	[Export] private FileLineEdit GamePath;
-	[Export] private FileLineEdit ServerPath;
-	[Export] private FileLineEdit AppDataPath;
+	[Export] private FileLineEdit _steamPath;
+	[Export] private FileLineEdit _gamePath;
+	[Export] private FileLineEdit _serverPath;
+	[Export] private FileLineEdit _appDataPath;
 
-	[Export] private Button SteamButton;
-	[Export] private Button GameButton;
-	[Export] private Button ServerButton;
-	[Export] private Button AppDataButton;
 	public override void _Ready()
 	{
-		SteamPath.SetText(GameManager.SteamExePath);
-		GamePath.SetText(GameManager.SteamGamePath);
-		ServerPath.SetText(GameManager.SteamGameServerPath);
-		AppDataPath.SetText(GameManager.AppDataPath);
+		_steamPath.SetText(GameManager.SteamExePath);
+		_gamePath.SetText(GameManager.SteamGamePath);
+		_serverPath.SetText(GameManager.SteamGameServerPath);
+		_appDataPath.SetText(GameManager.AppDataPath);
+		InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent += OnItemSelected;
 	}
 
 	public void _on_save_button_down()
 	{
-		GameManager.SteamExePath = SteamPath.Text;
-		GameManager.SteamGamePath = GamePath.Text;
-		GameManager.SteamGameServerPath = ServerPath.Text;
-		GameManager.AppDataPath = AppDataPath.Text;
+		GameManager.SteamExePath = _steamPath.Text;
+		GameManager.SteamGamePath = _gamePath.Text;
+		GameManager.SteamGameServerPath = _serverPath.Text;
+		GameManager.AppDataPath = _appDataPath.Text;
 		StoredDataManager.Serialize();
 	}
 
 	public void _on_button_button_down(string info)
 	{
-		GD.Print(info);
 		switch (info)
 		{
 			case "Steam":
 			{
-				GD.Print(info);
 				OS.ShellOpen(GameManager.SteamExePath);
 				return;
 			}
 			case "Game":
 			{
-				GD.Print(info);
 				OS.ShellOpen(GameManager.SteamGamePath);
 				return;
 			}
 			case "Server":
 			{
-				GD.Print(info);
-				OS.ShellOpen(ServerPath.Text);
+				OS.ShellOpen(_serverPath.Text);
 				return;
 			}
 			case "AppData":
 			{
-				GD.Print(info);
-				OS.ShellOpen(AppDataPath.Text);
+				OS.ShellOpen(_appDataPath.Text);
 				return;
 			}
 		}
+	}
+
+	private void OnItemSelected()
+	{
+		Visible = false;
 	}
 }

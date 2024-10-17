@@ -5,9 +5,9 @@ using Godot.Collections;
 namespace CoreLauncher.Scripts.Menus; 
 
 public partial class MenuManager : Control {
-    [Export] private int _activeMenuIndex = 0;
+    [Export] private int _activeMenuIndex;
     [Export] private Array<PackedScene> _menuScenes = new Array<PackedScene>();
-    private Node _activeMenu = null;
+    private Node _activeMenu;
 
     public override void _EnterTree() {
         InstanceManager.AddInstance(this);
