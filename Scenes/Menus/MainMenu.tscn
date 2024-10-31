@@ -596,8 +596,8 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_s7vrd")
 layout_mode = 2
 theme_override_constants/separation = 65
 
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(234.94, 0)
+[node name="Spacer" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 
 [node name="Save" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
@@ -605,6 +605,7 @@ layout_mode = 2
 text = "Save"
 
 [node name="Cancel" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
+visible = false
 layout_mode = 2
 text = "Cancel"
 
@@ -812,6 +813,14 @@ text = "Cancel"
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
+[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit" method="OnTextChanged"]
+[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions" method="_on_button_button_down" binds= [&"Steam"]]
+[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit" method="OnTextChanged"]
+[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions" method="_on_button_button_down" binds= [&"Game"]]
+[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit" method="OnTextChanged"]
+[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions" method="_on_button_button_down" binds= [&"Server"]]
+[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit" method="OnTextChanged"]
+[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions" method="_on_button_button_down" binds= [&"AppData"]]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs" method="OnTogglePressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/CLOptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin" method="TogglePanel"]
 [connection signal="pressed" from="MainConatiner/GameBar/DonateButton" to="MainConatiner/GameBar/DonateButton" method="OnPressed"]
