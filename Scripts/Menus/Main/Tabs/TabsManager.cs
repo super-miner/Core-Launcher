@@ -15,8 +15,6 @@ public partial class TabsManager : TabContainer
     }
 
     public void OnTogglePressed() {
-        if (_optionsPanelContainer.Visible)
-        { _optionsPanelContainer.Visible = false; }
         Visible = !Visible;
     }
 

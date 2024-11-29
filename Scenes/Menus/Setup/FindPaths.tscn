@@ -21,54 +21,63 @@ offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_eam08")
-_steamExePathLineEdit = NodePath("ScrollContainer/VBox/ExePathFilePicker/LineEdit")
-_steamGamePathLineEdit = NodePath("ScrollContainer/VBox/GamesPathFilePicker/LineEdit")
-_steamServerPathLineEdit = NodePath("ScrollContainer/VBox/ServerPathFilePicker/LineEdit")
-_appDataPathLineEdit = NodePath("ScrollContainer/VBox/AppDataPathFilePicker/LineEdit")
+_steamExePathLineEdit = NodePath("VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker/LineEdit")
+_steamGamePathLineEdit = NodePath("VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker/LineEdit")
+_steamServerPathLineEdit = NodePath("VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/LineEdit")
+_appDataPathLineEdit = NodePath("VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/LineEdit")
 _progressBar = NodePath("ProgressBar")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
-offset_left = 499.0
-offset_top = 2.0
-offset_right = 1105.0
-offset_bottom = 900.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="VBox" type="VBoxContainer" parent="ScrollContainer"]
-layout_mode = 2
+anchor_left = 0.497
+anchor_right = 0.497
+anchor_bottom = 1.0
+offset_left = -296.2
+offset_top = 18.0
+offset_right = 301.8
+offset_bottom = -74.0
 alignment = 1
 
-[node name="Title" type="Label" parent="ScrollContainer/VBox"]
+[node name="Title" type="Label" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("2_7nibv")
 theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 theme_override_font_sizes/font_size = 70
 text = "File Locations"
 
-[node name="Description" type="Label" parent="ScrollContainer/VBox"]
+[node name="Description" type="Label" parent="VBox"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 text = "Let Core Launcher know where important files are located on 
 your device."
 
-[node name="Separator" type="Container" parent="ScrollContainer/VBox"]
+[node name="Separator" type="Container" parent="VBox"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="ExePathLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_4bh3v")
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBox/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBox/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ExePathLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 text = "Select your steam executable path:"
 
-[node name="ExePathFilePicker" type="HBoxContainer" parent="ScrollContainer/VBox"]
+[node name="ExePathFilePicker" type="HBoxContainer" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBox/ExePathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+[node name="LineEdit" type="LineEdit" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
 z_index = 10
 layout_mode = 2
 size_flags_horizontal = 3
@@ -79,7 +88,7 @@ FolderMustContain = ["steam.exe"]
 _errorLabel = NodePath("../../ExePathErrorLabel")
 _successLabel = NodePath("../../ExePathSuccessLabel")
 
-[node name="Button" type="Button" parent="ScrollContainer/VBox/ExePathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
+[node name="Button" type="Button" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_4bh3v")
@@ -90,7 +99,7 @@ script = ExtResource("6_0ayy2")
 _fileExplorer = NodePath("FileExplorer")
 _fileLineEdit = NodePath("../LineEdit")
 
-[node name="FileExplorer" type="FileDialog" parent="ScrollContainer/VBox/ExePathFilePicker/Button"]
+[node name="FileExplorer" type="FileDialog" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker/Button"]
 title = "Open a Directory"
 initial_position = 2
 size = Vector2i(700, 500)
@@ -101,39 +110,39 @@ access = 2
 script = ExtResource("8_us0c3")
 StartingDirectory = "/"
 
-[node name="ExePathErrorLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="ExePathErrorLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "Could not find steam path automatically."
 
-[node name="ExePathSuccessLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="ExePathSuccessLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "Found path."
 
-[node name="Separator2" type="Container" parent="ScrollContainer/VBox"]
+[node name="Separator2" type="Container" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="GamesPathLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="GamesPathLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 text = "Select your steam library path for Core Keeper:"
 
-[node name="GamesPathLabel2" type="Label" parent="ScrollContainer/VBox"]
+[node name="GamesPathLabel2" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 text = "(Will usually be the same as the executable path on Windows)"
 
-[node name="GamesPathFilePicker" type="HBoxContainer" parent="ScrollContainer/VBox"]
+[node name="GamesPathFilePicker" type="HBoxContainer" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBox/GamesPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+[node name="LineEdit" type="LineEdit" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
 z_index = 10
 layout_mode = 2
 size_flags_horizontal = 3
@@ -144,7 +153,7 @@ FolderMustContain = ["CoreKeeper.exe"]
 _errorLabel = NodePath("../../GamesPathErrorLabel")
 _successLabel = NodePath("../../GamesPathSuccessLabel")
 
-[node name="Button" type="Button" parent="ScrollContainer/VBox/GamesPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
+[node name="Button" type="Button" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_4bh3v")
@@ -155,7 +164,7 @@ script = ExtResource("6_0ayy2")
 _fileExplorer = NodePath("FileExplorer")
 _fileLineEdit = NodePath("../LineEdit")
 
-[node name="FileExplorer" type="FileDialog" parent="ScrollContainer/VBox/GamesPathFilePicker/Button"]
+[node name="FileExplorer" type="FileDialog" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker/Button"]
 title = "Open a Directory"
 initial_position = 2
 size = Vector2i(700, 500)
@@ -166,39 +175,39 @@ access = 2
 script = ExtResource("8_us0c3")
 StartingDirectory = "/"
 
-[node name="GamesPathErrorLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="GamesPathErrorLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "Could not find steam path automatically."
 
-[node name="GamesPathSuccessLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="GamesPathSuccessLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "Found path."
 
-[node name="Separator3" type="Container" parent="ScrollContainer/VBox"]
+[node name="Separator3" type="Container" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="ServerPathLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="ServerPathLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 text = "Select your steam library path for Core Keeper Server:"
 
-[node name="ServerPathLabel2" type="Label" parent="ScrollContainer/VBox"]
+[node name="ServerPathLabel2" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(0.270588, 0.25098, 0.231373, 1)
 text = "(Will usually be the same as the executable path on Windows)"
 
-[node name="ServerPathFilePicker" type="HBoxContainer" parent="ScrollContainer/VBox"]
+[node name="ServerPathFilePicker" type="HBoxContainer" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBox/ServerPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+[node name="LineEdit" type="LineEdit" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
 z_index = 10
 layout_mode = 2
 size_flags_horizontal = 3
@@ -209,7 +218,7 @@ FolderMustContain = ["CoreKeeperServer.exe"]
 _errorLabel = NodePath("../../ServerPathErrorLabel")
 _successLabel = NodePath("../../ServerPathSuccessLabel2")
 
-[node name="Button" type="Button" parent="ScrollContainer/VBox/ServerPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
+[node name="Button" type="Button" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_4bh3v")
@@ -220,7 +229,7 @@ script = ExtResource("6_0ayy2")
 _fileExplorer = NodePath("../../GamesPathFilePicker/Button/FileExplorer")
 _fileLineEdit = NodePath("../../GamesPathFilePicker/LineEdit")
 
-[node name="FileExplorer" type="FileDialog" parent="ScrollContainer/VBox/ServerPathFilePicker/Button"]
+[node name="FileExplorer" type="FileDialog" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button"]
 title = "Open a Directory"
 initial_position = 2
 size = Vector2i(700, 500)
@@ -231,33 +240,33 @@ access = 2
 script = ExtResource("8_us0c3")
 StartingDirectory = "/"
 
-[node name="ServerPathErrorLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="ServerPathErrorLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "Could not find steam path automatically."
 
-[node name="ServerPathSuccessLabel2" type="Label" parent="ScrollContainer/VBox"]
+[node name="ServerPathSuccessLabel2" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "Found path."
 
-[node name="Separator4" type="Container" parent="ScrollContainer/VBox"]
+[node name="Separator4" type="Container" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="AppDataPathLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="AppDataPathLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 text = "Select your Core Keeper app data path:"
 
-[node name="AppDataPathFilePicker" type="HBoxContainer" parent="ScrollContainer/VBox"]
+[node name="AppDataPathFilePicker" type="HBoxContainer" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBox/AppDataPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+[node name="LineEdit" type="LineEdit" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
 z_index = 10
 layout_mode = 2
 size_flags_horizontal = 3
@@ -268,7 +277,7 @@ FolderMustContain = ["prefs.json", "saves", "mods", "worlds", "ServerConfig.json
 _errorLabel = NodePath("../../AppDataPathErrorLabel")
 _successLabel = NodePath("../../AppDataPathSuccessLabel")
 
-[node name="Button" type="Button" parent="ScrollContainer/VBox/AppDataPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
+[node name="Button" type="Button" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("3_4bh3v")
@@ -279,7 +288,7 @@ script = ExtResource("6_0ayy2")
 _fileExplorer = NodePath("FileExplorer")
 _fileLineEdit = NodePath("../LineEdit")
 
-[node name="FileExplorer" type="FileDialog" parent="ScrollContainer/VBox/AppDataPathFilePicker/Button"]
+[node name="FileExplorer" type="FileDialog" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button"]
 title = "Open a Directory"
 initial_position = 2
 size = Vector2i(700, 500)
@@ -290,27 +299,27 @@ access = 2
 script = ExtResource("8_us0c3")
 StartingDirectory = "/"
 
-[node name="AppDataPathErrorLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="AppDataPathErrorLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "Could not find steam path automatically."
 
-[node name="AppDataPathSuccessLabel" type="Label" parent="ScrollContainer/VBox"]
+[node name="AppDataPathSuccessLabel" type="Label" parent="VBox/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_4bh3v")
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "Found path."
 
-[node name="Margin" type="MarginContainer" parent="ScrollContainer/VBox"]
+[node name="Margin" type="MarginContainer" parent="VBox"]
 layout_mode = 2
 theme_override_constants/margin_left = 80
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 80
 
-[node name="ContinueButton" type="Button" parent="ScrollContainer/VBox/Margin"]
+[node name="ContinueButton" type="Button" parent="VBox/Margin"]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_7nibv")
@@ -352,16 +361,16 @@ theme = ExtResource("3_4bh3v")
 script = ExtResource("10_1l0l7")
 TotalPercent = 1.0
 
-[connection signal="text_changed" from="ScrollContainer/VBox/ExePathFilePicker/LineEdit" to="ScrollContainer/VBox/ExePathFilePicker/LineEdit" method="OnTextChanged"]
-[connection signal="pressed" from="ScrollContainer/VBox/ExePathFilePicker/Button" to="ScrollContainer/VBox/ExePathFilePicker/Button" method="OnPressed"]
-[connection signal="dir_selected" from="ScrollContainer/VBox/ExePathFilePicker/Button/FileExplorer" to="ScrollContainer/VBox/ExePathFilePicker/Button" method="OnDirectorySelected"]
-[connection signal="text_changed" from="ScrollContainer/VBox/GamesPathFilePicker/LineEdit" to="ScrollContainer/VBox/GamesPathFilePicker/LineEdit" method="OnTextChanged"]
-[connection signal="pressed" from="ScrollContainer/VBox/GamesPathFilePicker/Button" to="ScrollContainer/VBox/GamesPathFilePicker/Button" method="OnPressed"]
-[connection signal="dir_selected" from="ScrollContainer/VBox/GamesPathFilePicker/Button/FileExplorer" to="ScrollContainer/VBox/GamesPathFilePicker/Button" method="OnDirectorySelected"]
-[connection signal="text_changed" from="ScrollContainer/VBox/ServerPathFilePicker/LineEdit" to="ScrollContainer/VBox/ServerPathFilePicker/LineEdit" method="OnTextChanged"]
-[connection signal="pressed" from="ScrollContainer/VBox/ServerPathFilePicker/Button" to="ScrollContainer/VBox/ServerPathFilePicker/Button" method="OnPressed"]
-[connection signal="dir_selected" from="ScrollContainer/VBox/ServerPathFilePicker/Button/FileExplorer" to="ScrollContainer/VBox/ServerPathFilePicker/Button" method="OnDirectorySelected"]
-[connection signal="text_changed" from="ScrollContainer/VBox/AppDataPathFilePicker/LineEdit" to="ScrollContainer/VBox/AppDataPathFilePicker/LineEdit" method="OnTextChanged"]
-[connection signal="pressed" from="ScrollContainer/VBox/AppDataPathFilePicker/Button" to="ScrollContainer/VBox/AppDataPathFilePicker/Button" method="OnPressed"]
-[connection signal="dir_selected" from="ScrollContainer/VBox/AppDataPathFilePicker/Button/FileExplorer" to="ScrollContainer/VBox/AppDataPathFilePicker/Button" method="OnDirectorySelected"]
-[connection signal="pressed" from="ScrollContainer/VBox/Margin/ContinueButton" to="." method="Continue"]
+[connection signal="text_changed" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker/LineEdit" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker/LineEdit" method="OnTextChanged"]
+[connection signal="pressed" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker/Button" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker/Button/FileExplorer" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/ExePathFilePicker/Button" method="OnDirectorySelected"]
+[connection signal="text_changed" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker/LineEdit" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker/LineEdit" method="OnTextChanged"]
+[connection signal="pressed" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker/Button" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker/Button/FileExplorer" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/GamesPathFilePicker/Button" method="OnDirectorySelected"]
+[connection signal="text_changed" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/LineEdit" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/LineEdit" method="OnTextChanged"]
+[connection signal="pressed" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button/FileExplorer" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button" method="OnDirectorySelected"]
+[connection signal="text_changed" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/LineEdit" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/LineEdit" method="OnTextChanged"]
+[connection signal="pressed" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button/FileExplorer" to="VBox/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button" method="OnDirectorySelected"]
+[connection signal="pressed" from="VBox/Margin/ContinueButton" to="." method="Continue"]
