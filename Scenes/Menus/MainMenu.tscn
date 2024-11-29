@@ -56,7 +56,7 @@ unicode = 112
 [sub_resource type="Shortcut" id="Shortcut_aaq3q"]
 events = [SubResource("InputEventKey_ifb3j")]
 
-[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "NameProfilePopup", "PlayProgressBar", "OptionsTabs")]
+[node name="MainMenu" type="MarginContainer" node_paths=PackedStringArray("ProfileList", "PlayProgressBar", "OptionsTabs")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -64,7 +64,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qb7sc")
 ProfileList = NodePath("MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/ScrollContainer/Margin/Profiles")
-NameProfilePopup = NodePath("InvalidNamePopup")
 PlayProgressBar = NodePath("MainConatiner/GameBar/ProgressBar")
 OptionsTabs = NodePath("MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs")
 
@@ -284,11 +283,10 @@ anchor_bottom = 1.0
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="Tabs" type="TabContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer" node_paths=PackedStringArray("_optionsPanelContainer")]
+[node name="Tabs" type="TabContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer"]
 layout_mode = 2
 theme = ExtResource("1_81ept")
 script = ExtResource("12_4bc7j")
-_optionsPanelContainer = NodePath("")
 
 [node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs"]
 layout_mode = 2

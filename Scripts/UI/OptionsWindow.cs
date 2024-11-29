@@ -27,10 +27,22 @@ public partial class OptionsWindow : Window
 	}
 
 	public void Save() {
-		GameManager.SteamExePath = _steamPathLineEdit.Text;
-		GameManager.SteamGamePath = _gamePathLineEdit.Text;
-		GameManager.SteamGameServerPath = _serverPathLineEdit.Text;
-		GameManager.AppDataPath = _appDataPathLineEdit.Text;
+		if (_steamPathLineEdit.PathIsValid(out string _)) {
+			GameManager.SteamExePath = _steamPathLineEdit.Text;
+		}
+
+		if (_gamePathLineEdit.PathIsValid(out string _)) {
+			GameManager.SteamGamePath = _gamePathLineEdit.Text;
+		}
+
+		if (_serverPathLineEdit.PathIsValid(out string _)) {
+			GameManager.SteamGameServerPath = _serverPathLineEdit.Text;
+		}
+
+		if (_appDataPathLineEdit.PathIsValid(out string _)) {
+			GameManager.AppDataPath = _appDataPathLineEdit.Text;
+		}
+
 		StoredDataManager.Serialize();
 	}
 }
