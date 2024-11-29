@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=39 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -30,7 +30,6 @@
 [ext_resource type="Script" path="res://Scripts/UI/Generic/CustomLinkButton.cs" id="21_r6au4"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/FileLineEdit.cs" id="21_rua1n"]
 [ext_resource type="Texture2D" uid="uid://udrjjhyr7euf" path="res://Images/Icons/File.png" id="22_3kivl"]
-[ext_resource type="Script" path="res://Scripts/UI/Generic/WindowToggleButton.cs" id="23_xjxqa"]
 [ext_resource type="Script" path="res://Scripts/UI/NameProfilePopup.cs" id="29_wblnm"]
 [ext_resource type="Script" path="res://Scripts/UI/OptionsWindow.cs" id="32_botnd"]
 [ext_resource type="Theme" uid="uid://ca310l130svfn" path="res://Themes/DefualtTheme/NormalFileExplorer.tres" id="33_g5u7b"]
@@ -424,7 +423,7 @@ layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 2
 
-[node name="OptionsButton" type="Button" parent="MainConatiner/GameBar/SideButtonsMargin/SideButtons" node_paths=PackedStringArray("_toggle")]
+[node name="OptionsButton" type="Button" parent="MainConatiner/GameBar/SideButtonsMargin/SideButtons"]
 z_index = 100
 layout_mode = 2
 size_flags_vertical = 4
@@ -432,8 +431,6 @@ focus_mode = 0
 theme = ExtResource("19_ipapd")
 icon = ExtResource("18_qlm2n")
 icon_alignment = 1
-script = ExtResource("23_xjxqa")
-_toggle = NodePath("../../../../../OptionsWindow")
 
 [node name="DonateButton" type="Button" parent="MainConatiner/GameBar/SideButtonsMargin/SideButtons"]
 layout_mode = 2
@@ -587,26 +584,12 @@ size_flags_horizontal = 4
 theme = ExtResource("1_81ept")
 text = "Cancel"
 
-[node name="OptionsFileExplorer" type="FileDialog" parent="."]
-title = "Open a Directory"
-initial_position = 2
-size = Vector2i(700, 500)
-transient = false
-always_on_top = true
-theme = ExtResource("33_g5u7b")
-ok_button_text = "Select Current Folder"
-file_mode = 2
-access = 2
-script = ExtResource("33_teo05")
-StartingDirectory = "/"
-
 [node name="OptionsWindow" type="Window" parent="." node_paths=PackedStringArray("_steamPathLineEdit", "_gamePathLineEdit", "_serverPathLineEdit", "_appDataPathLineEdit")]
 title = "Options"
 initial_position = 2
 size = Vector2i(900, 600)
 visible = false
 exclusive = true
-always_on_top = true
 script = ExtResource("32_botnd")
 _steamPathLineEdit = NodePath("TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/LineEdit")
 _gamePathLineEdit = NodePath("TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/LineEdit")
@@ -672,8 +655,20 @@ icon = ExtResource("22_3kivl")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("34_ocuo3")
-_fileExplorer = NodePath("../../../../../../../../OptionsFileExplorer")
+_fileExplorer = NodePath("OptionsFileExplorer")
 _fileLineEdit = NodePath("../LineEdit")
+
+[node name="OptionsFileExplorer" type="FileDialog" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+transient = false
+theme = ExtResource("33_g5u7b")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("33_teo05")
+StartingDirectory = "/"
 
 [node name="SteamPathErrorMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -716,8 +711,20 @@ icon = ExtResource("22_3kivl")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("34_ocuo3")
-_fileExplorer = NodePath("../../../../../../../../OptionsFileExplorer")
+_fileExplorer = NodePath("OptionsFileExplorer")
 _fileLineEdit = NodePath("../LineEdit")
+
+[node name="OptionsFileExplorer" type="FileDialog" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+transient = false
+theme = ExtResource("33_g5u7b")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("33_teo05")
+StartingDirectory = "/"
 
 [node name="GamePathErrorMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -760,8 +767,20 @@ icon = ExtResource("22_3kivl")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("34_ocuo3")
-_fileExplorer = NodePath("../../../../../../../../OptionsFileExplorer")
+_fileExplorer = NodePath("OptionsFileExplorer")
 _fileLineEdit = NodePath("../LineEdit")
+
+[node name="OptionsFileExplorer" type="FileDialog" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+transient = false
+theme = ExtResource("33_g5u7b")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("33_teo05")
+StartingDirectory = "/"
 
 [node name="ServerPathErrorMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -804,8 +823,20 @@ icon = ExtResource("22_3kivl")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("34_ocuo3")
-_fileExplorer = NodePath("../../../../../../../../OptionsFileExplorer")
+_fileExplorer = NodePath("OptionsFileExplorer")
 _fileLineEdit = NodePath("../LineEdit")
+
+[node name="OptionsFileExplorer" type="FileDialog" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+transient = false
+theme = ExtResource("33_g5u7b")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("33_teo05")
+StartingDirectory = "/"
 
 [node name="AppDataPathErrorMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -829,7 +860,7 @@ text = "Found path."
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs" method="OnTogglePressed"]
-[connection signal="pressed" from="MainConatiner/GameBar/SideButtonsMargin/SideButtons/OptionsButton" to="MainConatiner/GameBar/SideButtonsMargin/SideButtons/OptionsButton" method="OnPressed"]
+[connection signal="pressed" from="MainConatiner/GameBar/SideButtonsMargin/SideButtons/OptionsButton" to="OptionsWindow" method="Toggle"]
 [connection signal="pressed" from="MainConatiner/GameBar/SideButtonsMargin/SideButtons/DonateButton" to="MainConatiner/GameBar/SideButtonsMargin/SideButtons/DonateButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]
 [connection signal="close_requested" from="InvalidNamePopup" to="InvalidNamePopup" method="OnCloseRequested"]
@@ -837,6 +868,10 @@ text = "Found path."
 [connection signal="pressed" from="InvalidNamePopup/MarginContainer/VBoxContainer/HBoxContainer/Cancel" to="InvalidNamePopup" method="OnCancelButtonPressed"]
 [connection signal="close_requested" from="OptionsWindow" to="OptionsWindow" method="OnCloseRequested"]
 [connection signal="pressed" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/Button" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/Button/OptionsFileExplorer" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/Button" method="OnDirectorySelected"]
 [connection signal="pressed" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/Button" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/Button/OptionsFileExplorer" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/Button" method="OnDirectorySelected"]
 [connection signal="pressed" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button/OptionsFileExplorer" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button" method="OnDirectorySelected"]
 [connection signal="pressed" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button" method="OnPressed"]
+[connection signal="dir_selected" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button/OptionsFileExplorer" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button" method="OnDirectorySelected"]
