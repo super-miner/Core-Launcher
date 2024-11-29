@@ -45,7 +45,7 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 
 4. Once mods are installed, you don't need to launch via Core Launcher
 
-## Debugging
+## Troubleshooting
 ### Data
 Core Launcher's save files are located at:<br>
 `.../AppData/Roaming/Godot/app_userdata/Core Launcher (An Unofficial Launcher for Core Keeper)/Data`
@@ -55,6 +55,13 @@ With `ProfileInfo.json` being information about your created profiles, `Persiste
 ### Logs
 Core Launcher's log files are located at:<br>
 `.../AppData/Roaming/Godot/app_userdata/Core Launcher (An Unofficial Launcher for Core Keeper)/logs/godot.log`
+
+### Core Keeper
+Mods installed by Core Launcher will be located at<br>
+`.../Steam/steamapps/common/Core Keeper/CoreKeeper_Data/StreamingAssets/Mods`
+
+The game's logs are located at<br>
+`.../appdata/locallow/Pugstorm/Core Keeper/Player.log`
 
 ## Roadmap
 
