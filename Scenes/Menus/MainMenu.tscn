@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://c1n73swpkdwjh"]
+[gd_scene load_steps=40 format=3 uid="uid://c1n73swpkdwjh"]
 
 [ext_resource type="Theme" uid="uid://cp0vpg6x6licf" path="res://Themes/DefualtTheme/Normal.tres" id="1_81ept"]
 [ext_resource type="Texture2D" uid="uid://uvr5n8ftp0lr" path="res://Images/Icons/Plus.png" id="1_hfmwg"]
@@ -22,7 +22,6 @@
 [ext_resource type="Script" path="res://Scripts/UI/ModList.cs" id="12_e3elj"]
 [ext_resource type="Script" path="res://Scripts/Menus/Main/Tabs/ModsTabManager.cs" id="12_jy5iy"]
 [ext_resource type="PackedScene" uid="uid://c76en0nxy0bs6" path="res://Scenes/ListEntires/ModEntry.tscn" id="13_4fbd0"]
-[ext_resource type="Script" path="res://Scripts/Menus/Main/OptionsPanelController.cs" id="14_q7umy"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBar.cs" id="17_chpd6"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/LoadingBarSegment.cs" id="18_ooe8h"]
 [ext_resource type="Texture2D" uid="uid://veuu33emiei4" path="res://Images/Icons/Settings.png" id="18_qlm2n"]
@@ -30,9 +29,13 @@
 [ext_resource type="Texture2D" uid="uid://bkhpatrg57ab5" path="res://Images/Icons/HeartSmall.png" id="20_qv3hg"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/CustomLinkButton.cs" id="21_r6au4"]
 [ext_resource type="Script" path="res://Scripts/UI/Generic/FileLineEdit.cs" id="21_rua1n"]
-[ext_resource type="Script" path="res://Scripts/Menus/CoreLauncherOptions.cs" id="21_slxsk"]
 [ext_resource type="Texture2D" uid="uid://udrjjhyr7euf" path="res://Images/Icons/File.png" id="22_3kivl"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/WindowToggleButton.cs" id="23_xjxqa"]
 [ext_resource type="Script" path="res://Scripts/UI/NameProfilePopup.cs" id="29_wblnm"]
+[ext_resource type="Script" path="res://Scripts/UI/OptionsWindow.cs" id="32_botnd"]
+[ext_resource type="Theme" uid="uid://ca310l130svfn" path="res://Themes/DefualtTheme/NormalFileExplorer.tres" id="33_g5u7b"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/FileExplorer.cs" id="33_teo05"]
+[ext_resource type="Script" path="res://Scripts/UI/Generic/FileExplorerButton.cs" id="34_ocuo3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oyhup"]
 bg_color = Color(0.101961, 0.0901961, 0.0784314, 1)
@@ -43,11 +46,6 @@ corner_radius_bottom_left = 7
 shadow_color = Color(0, 0, 0, 0.392157)
 shadow_size = 10
 shadow_offset = Vector2(0, 5)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y78sb"]
-blend_mode = 3
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s7vrd"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ifb3j"]
 device = -1
@@ -277,13 +275,10 @@ patch_margin_top = 124
 patch_margin_right = 124
 patch_margin_bottom = 124
 
-[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen" node_paths=PackedStringArray("_optionsTabContainer", "_optionsPanelContainer")]
+[node name="Margin" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen"]
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("14_q7umy")
-_optionsTabContainer = NodePath("MarginContainer/Tabs")
-_optionsPanelContainer = NodePath("CoreLauncherOptions")
 
 [node name="MarginContainer" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin"]
 layout_mode = 2
@@ -292,12 +287,10 @@ theme_override_constants/margin_top = 10
 [node name="Tabs" type="TabContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer" node_paths=PackedStringArray("_optionsPanelContainer")]
 layout_mode = 2
 theme = ExtResource("1_81ept")
-current_tab = 1
 script = ExtResource("12_4bc7j")
-_optionsPanelContainer = NodePath("../../CoreLauncherOptions")
+_optionsPanelContainer = NodePath("")
 
 [node name="Options" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -336,6 +329,7 @@ script = ExtResource("11_bg25y")
 SettingName = "Name"
 
 [node name="Mods" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs" node_paths=PackedStringArray("ModList", "_modsLoadedLabel", "_showLibraryModsCheckBox")]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 15
@@ -395,220 +389,6 @@ theme_override_constants/separation = 10
 script = ExtResource("12_e3elj")
 EntryScene = ExtResource("13_4fbd0")
 
-[node name="CoreLauncherOptions" type="PanelContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin" node_paths=PackedStringArray("_steamPath", "_gamePath", "_serverPath", "_appDataPath")]
-visible = false
-material = SubResource("CanvasItemMaterial_y78sb")
-layout_mode = 2
-script = ExtResource("21_slxsk")
-_steamPath = NodePath("MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit")
-_gamePath = NodePath("MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit")
-_serverPath = NodePath("MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit")
-_appDataPath = NodePath("MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit")
-
-[node name="MarginContainer" type="MarginContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Directories" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "Directories"
-horizontal_alignment = 1
-justification_flags = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories"]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="SteamPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-
-[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
-layout_mode = 2
-text = "Path to Steam: "
-
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
-custom_minimum_size = Vector2(22.805, 0)
-layout_mode = 2
-
-[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
-custom_minimum_size = Vector2(597, 0)
-layout_mode = 2
-script = ExtResource("21_rua1n")
-FolderMustContain = ["steam.exe"]
-_errorLabel = NodePath("../../Label/Label2")
-_successLabel = NodePath("../../Label/Label2")
-
-[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit"]
-custom_minimum_size = Vector2(35, 0)
-layout_mode = 2
-icon = ExtResource("22_3kivl")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath"]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/Label"]
-custom_minimum_size = Vector2(173.44, 0)
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/Label"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 10
-
-[node name="HSeparator3" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-
-[node name="GamePath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-
-[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
-layout_mode = 2
-text = "Path to Game: "
-
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
-custom_minimum_size = Vector2(25.88, 0)
-layout_mode = 2
-
-[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
-custom_minimum_size = Vector2(597, 0)
-layout_mode = 2
-script = ExtResource("21_rua1n")
-FolderMustContain = ["CoreKeeper.exe"]
-_errorLabel = NodePath("../../HBoxContainer/Label2")
-_successLabel = NodePath("../../HBoxContainer/Label2")
-
-[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit"]
-custom_minimum_size = Vector2(35, 0)
-layout_mode = 2
-icon = ExtResource("22_3kivl")
-icon_alignment = 1
-expand_icon = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath"]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/HBoxContainer"]
-custom_minimum_size = Vector2(173.44, 0)
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 10
-
-[node name="HSeparator2" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-
-[node name="ServerPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-
-[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
-layout_mode = 2
-text = "Path to Server: "
-
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
-custom_minimum_size = Vector2(20.995, 0)
-layout_mode = 2
-
-[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
-custom_minimum_size = Vector2(597, 0)
-layout_mode = 2
-script = ExtResource("21_rua1n")
-FolderMustContain = ["CoreKeeperServer.exe"]
-_errorLabel = NodePath("../../Label/Label2")
-_successLabel = NodePath("../../Label/Label2")
-
-[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit"]
-custom_minimum_size = Vector2(35, 0)
-layout_mode = 2
-icon = ExtResource("22_3kivl")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath"]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/Label"]
-custom_minimum_size = Vector2(173.44, 0)
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/Label"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 10
-
-[node name="HSeparator" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-
-[node name="AppDataPath" type="VBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-
-[node name="LineEdit" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit"]
-layout_mode = 2
-text = "Path to App data: "
-
-[node name="LineEdit" type="LineEdit" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
-custom_minimum_size = Vector2(597, 0)
-layout_mode = 2
-script = ExtResource("21_rua1n")
-FolderMustContain = ["prefs.json", "worlds", "saves", "mods", "ServerConfig.json"]
-_errorLabel = NodePath("../../Label/Label2")
-_successLabel = NodePath("../../Label/Label2")
-
-[node name="Button" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit"]
-custom_minimum_size = Vector2(35, 0)
-layout_mode = 2
-icon = ExtResource("22_3kivl")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Label" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath"]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/Label"]
-custom_minimum_size = Vector2(173.44, 0)
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/Label"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 10
-
-[node name="HSeparator4" type="HSeparator" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxEmpty_s7vrd")
-
-[node name="Buttons" type="HBoxContainer" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 65
-
-[node name="Spacer" type="Control" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-
-[node name="Save" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
-layout_mode = 2
-text = "Save"
-
-[node name="Cancel" type="Button" parent="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/Buttons"]
-visible = false
-layout_mode = 2
-text = "Cancel"
-
 [node name="OptionsButton" type="Button" parent="MainConatiner/CentralMenu/MainScreen"]
 z_index = 100
 layout_mode = 2
@@ -646,7 +426,7 @@ layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 2
 
-[node name="OptionsButton" type="Button" parent="MainConatiner/GameBar/SideButtonsMargin/SideButtons"]
+[node name="OptionsButton" type="Button" parent="MainConatiner/GameBar/SideButtonsMargin/SideButtons" node_paths=PackedStringArray("_toggle")]
 z_index = 100
 layout_mode = 2
 size_flags_vertical = 4
@@ -654,6 +434,8 @@ focus_mode = 0
 theme = ExtResource("19_ipapd")
 icon = ExtResource("18_qlm2n")
 icon_alignment = 1
+script = ExtResource("23_xjxqa")
+_toggle = NodePath("../../../../../OptionsWindow")
 
 [node name="DonateButton" type="Button" parent="MainConatiner/GameBar/SideButtonsMargin/SideButtons"]
 layout_mode = 2
@@ -807,6 +589,240 @@ size_flags_horizontal = 4
 theme = ExtResource("1_81ept")
 text = "Cancel"
 
+[node name="OptionsFileExplorer" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(700, 500)
+transient = false
+always_on_top = true
+theme = ExtResource("33_g5u7b")
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+script = ExtResource("33_teo05")
+StartingDirectory = "/"
+
+[node name="OptionsWindow" type="Window" parent="." node_paths=PackedStringArray("_steamPathLineEdit", "_gamePathLineEdit", "_serverPathLineEdit", "_appDataPathLineEdit")]
+title = "Options"
+initial_position = 2
+size = Vector2i(900, 600)
+visible = false
+exclusive = true
+always_on_top = true
+script = ExtResource("32_botnd")
+_steamPathLineEdit = NodePath("TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/LineEdit")
+_gamePathLineEdit = NodePath("TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/LineEdit")
+_serverPathLineEdit = NodePath("TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/LineEdit")
+_appDataPathLineEdit = NodePath("TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/LineEdit")
+
+[node name="TabContainer" type="TabContainer" parent="OptionsWindow"]
+offset_right = 900.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_81ept")
+
+[node name="Settings" type="MarginContainer" parent="OptionsWindow/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="ScrollContainer" type="ScrollContainer" parent="OptionsWindow/TabContainer/Settings"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+vertical_scroll_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsWindow/TabContainer/Settings/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SteamPathFilePicker" type="HBoxContainer" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker"]
+layout_mode = 2
+theme = ExtResource("19_ipapd")
+text = "Steam Path:"
+
+[node name="LineEdit" type="LineEdit" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_81ept")
+placeholder_text = "Steam Path..."
+script = ExtResource("21_rua1n")
+FolderMustContain = ["steam.exe"]
+_errorLabel = NodePath("../../SteamPathErrorMessage")
+_successLabel = NodePath("../../SteamPathSuccessMessage")
+
+[node name="Button" type="Button" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+theme = ExtResource("1_81ept")
+icon = ExtResource("22_3kivl")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("34_ocuo3")
+_fileExplorer = NodePath("../../../../../../../../OptionsFileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
+
+[node name="SteamPathErrorMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="SteamPathSuccessMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Found path."
+
+[node name="GamePathFilePicker" type="HBoxContainer" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker"]
+layout_mode = 2
+theme = ExtResource("19_ipapd")
+text = "Client Path:"
+
+[node name="LineEdit" type="LineEdit" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_81ept")
+placeholder_text = "Client Path..."
+script = ExtResource("21_rua1n")
+FolderMustContain = ["CoreKeeper.exe"]
+_errorLabel = NodePath("../../GamePathErrorMessage")
+_successLabel = NodePath("../../GamePathSuccessMessage")
+
+[node name="Button" type="Button" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+theme = ExtResource("1_81ept")
+icon = ExtResource("22_3kivl")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("34_ocuo3")
+_fileExplorer = NodePath("../../../../../../../../OptionsFileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
+
+[node name="GamePathErrorMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="GamePathSuccessMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Found path."
+
+[node name="ServerPathFilePicker" type="HBoxContainer" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker"]
+layout_mode = 2
+theme = ExtResource("19_ipapd")
+text = "Server Path:"
+
+[node name="LineEdit" type="LineEdit" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_81ept")
+placeholder_text = "Server Path..."
+script = ExtResource("21_rua1n")
+FolderMustContain = ["CoreKeeperServer.exe"]
+_errorLabel = NodePath("../../ServerPathErrorMessage")
+_successLabel = NodePath("../../ServerPathSuccessMessage")
+
+[node name="Button" type="Button" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+theme = ExtResource("1_81ept")
+icon = ExtResource("22_3kivl")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("34_ocuo3")
+_fileExplorer = NodePath("../../../../../../../../OptionsFileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
+
+[node name="ServerPathErrorMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="ServerPathSuccessMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Found path."
+
+[node name="AppDataPathFilePicker" type="HBoxContainer" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker"]
+layout_mode = 2
+theme = ExtResource("19_ipapd")
+text = "App Data Path:"
+
+[node name="LineEdit" type="LineEdit" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker" node_paths=PackedStringArray("_errorLabel", "_successLabel")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_81ept")
+placeholder_text = "App Data Path..."
+script = ExtResource("21_rua1n")
+FolderMustContain = ["prefs.json", "saves", "mods", "worlds", "ServerConfig.json"]
+_errorLabel = NodePath("../../AppDataPathErrorMessage")
+_successLabel = NodePath("../../AppDataPathSuccessMessage2")
+
+[node name="Button" type="Button" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker" node_paths=PackedStringArray("_fileExplorer", "_fileLineEdit")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+theme = ExtResource("1_81ept")
+icon = ExtResource("22_3kivl")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("34_ocuo3")
+_fileExplorer = NodePath("../../../../../../../../OptionsFileExplorer")
+_fileLineEdit = NodePath("../LineEdit")
+
+[node name="AppDataPathErrorMessage" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Could not find steam path automatically."
+
+[node name="AppDataPathSuccessMessage2" type="Label" parent="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_81ept")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Found path."
+
 [connection signal="OnItemSelected" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnProfileTypeSelected"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/AddButton/Dropdown/Margin/VBox/ClientButton" method="OnPressed"]
@@ -814,14 +830,15 @@ text = "Cancel"
 [connection signal="pressed" from="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" to="MainConatiner/CentralMenu/ProfilesBar/Margin/VBox/Options/RemoveButton" method="OnPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
-[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit" method="OnTextChanged"]
-[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit" method="OnTextChanged"]
-[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit" method="OnTextChanged"]
-[connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit" method="OnTextChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs" method="OnTogglePressed"]
-[connection signal="pressed" from="MainConatiner/GameBar/SideButtonsMargin/SideButtons/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin" method="TogglePanel"]
+[connection signal="pressed" from="MainConatiner/GameBar/SideButtonsMargin/SideButtons/OptionsButton" to="MainConatiner/GameBar/SideButtonsMargin/SideButtons/OptionsButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/SideButtonsMargin/SideButtons/DonateButton" to="MainConatiner/GameBar/SideButtonsMargin/SideButtons/DonateButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]
 [connection signal="close_requested" from="InvalidNamePopup" to="InvalidNamePopup" method="OnCloseRequested"]
 [connection signal="pressed" from="InvalidNamePopup/MarginContainer/VBoxContainer/HBoxContainer/OK" to="InvalidNamePopup" method="OnOkButtonPressed"]
 [connection signal="pressed" from="InvalidNamePopup/MarginContainer/VBoxContainer/HBoxContainer/Cancel" to="InvalidNamePopup" method="OnCancelButtonPressed"]
+[connection signal="close_requested" from="OptionsWindow" to="OptionsWindow" method="OnCloseRequested"]
+[connection signal="pressed" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/Button" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/SteamPathFilePicker/Button" method="OnPressed"]
+[connection signal="pressed" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/Button" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/GamePathFilePicker/Button" method="OnPressed"]
+[connection signal="pressed" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/ServerPathFilePicker/Button" method="OnPressed"]
+[connection signal="pressed" from="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button" to="OptionsWindow/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/AppDataPathFilePicker/Button" method="OnPressed"]
