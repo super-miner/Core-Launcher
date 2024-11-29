@@ -44,10 +44,17 @@ Core Launcher is a custom game launcher for the game <strong>Core Keeper</strong
 ![PlayButton](https://github.com/user-attachments/assets/ee66adf7-e2aa-4e2d-81c3-2a8a87f48bda)
 
 4. Once mods are installed, you don't need to launch via Core Launcher
-5. Dedicated Servers at the default Steam install location will appear in the list and can also be managed
 
-> [!Note]
-> There is currently no way to change the server or client location
+## Debugging
+### Data
+Core Launcher's save files are located at:<br>
+`.../AppData/Roaming/Godot/app_userdata/Core Launcher (An Unofficial Launcher for Core Keeper)/Data`
+
+With `ProfileInfo.json` being information about your created profiles, `PersistentData.json` being for general launcher data, and `Config.json` being unused at the moment.
+
+### Logs
+Core Launcher's log files are located at:<br>
+`.../AppData/Roaming/Godot/app_userdata/Core Launcher (An Unofficial Launcher for Core Keeper)/logs/godot.log`
 
 ## Roadmap
 
