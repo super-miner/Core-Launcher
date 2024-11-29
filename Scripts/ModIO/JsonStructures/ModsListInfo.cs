@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.Menus.Loading;
 using CoreLauncher.Scripts.Systems;
-using Godot;
 
 namespace CoreLauncher.Scripts.ModIO.JsonStructures; 
 

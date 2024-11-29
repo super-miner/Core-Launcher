@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.Profiles;
 using CoreLauncher.Scripts.StoredData;
-using CoreLauncher.Scripts.StoredData.StoredDataGroups;
-using CoreLauncher.Scripts.StoredData.StoredDataTypes;
 using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;

@@ -3,7 +3,8 @@ using Godot;
 
 namespace CoreLauncher.Scripts.Menus.Main.Tabs; 
 
-public partial class TabsManager : TabContainer {
+public partial class TabsManager : TabContainer
+{
     public override void _EnterTree() {
         InstanceManager.GetInstance<MainMenuManager>().ProfileList.ItemSelectedEvent += OnItemSelected;
     }

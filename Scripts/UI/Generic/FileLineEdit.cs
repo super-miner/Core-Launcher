@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using CoreLauncher.Scripts.Systems;
 using Godot;
 using Godot.Collections;
@@ -50,15 +51,14 @@ public partial class FileLineEdit : LineEdit {
             return false;
         }
         
-        foreach (string contains in FolderMustContain) {
-            string combinedPath = Path.Combine(Text, contains);
-            
-            if (!FileUtil.FileExists(combinedPath) && !FileUtil.DirectoryExists(combinedPath)) {
-                outMsg = FileErrorText.Replace("{folderMustContain}", contains);
-                return false;
-            }
+        if (!FolderMustContain.Any(contains => {
+                string combinedPath = Path.Combine(Text, contains);
+                return FileUtil.FileExists(combinedPath) || FileUtil.DirectoryExists(combinedPath);
+            })) {
+            outMsg = FileErrorText.Replace("{folderMustContain}", string.Join(", ", FolderMustContain));
+            return false;
         }
-        
+
         outMsg = SuccessText;
         return true;
     }

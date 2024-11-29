@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using CoreLauncher.Scripts.Menus.Main;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.ModIO.JsonStructures;
@@ -19,23 +19,32 @@ public partial class ModListEntry : ItemListEntry {
 	[Export] private TextureRect _logoTexture;
 	[Export] private CustomLinkButton _donationButton;
 
-	public override void Init() {
+	public override void Init()
+	{
 		ModInfo modInfo = GetModInfo();
-		
-		_nameLabel.Text = modInfo.Name;
-		_elevatedAccessLabel.Visible = modInfo.IsElevatedAccess();
-		_authorLabel.Text = $"By: {modInfo.Author.Username}";
-		_logoTexture.Texture = ImageTexture.CreateFromImage(modInfo.Logo.LogoImage);
+		try
+		{
+			_nameLabel.Text = modInfo.Name;
+			_elevatedAccessLabel.Visible = modInfo.IsElevatedAccess();
+			_authorLabel.Text = $"By: {modInfo.Author.Username}";
+			_logoTexture.Texture = ImageTexture.CreateFromImage(modInfo.Logo.LogoImage);
 
-		string donationLink = modInfo.GetDonationLink();
-		if (!string.IsNullOrEmpty(donationLink)) {
-			_donationButton.Link = donationLink;
+			string donationLink = modInfo.GetDonationLink();
+			if (!string.IsNullOrEmpty(donationLink))
+			{
+				_donationButton.Link = donationLink;
+			}
+			else
+			{
+				_donationButton.Visible = false;
+			}
+
+			UpdateButtonState();
 		}
-		else {
-			_donationButton.Visible = false;
+		catch (Exception e)
+		{
+			GD.PrintErr($"Mod: [{modInfo.Name}] is causing {e.Message}\r\n{modInfo.GetDonationLink()}\r\n {e.StackTrace}");
 		}
-		
-		UpdateButtonState();
 	}
 
 	public async void UpdateButtonState() {
@@ -49,13 +58,8 @@ public partial class ModListEntry : ItemListEntry {
 			}
 			else {
 				List<int> dependencies = await ModManager.GetDependencies(profileEntryMods);
-				
-				if (dependencies.Contains(modInfo.Id)) {
-					_addButton.SetState("AddedAsDependencyButton");
-				}
-				else {
-					_addButton.SetState("NotAddedButton");
-				}
+				if (!modInfo.HasDependencies) return;
+				_addButton.SetState(dependencies.Contains(modInfo.Id) ? "AddedAsDependencyButton" : "NotAddedButton");
 			}
 		}
 	}

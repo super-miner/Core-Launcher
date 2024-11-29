@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-using CoreLauncher.Scripts.ModIO.JsonStructures;
 using CoreLauncher.Scripts.Systems;
 
 namespace CoreLauncher.Scripts.ModIO.LocalInfo; 

@@ -1,9 +1,7 @@
-using System.Diagnostics;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.Profiles;
 using CoreLauncher.Scripts.StoredData;
-using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.Systems;
 using CoreLauncher.Scripts.UI.Generic;
 using Godot;
@@ -49,11 +47,11 @@ public partial class LoadingManager : Control {
 		InstanceManager.RemoveInstance(this);
 	}
 
-	public void StepComplete() {
+	private void StepComplete() {
 		SetStepsComplete(_stepsComplete + 1);
 	}
 
-	public async void SetStepsComplete(int amount) {
+	private async void SetStepsComplete(int amount) {
 		GD.Print($"Loading Manager: Completed {amount} steps.");
 		
 		_stepsComplete = amount;
@@ -65,7 +63,7 @@ public partial class LoadingManager : Control {
 		}
 	}
 
-	public void Finish() {
+	private void Finish() {
 		InstanceManager.GetInstance<MenuManager>().SetActiveMenu(2);
 	}
 

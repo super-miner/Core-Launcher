@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using System.IO.Compression;
 using System.Threading.Tasks;
 using CoreLauncher.Scripts.Menus.Main;
-using CoreLauncher.Scripts.ModIO;
 using CoreLauncher.Scripts.StoredData;
 using CoreLauncher.Scripts.StoredData.StoredDataGroups;
 using CoreLauncher.Scripts.UI;
@@ -12,16 +9,18 @@ using Godot;
 namespace CoreLauncher.Scripts.Systems;
 
 public static class GameManager {
-	public static readonly string CoreKeeperRelativePath = "/steamapps/common/Core Keeper";
-	public static readonly string CoreKeeperServerRelativePath = "/steamapps/common/Core Keeper Dedicated Server";
-	public static readonly string ModsRelativePath = "/CoreKeeper_Data/StreamingAssets/Mods";
-	public static readonly string ModsRelativeServerPath = "/CoreKeeperServer_Data/StreamingAssets/Mods";
-	
-	public static string SteamPath;
+	public static string SteamExePath;
+	public static string SteamGamePath;
+	public static string SteamGameServerPath;
+	public static string AppDataPath;
 	
 	public static void Init() {
 		StoredDataManager.DeserializeStoredDataEvent += OnDeserializeStoredData;
 		StoredDataManager.SerializeStoredDataEvent += OnSerializeStoredData;
+
+		if (StoredDataManager.HasDeserialized) {
+			OnDeserializeStoredData();
+		}
 	}
 	
 	public static async void RunGame() {
@@ -33,21 +32,36 @@ public static class GameManager {
 		}
 		
 		if (selectableEntry is ProfileListEntry profileEntry) {
-			await ModManager.ManageMods(profileEntry.Server, profileEntry.Mods);
+			if (string.IsNullOrEmpty(profileEntry.GetName())) {
+				TaskCompletionSource<string> popupTask = new TaskCompletionSource<string>();
+				
+				InstanceManager.GetInstance<MainMenuManager>().NameProfilePopup.Open(popupTask);
+				
+				string popupResult = await popupTask.Task;
+
+				if (string.IsNullOrEmpty(popupResult)) {
+					return;
+				}
+				
+				profileEntry.SetName(popupResult);
+			}
+
+			await profileEntry.Profile.Install();
 
 			string osName = OS.GetName();
 
-			/*if (osName == "Windows") {
-				OS.Execute("steam", new [] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+			switch (osName)
+			{
+				case "Windows":
+					OS.Execute($"{FileUtil.GetPath(PathType.SteamExe)}/steam.exe", new string[] {"-applaunch", profileEntry.Profile.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+					break;
+				case "Linux":
+					OS.Execute($"{FileUtil.GetPath(PathType.SteamExe)}/steam", new string[] {"-applaunch", profileEntry.Profile.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
+					break;
+				default:
+					GD.PrintErr($"Unrecognized operating system {osName}.");
+					break;
 			}
-			else if (osName == "Linux") {
-				OS.Execute("steam", new string[] {"-applaunch", profileEntry.Server ? "1963720" : "1621690"}, new Godot.Collections.Array());
-			}
-			else {
-				GD.PrintErr($"Unrecognized operating system {osName}.");
-			}*/
-			
-			OS.ShellOpen($"steam://rungameid/{(profileEntry.Server ? 1963720 : 1621690)}");
 		}
 		
 		await Task.Delay(2000);
@@ -56,22 +70,39 @@ public static class GameManager {
 	}
 
 	public static string GetCoreKeeperPath() {
-		return FileUtil.GetPath(PathType.Steam) + CoreKeeperRelativePath;
+		return $"{FileUtil.GetPath(PathType.SteamGames)}";
 	}
 	
 	public static string GetCoreKeeperServerPath() {
-		return FileUtil.GetPath(PathType.Steam) + CoreKeeperServerRelativePath;
+		return $"{FileUtil.GetPath(PathType.SteamGamesServer)}";
 	}
 	
-	public static string GetModsPath(bool server) {
-		return server ? GetCoreKeeperServerPath() + ModsRelativeServerPath : GetCoreKeeperPath() + ModsRelativePath;
+	public static string GetModsPath(bool isServer = false) {
+		if (isServer)
+		{ return $@"{FileUtil.GetPath(PathType.SteamGamesServer)}\CoreKeeperServer_Data\StreamingAssets\Mods"; }
+		return $@"{FileUtil.GetPath(PathType.SteamGamesServer)}\CoreKeeper_Data\StreamingAssets\Mods";
+		
+	}
+	 
+	public static string GetCoreKeeperDataPath(bool server) {
+		return server ? $@"{GetCoreKeeperServerPath()}\CoreKeeperServer_Data\" : $@"{GetCoreKeeperPath()}\CoreKeeper_Data\";
+	}
+
+	public static string GetAppDataPath() {
+		return $"{AppDataPath}/";
 	}
 	
 	private static void OnDeserializeStoredData() {
-		SteamPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath;
+		SteamExePath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamExePath;
+		SteamGamePath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamePath;
+		SteamGameServerPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGameServerPath;
+		AppDataPath = StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().AppDataPath;
 	}
 
 	private static void OnSerializeStoredData() {
-		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamPath = SteamPath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamExePath = SteamExePath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGamePath = SteamGamePath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().SteamGameServerPath = SteamGameServerPath;
+		StoredDataManager.GetStoredDataGroup<PersistentDataGroup>().AppDataPath = AppDataPath;
 	}
 }
