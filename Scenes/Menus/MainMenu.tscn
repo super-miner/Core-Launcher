@@ -268,8 +268,8 @@ size_flags_horizontal = 3
 modulate = Color(0, 0, 0, 0.235294)
 z_index = -99
 layout_mode = 2
-offset_right = 1300.0
-offset_bottom = 784.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource("2_3jvfp")
 region_rect = Rect2(0, 0, 250, 250)
 patch_margin_left = 124
@@ -629,34 +629,35 @@ layout_mode = 2
 mouse_filter = 2
 color = Color(0.101961, 0.0901961, 0.0784314, 1)
 
-[node name="CLOptionsButton" type="Button" parent="MainConatiner/GameBar"]
-z_index = 100
+[node name="SideButtonsMargin" type="MarginContainer" parent="MainConatiner/GameBar"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = -22.5
-offset_right = -95.0
-offset_bottom = 22.5
-grow_horizontal = 0
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("1_81ept")
-icon = ExtResource("18_qlm2n")
-
-[node name="DonateButton" type="Button" parent="MainConatiner/GameBar"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -81.0
-offset_top = 30.0
-offset_right = -26.0
-offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="SideButtons" type="HBoxContainer" parent="MainConatiner/GameBar/SideButtonsMargin"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 2
+
+[node name="OptionsButton" type="Button" parent="MainConatiner/GameBar/SideButtonsMargin/SideButtons"]
+z_index = 100
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme = ExtResource("19_ipapd")
+icon = ExtResource("18_qlm2n")
+icon_alignment = 1
+
+[node name="DonateButton" type="Button" parent="MainConatiner/GameBar/SideButtonsMargin/SideButtons"]
+layout_mode = 2
+size_flags_vertical = 4
 focus_mode = 0
 theme = ExtResource("19_ipapd")
 icon = ExtResource("20_qv3hg")
@@ -814,16 +815,12 @@ text = "Cancel"
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Options/ScrollContainer/VBox/Name/Input" method="OnInputChanged"]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods/VBox/TabSettings/HBox/CheckButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs/Mods" method="OnShowLibraryModsCheckboxPressed"]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/LineEdit" method="OnTextChanged"]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/SteamPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions" method="_on_button_button_down" binds= [&"Steam"]]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/LineEdit" method="OnTextChanged"]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/GamePath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions" method="_on_button_button_down" binds= [&"Game"]]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/LineEdit" method="OnTextChanged"]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/ServerPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions" method="_on_button_button_down" binds= [&"Server"]]
 [connection signal="text_changed" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/LineEdit" method="OnTextChanged"]
-[connection signal="button_down" from="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions/MarginContainer/Directories/VBoxContainer/AppDataPath/LineEdit/Button" to="MainConatiner/CentralMenu/MainScreen/Margin/CoreLauncherOptions" method="_on_button_button_down" binds= [&"AppData"]]
 [connection signal="pressed" from="MainConatiner/CentralMenu/MainScreen/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin/MarginContainer/Tabs" method="OnTogglePressed"]
-[connection signal="pressed" from="MainConatiner/GameBar/CLOptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin" method="TogglePanel"]
-[connection signal="pressed" from="MainConatiner/GameBar/DonateButton" to="MainConatiner/GameBar/DonateButton" method="OnPressed"]
+[connection signal="pressed" from="MainConatiner/GameBar/SideButtonsMargin/SideButtons/OptionsButton" to="MainConatiner/CentralMenu/MainScreen/Margin" method="TogglePanel"]
+[connection signal="pressed" from="MainConatiner/GameBar/SideButtonsMargin/SideButtons/DonateButton" to="MainConatiner/GameBar/SideButtonsMargin/SideButtons/DonateButton" method="OnPressed"]
 [connection signal="pressed" from="MainConatiner/GameBar/PlayButton" to="MainConatiner/GameBar/PlayButton" method="OnPressed"]
 [connection signal="close_requested" from="InvalidNamePopup" to="InvalidNamePopup" method="OnCloseRequested"]
 [connection signal="pressed" from="InvalidNamePopup/MarginContainer/VBoxContainer/HBoxContainer/OK" to="InvalidNamePopup" method="OnOkButtonPressed"]
