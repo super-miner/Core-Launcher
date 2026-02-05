@@ -1,3 +1,7 @@
+> [!WARNING]
+> 
+> This project is no longer maintained because the game is planning to partially switch to Steam workshop for hosting mods which does not have a public API. If you know of a way to work around this let me know.
+
 ![Core Launcher](Banner.png)
 
 # Core Launcher
